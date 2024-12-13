@@ -1,0 +1,9 @@
+Modelo de pagina fogger
+Organizar los juegos por categorias
+Formilaro registro en torneos
+Registro de usuarios (obvio)
+Valoraciones de juegos
+Si existe, traer desde una api titulo, imagen, descripcion, si no existe, hacer array pa los juegos y carpeta de imagenes
+Publicaciones de usuarios
+Feed inicial
+Si hay tiempo, chat en vivo
