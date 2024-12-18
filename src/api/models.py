@@ -4,11 +4,31 @@ db = SQLAlchemy()
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(500), unique=True, nullable=False)
+    name = db.Column(db.String(500), unique=True, nullable=False)
     email = db.Column(db.String(500), unique=True, nullable=False)
     password = db.Column(db.String(500), nullable=False)
+    creation_date = db.Column(db.String(500), unique=True, nullable=False)
+
+
+    def __repr__(self):
+        return f'<User {self.name}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "email": self.email,
+            # do not serialize the password, its a security breach
+        }
+
+
+class Profile(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(500), unique=True, nullable=False)
+    description = db.Column(db.String(500), unique=True, nullable=False)
     birth_date = db.Column(db.Date, nullable=False)
-    creation_date = db.Column(db.TIMESTAMP, default=db.func.current_timestamp(), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
+    user = db.relationship('User')
 
 
     def __repr__(self):
@@ -18,7 +38,7 @@ class User(db.Model):
         return {
             "id": self.id,
             "username": self.username,
-            "email": self.email,
+            "description": self.description,
             "birth_date": self.birth_date,
             # do not serialize the password, its a security breach
         }
