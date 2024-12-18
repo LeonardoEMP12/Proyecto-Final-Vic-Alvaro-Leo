@@ -1,0 +1,59 @@
+/* Fondo principal */
+body {
+    background-color: #000; /* Negro */
+    color: #fff;
+  }
+  
+  /* Contenedor del formulario */
+  .formulario-contenedor {
+    background-color: #1b1b1b; /* Gris oscuro */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 255, 0, 0.3);
+  }
+  
+  /* Título */
+  .formulario-titulo {
+    color: #00ff00; /* Verde neón */
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  /* Etiquetas */
+  .formulario-label {
+    color: #00ff00;
+    font-size: 0.9rem;
+  }
+  
+  /* Inputs */
+  .formulario-input {
+    background-color: #121212; /* Negro más oscuro */
+    border: 1px solid #00ff00;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .formulario-input:focus {
+    border-color: #00ff00;
+    box-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+    outline: none;
+  }
+  
+  /* Botón */
+  .formulario-boton {
+    background-color: #00ff00;
+    border: none;
+    color: #000;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .formulario-boton:hover {
+    background-color: #00cc00;
+    color: #fff;
+  }
+  
