@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Genres
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt 
@@ -24,7 +24,7 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-
+# Endpoint de registro de Usuario
 @api.route('/signup', methods=['POST'])
 def handle_register():
     request_body = request.json # Recogemos los datos del body mandado  
@@ -36,7 +36,7 @@ def handle_register():
     if not name or not password or not email or not creation_date: # Validamos si existen los campos email, username y password
         return jsonify({"message": "Todos los campos deben estar completos"}), 400
     
-    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8') # Encriptamos la contraseña
     
     user = User.query.filter_by(name = name, email = email).first() # Buscamos dentro de la tabla user si hay ya un usuario que contenga los mismos datos
 
@@ -51,3 +51,15 @@ def handle_register():
      # Retornamos los datos añadidos
     usuario_add_serialize = usuario_add.serialize()
     return jsonify({"response":hashed_password}), 200
+
+
+# Endpoint Get categorias
+@api.route('/genres', methods=['GET'])
+def get_genres():
+
+    # Creamos las variables para los personajes de la tabla Personajes
+    genre=Genres.query.all()
+    all_genres = [genres.serialize() for genres in genre]
+
+    # Retornamos todos los personajes de la tabla Personajes
+    return jsonify(all_genres), 200
