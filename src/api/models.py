@@ -7,7 +7,7 @@ class User(db.Model):
     name = db.Column(db.String(500), unique=True, nullable=False)
     email = db.Column(db.String(500), unique=True, nullable=False)
     password = db.Column(db.String(500), nullable=False)
-    creation_date = db.Column(db.String(500), unique=True, nullable=False)
+    creation_date = db.Column(db.String(500), nullable=False)
 
 
     def __repr__(self):
