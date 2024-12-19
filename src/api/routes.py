@@ -6,8 +6,7 @@ from api.models import db, User, Genres
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt 
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 
 
 api = Blueprint('api', __name__)
@@ -50,8 +49,8 @@ def handle_register():
     db.session.add(usuario_add) # Realizamos la insercion
     db.session.commit() # Actualizamos la base de datos
 
+     # Retornamos los datos añadidos
     usuario_add_serialize = usuario_add.serialize()
-
     token = create_access_token(identity = usuario_add.name) # Creamos el token del usuario
     return jsonify({"token": token, "user":usuario_add_serialize}), 200
 
@@ -66,4 +65,3 @@ def get_genres():
 
     # Retornamos todos los personajes de la tabla Personajes
     return jsonify(all_genres), 200
-
