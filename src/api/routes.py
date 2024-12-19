@@ -56,3 +56,15 @@ def handle_register():
     token = create_access_token(identity = usuario_add.name) # Creamos el token del usuario
     return jsonify({"token": token, "user":usuario_add_serialize}), 200
 
+
+# Endpoint Get categorias
+@api.route('/genres', methods=['GET'])
+def get_genres():
+
+    # Creamos las variables para los personajes de la tabla Personajes
+    genre=Genres.query.all()
+    all_genres = [genres.serialize() for genres in genre]
+
+    # Retornamos todos los personajes de la tabla Personajes
+    return jsonify(all_genres), 200
+
