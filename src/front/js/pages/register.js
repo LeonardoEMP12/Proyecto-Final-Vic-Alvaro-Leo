@@ -8,10 +8,9 @@ const Register = () => {
     email: "",
     password: "",
     confirm_password: "",
-	creation_date:""
+	creation_date:new Date()
   });
 
-  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -41,7 +40,7 @@ const Register = () => {
         email: formData.email,
         password: formData.password,
 		confirm_password: formData.confirm_password,
-		creation_date: "1111"
+		creation_date: formData.creation_date
       }),
     })
       .then((response) => response.json())
