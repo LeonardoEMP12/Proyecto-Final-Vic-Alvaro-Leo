@@ -55,8 +55,7 @@ def handle_register():
 
      # Retornamos los datos añadidos
     usuario_add_serialize = usuario_add.serialize()
-    token = create_access_token(identity = usuario_add.name) # Creamos el token del usuario
-    return jsonify({"token": token, "user":usuario_add_serialize}), 200
+    return jsonify({"message":usuario_add_serialize}), 200
 
 
 # Endpoint Get categorias
