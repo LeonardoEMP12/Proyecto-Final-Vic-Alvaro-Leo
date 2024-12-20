@@ -6,6 +6,7 @@ from api.models import db, User, Genres
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt 
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 
 
 api = Blueprint('api', __name__)
@@ -50,7 +51,8 @@ def handle_register():
 
      # Retornamos los datos añadidos
     usuario_add_serialize = usuario_add.serialize()
-    return jsonify({"response":hashed_password}), 200
+    token = create_access_token(identity = usuario_add.name) # Creamos el token del usuario
+    return jsonify({"token": token, "user":usuario_add_serialize}), 200
 
 
 # Endpoint Get categorias
