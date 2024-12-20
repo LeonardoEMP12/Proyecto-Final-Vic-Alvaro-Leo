@@ -13,8 +13,7 @@ p {
 
 .btn-orange {
     background-color: #6CE690;
-    border-color: #6CE690; 
-    --bs-btn-hover-color: var(--bs-white);
+    border-color: #6CE690;
 }
 
 .btn-orange:hover {
