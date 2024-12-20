@@ -1,0 +1,21 @@
+body {
+    background: rgb(0,55,48);
+background: linear-gradient(90deg, rgba(0,55,48,1) 0%, rgba(0,0,48,1) 100%);
+}
+
+h1 {
+    color: #FAFAFA;
+}
+
+p {
+    color: #FAFAFA;
+}
+
+.btn-orange {
+    background-color: #6CE690;
+    border-color: #6CE690;
+}
+
+.btn-orange:hover {
+    border-color: #58BB76;
+}
