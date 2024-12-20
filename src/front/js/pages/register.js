@@ -8,7 +8,7 @@ const Register = () => {
     email: "",
     password: "",
     confirm_password: "",
-	creation_date:"21212"
+	creation_date:""
   });
 
   
@@ -41,7 +41,7 @@ const Register = () => {
         email: formData.email,
         password: formData.password,
 		confirm_password: formData.confirm_password,
-		creation_date: "1212121"
+		creation_date: "1111"
       }),
     })
       .then((response) => response.json())
