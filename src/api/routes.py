@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Genres
+from api.models import db, User, Genres, FavoritesGenres
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt 
@@ -24,6 +24,7 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
 
 # Endpoint de registro de Usuario
 @api.route('/signup', methods=['POST'])
@@ -68,3 +69,27 @@ def get_genres():
 
     # Retornamos todos los personajes de la tabla Personajes
     return jsonify(all_genres), 200
+
+
+# Endpoint registro de categorias
+@api.route('/register-genres', methods=['POST'])
+def register_genres():
+
+    request_body = request.json # Recogemos los datos del body mandado  
+    user_id = request_body.get('user_id') # Recogemos el user_id del request_body
+    genre_id = request_body.get('genre_id') # Recogemos el genre_id del request_body
+
+    if not user_id or not genre_id:
+        return jsonify({"message": "No se ha podido añadir a favoritos"}), 400
+    
+    genres = FavoritesGenres.query.filter_by(user_id = user_id, genre_id = genre_id).first()
+
+    if genres:
+        return jsonify({"message": "Ya está en favoritos"}), 400
+    
+    genres_add = FavoritesGenres(user_id = user_id, genre_id = genre_id)
+
+    db.session.add(genres_add) # Realizamos la insercion
+    db.session.commit() # Actualizamos la base de datos
+
+    return jsonify({"message": "Se ha añadido a favoritos"}), 200
