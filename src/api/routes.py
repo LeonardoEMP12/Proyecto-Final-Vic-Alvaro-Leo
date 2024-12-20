@@ -32,8 +32,12 @@ def handle_register():
     name = request_body.get('name') # Recogemos el campo name del request_body
     email = request_body.get('email') # Recogemos el campo email del request_body
     password = request_body.get('password') # Recogemos el campo password del request_body
+    confirm_password = request_body.get('confirm_password')# Recogemos el campo repita contraseña del request_body
     creation_date = request_body.get('creation_date') # Recogemos el campo creation_date del request_body
 
+    if password != confirm_password: # Validamos si las contraseñas coinciden
+        return jsonify({"message": "Las contraseñas no coinciden"}), 400
+    
     if not name or not password or not email or not creation_date: # Validamos si existen los campos email, username y password
         return jsonify({"message": "Todos los campos deben estar completos"}), 400
     
