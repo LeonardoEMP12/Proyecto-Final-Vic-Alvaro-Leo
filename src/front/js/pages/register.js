@@ -30,7 +30,7 @@ const Register = () => {
     }
 
     
-    fetch("https://bug-free-space-meme-5g4v5jxq59grf6rj-3001.app.github.dev/api/signup", {
+    fetch(process.env.BACKEND_URL + "/api/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
