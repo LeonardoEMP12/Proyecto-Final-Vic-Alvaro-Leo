@@ -5,13 +5,13 @@ const ButtonComponent = () => {
   const buttonData = [
     {
       text: 'Iniciar sesión',
-      color: 'primary',
+      color: 'orange',
       link: 'https://www.Google.com',
     },
     {
       text: 'Registrarse',
       color: 'light',
-      link: '#',
+      link: '/register',
     },
   ];
 
