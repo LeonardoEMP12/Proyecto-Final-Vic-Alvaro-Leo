@@ -103,7 +103,6 @@ class Developers(db.Model):
 class Genres(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(500), nullable=False)
-    pegi = db.Column(db.String(500), nullable=False)
     description = db.Column(db.String(500), nullable=False)
     videogame_id = db.Column(db.Integer, db.ForeignKey(Videogames.id))
     videogame = db.relationship('Videogames')
@@ -117,7 +116,6 @@ class Genres(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "pegi": self.pegi,
             "description": self.description,
             "videogame_id": self.videogame_id,
         } 
@@ -162,6 +160,7 @@ class Platforms(db.Model):
 class Tags(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(500), nullable=False)
+    pegi = db.Column(db.String(500), nullable=False) 
     videogame_id = db.Column(db.Integer, db.ForeignKey(Videogames.id), nullable=False)
     videogame = db.relationship('Videogames')
 
@@ -173,6 +172,7 @@ class Tags(db.Model):
         return {
             "id": self.id,
             "name": self.name,
+            "pegi": self.pegi,
             "videogame_id": self.videogame_id,
         } 
 
