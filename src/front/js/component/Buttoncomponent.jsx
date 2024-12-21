@@ -5,7 +5,7 @@ const ButtonComponent = () => {
   const buttonData = [
     {
       text: 'Iniciar sesión',
-      color: 'orange',
+      color: 'green',
       link: 'https://www.Google.com',
     },
     {
