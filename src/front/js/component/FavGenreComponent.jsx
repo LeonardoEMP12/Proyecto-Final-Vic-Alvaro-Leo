@@ -27,9 +27,9 @@ const FavGenreComponent = () => {
           <div className="col-md-3" key={genre.id}>
             <CardFavGenre
               name={genre.name}
-              description={genre.id} // Usamos el slug como descripción
-              image_background={genre.image_background} // Imagen de fondo de la API
-              link="#" // Puedes ajustar esto si tienes un enlace dinámico
+              description={genre.id} // De momento uso el id para ver si se traen bien
+              image_background={genre.image_background}
+              link="#"
             />
           </div>
         ))}
