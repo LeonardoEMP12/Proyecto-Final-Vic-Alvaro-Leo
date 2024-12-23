@@ -108,7 +108,7 @@ def handle_login():
     is_valid = bcrypt.check_password_hash(user.password, password)
 
     if not user or is_valid == False: # Validamos si existe ese usuario dentro de la base de datos
-        return jsonify({"message": "Nombre de usuario o contraseña erroneos"}), 400
+        return jsonify({"message": "Correo o contraseña erroneos"}), 400
     
     user_serialize = user.serialize()
 
