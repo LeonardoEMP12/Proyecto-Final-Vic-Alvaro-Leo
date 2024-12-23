@@ -13,7 +13,7 @@ const CardFavGenre = ({ name, description, image_background, id }) => {
         },
         body: JSON.stringify({
           user_id: 2,
-          genre_id: 4
+          genre_id: id, // Ahora utiliza el id dinámico
         }),
       });
 
@@ -29,35 +29,18 @@ const CardFavGenre = ({ name, description, image_background, id }) => {
   };
 
   return (
-    <div>
-      <div
-        className="card"
-        style={{
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between'
-        }}
-      >
-        <img
-          src={`${image_background}`}
-          className="card-img-top"
-          alt={`${name} image`}
-          style={{
-            height: '150px', 
-            objectFit: 'cover'
-          }}
-        />
-        <div className="card-body">
-          <h5 className="card-title">{name}</h5>
-          <p className="card-text">{description}</p>
-          <button
-            className="btn btn-green"
-            onClick={handleAddToFavorites}
-          >
-            Añadir a favoritos
-          </button>
-        </div>
+    <div
+      className="card card-border"
+      onClick={handleAddToFavorites} // Toda la tarjeta es clickeable
+    >
+      <img
+        src={`${image_background}`}
+        className="card-img-top"
+        alt={`imagen de ${name}`}
+      />
+      <div className="card-body">
+        <h5 className="card-title">{name}</h5>
+        <p className="card-text">{description}</p>
       </div>
     </div>
   );
