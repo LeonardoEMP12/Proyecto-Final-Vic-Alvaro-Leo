@@ -112,6 +112,6 @@ def handle_login():
     
     user_serialize = user.serialize()
 
-    token = create_access_token(identity = user.name) # Creamos el token del usuario
+    token = create_access_token(identity = user.id) # Creamos el token del usuario
     return jsonify({"token": token,
                     "user":user_serialize}), 200
