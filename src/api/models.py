@@ -174,7 +174,7 @@ class FavoritesGenres(db.Model):
             "user_id": self.user_id,
             "genre_id": self.videogame_id,
         }  
-
+    
 
 class Comments(db.Model):
     id = db.Column(db.Integer, primary_key=True)
