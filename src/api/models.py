@@ -4,11 +4,31 @@ db = SQLAlchemy()
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(500), unique=True, nullable=False)
+    name = db.Column(db.String(500), nullable=False)
     email = db.Column(db.String(500), unique=True, nullable=False)
     password = db.Column(db.String(500), nullable=False)
+    creation_date = db.Column(db.String(500), nullable=False)
+
+
+    def __repr__(self):
+        return f'<User {self.name}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "email": self.email,
+            # do not serialize the password, its a security breach
+        }
+
+
+class Profile(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(500), unique=True, nullable=False)
+    description = db.Column(db.String(500), unique=True, nullable=False)
     birth_date = db.Column(db.Date, nullable=False)
-    creation_date = db.Column(db.TIMESTAMP, default=db.func.current_timestamp(), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
+    user = db.relationship('User')
 
 
     def __repr__(self):
@@ -18,9 +38,72 @@ class User(db.Model):
         return {
             "id": self.id,
             "username": self.username,
-            "email": self.email,
+            "description": self.description,
             "birth_date": self.birth_date,
             # do not serialize the password, its a security breach
+        }
+
+
+class Genres(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(500), nullable=False)
+    description = db.Column(db.String(500), nullable=False)
+
+
+    def __repr__(self):
+        return f'<Genre {self.name}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+        }
+    
+
+class Developers(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(500), nullable=False)
+
+
+    def __repr__(self):
+        return f'<Developer {self.name}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+        } 
+    
+
+class Platforms(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(500), nullable=False)
+
+    def __repr__(self):
+        return f'<Platform {self.name}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+        }         
+
+
+class Tags(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(500), nullable=False)
+    pegi = db.Column(db.String(500), nullable=False) 
+
+
+    def __repr__(self):
+        return f'<Tag {self.name}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "pegi": self.pegi,
         }
 
 
@@ -29,6 +112,14 @@ class Videogames(db.Model):
     title = db.Column(db.String(500), nullable=False)
     image = db.Column(db.String(500), nullable=False)
     rating = db.Column(db.Integer, nullable=False)
+    genre_id = db.Column(db.Integer, db.ForeignKey(Genres.id))
+    developer_id = db.Column(db.Integer, db.ForeignKey(Developers.id))
+    platform_id = db.Column(db.Integer, db.ForeignKey(Platforms.id))
+    tag_id = db.Column(db.Integer, db.ForeignKey(Tags.id))
+    genre = db.relationship('Genres')
+    developer = db.relationship('Developers')
+    platform = db.relationship('Platforms')
+    tag = db.relationship('Tags')
 
 
     def __repr__(self):
@@ -40,6 +131,10 @@ class Videogames(db.Model):
             "title": self.title,
             "image": self.image,
             "rating": self.rating,
+            "genre_id":self.genre_id,
+            "developer_id":self.genre_id,
+            "platform_id":self.genre_id,
+            "tag_id":self.genre_id
         }
 
 
@@ -60,47 +155,7 @@ class FavoritesVideogames(db.Model):
             "user_id": self.user_id,
             "videogame_id": self.videogame_id,
         } 
-
-
-class Developers(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(500), nullable=False)
-    videogame_id = db.Column(db.Integer, db.ForeignKey(Videogames.id), nullable=False)
-    videogame = db.relationship('Videogames')
-
-
-    def __repr__(self):
-        return f'<Developer {self.name}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "videogame_id": self.videogame_id,
-        } 
-
-
-class Genres(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(500), nullable=False)
-    pegi = db.Column(db.String(500), nullable=False)
-    description = db.Column(db.String(500), nullable=False)
-    videogame_id = db.Column(db.Integer, db.ForeignKey(Videogames.id))
-    videogame = db.relationship('Videogames')
-
-
-
-    def __repr__(self):
-        return f'<Genre {self.name}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "pegi": self.pegi,
-            "description": self.description,
-            "videogame_id": self.videogame_id,
-        } 
+ 
 
 class FavoritesGenres(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -118,44 +173,8 @@ class FavoritesGenres(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             "genre_id": self.videogame_id,
-        } 
-
-
-class Platforms(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(500), nullable=False)
-    videogame_id = db.Column(db.Integer, db.ForeignKey(Videogames.id), nullable=False)
-    videogame = db.relationship('Videogames')
-
-
-    def __repr__(self):
-        return f'<Platform {self.name}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "videogame_id": self.videogame_id,
-        }         
-
-
-class Tags(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(500), nullable=False)
-    videogame_id = db.Column(db.Integer, db.ForeignKey(Videogames.id), nullable=False)
-    videogame = db.relationship('Videogames')
-
-
-    def __repr__(self):
-        return f'<Tag {self.name}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "videogame_id": self.videogame_id,
-        } 
-
+        }  
+    
 
 class Comments(db.Model):
     id = db.Column(db.Integer, primary_key=True)
