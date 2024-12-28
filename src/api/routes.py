@@ -98,7 +98,7 @@ def register_genres():
 #Endpoint eliminar categoria de favoritas
 @api.route('/remove-genres', methods=['DELETE'])
 def remove_genres():
-    request_body = request.json  # Recogemos los datos del body enviado  
+    request_body = request.json  # Recogemos los datos del body enviado
     user_id = request_body.get('user_id')  # Recogemos el user_id del request_body
     genre_id = request_body.get('genre_id')  # Recogemos el genre_id del request_body
 
