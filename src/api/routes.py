@@ -59,6 +59,29 @@ def handle_register():
     return jsonify({"message":usuario_add_serialize}), 200
 
 
+#Endpoint login de usuario
+@api.route('/login', methods=['POST'])
+def handle_login(): 
+    request_body = request.json # Recogemos los datos del body mandado    
+    password = request_body.get('password') # Recogemos el campo password del request_body
+    email = request_body.get('email') # Recogemos el campo username del request_body
+
+    if not email or not password: # Validamos si existen los campos username y password
+        return jsonify({"message": "Todos los campos deben estar completos"}), 400
+    
+    user = User.query.filter_by(email = email).first() # Buscamos dentro de la tabla user si hay ya un usuario que contenga los mismos datos
+    is_valid = bcrypt.check_password_hash(user.password, password)
+
+    if not user or is_valid == False: # Validamos si existe ese usuario dentro de la base de datos
+        return jsonify({"message": "Correo o contraseña erroneos"}), 400
+    
+    user_serialize = user.serialize()
+
+    token = create_access_token(identity = user.id) # Creamos el token del usuario
+    return jsonify({"token": token,
+                    "user":user_serialize}), 200
+
+
 # Endpoint Get categorias
 @api.route('/genres', methods=['GET'])
 def get_genres():
@@ -71,7 +94,7 @@ def get_genres():
     return jsonify(all_genres), 200
 
 
-# Endpoint registro de categorias
+# Endpoint añadir categoria a favoritas
 @api.route('/register-genres', methods=['POST'])
 def register_genres():
 
@@ -94,24 +117,22 @@ def register_genres():
 
     return jsonify({"message": "Se ha añadido a favoritos"}), 200
 
+#Endpoint eliminar categoria de favoritas
+@api.route('/remove-genres', methods=['DELETE'])
+def remove_genres():
+    request_body = request.json  # Recogemos los datos del body enviado
+    user_id = request_body.get('user_id')  # Recogemos el user_id del request_body
+    genre_id = request_body.get('genre_id')  # Recogemos el genre_id del request_body
 
-@api.route('/login', methods=['POST'])
-def handle_login(): 
-    request_body = request.json # Recogemos los datos del body mandado    
-    password = request_body.get('password') # Recogemos el campo password del request_body
-    email = request_body.get('email') # Recogemos el campo username del request_body
+    if not user_id or not genre_id:
+        return jsonify({"message": "No se ha podido eliminar de favoritos"}), 400
 
-    if not email or not password: # Validamos si existen los campos username y password
-        return jsonify({"message": "Todos los campos deben estar completos"}), 400
-    
-    user = User.query.filter_by(email = email).first() # Buscamos dentro de la tabla user si hay ya un usuario que contenga los mismos datos
-    is_valid = bcrypt.check_password_hash(user.password, password)
+    genres = FavoritesGenres.query.filter_by(user_id=user_id, genre_id=genre_id).first()
 
-    if not user or is_valid == False: # Validamos si existe ese usuario dentro de la base de datos
-        return jsonify({"message": "Correo o contraseña erroneos"}), 400
-    
-    user_serialize = user.serialize()
+    if not genres:
+        return jsonify({"message": "El género no está en favoritos"}), 404
 
-    token = create_access_token(identity = user.id) # Creamos el token del usuario
-    return jsonify({"token": token,
-                    "user":user_serialize}), 200
+    db.session.delete(genres)  # Eliminamos el registro
+    db.session.commit()  # Actualizamos la base de datos
+
+    return jsonify({"message": "Se ha eliminado de favoritos"}), 200

@@ -3,19 +3,19 @@ body {
 background: linear-gradient(90deg, rgba(0,55,48,1) 0%, rgba(0,0,48,1) 100%);
 }
 
-h1 {
+.text-white {
     color: #FAFAFA;
 }
 
-p {
-    color: #FAFAFA;
+.text-black {
+    color: #000030;
 }
 
-.btn-orange {
+.btn-green {
     background-color: #6CE690;
     border-color: #6CE690;
 }
 
-.btn-orange:hover {
+.btn-green:hover {
     border-color: #58BB76;
 }
