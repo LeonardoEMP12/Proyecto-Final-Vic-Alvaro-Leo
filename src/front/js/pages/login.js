@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../../styles/register.css";
 
-const Login = () => {
+export const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -88,5 +88,3 @@ const Login = () => {
     </div>
   );
 };
-
-export default Login;

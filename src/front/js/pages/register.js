@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../../styles/register.css";
 
-const Register = () => {
+export const Register = () => {
   
   const [formData, setFormData] = useState({
     name: "",
@@ -133,5 +133,3 @@ const Register = () => {
     </div>
   );
 };
-
-export default Register;
