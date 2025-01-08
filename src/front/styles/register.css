@@ -1,17 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap');
+
 body {
-  background: rgb(0,55,48);
-  background: linear-gradient(90deg, rgba(0,55,48,1) 0%, rgba(0,0,48,1) 100%);
+  background: #000000;
+  font-family: "Rowdies", serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .formulario-contenedor {
-  background-color: #E6B46C;
+  background-color: #141414;
   padding: 40px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ffd200;
 }
 
 .formulario-titulo {
-  color: #fff;
+  color: #ffd200;
   font-weight: bold;
   text-transform: uppercase;
 }
@@ -22,9 +27,9 @@ body {
 }
 
 .formulario-input {
-  background-color: #f7f9fc;
+  background-color: #1c1c1c;
   border: 1px solid #ccc;
-  color: #333;
+  color: #fff;
   border-radius: 5px;
   padding: 12px;
   width: 100%;
@@ -32,21 +37,21 @@ body {
 }
 
 .formulario-input:focus {
-  border-color: #6CE690;
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+  border-color: #ffd200;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
   outline: none;
 }
 
 .formulario-boton {
-  background-color: #6CE690;
+  background-color: #ffd200;
   border: none;
-  color: #fff;
+  color: #000;
   font-weight: bold;
   padding: 12px 20px;
   border-radius: 5px;
 }
 
 .formulario-boton:hover {
-  background-color: #A56CE6;
-  color: #fff;
+  background-color: #aa8b01;
+  color: #000;
 }
