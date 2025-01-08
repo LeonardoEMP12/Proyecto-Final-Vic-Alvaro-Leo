@@ -77,11 +77,12 @@ const Login = () => {
                 required
               />
             </div>
-
+{/* Boton inicio de sesion */}
             <div className="d-grid">
               <button type="submit" className="formulario-boton">Iniciar sesión</button>
             </div>
           </form>
+          
           <div className="text-center mt-5">
             <img src={OMNIAlogo} alt="OMNIA Logo" className="img-fluid" />
           </div>
