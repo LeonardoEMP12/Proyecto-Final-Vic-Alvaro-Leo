@@ -118,7 +118,6 @@ def register_genres():
 
     return jsonify({"message": "Se ha añadido a favoritos"}), 200
 
-
 #Endpoint eliminar categoria de favoritas
 @api.route('/remove-genres', methods=['DELETE'])
 def remove_genres():
@@ -267,3 +266,4 @@ def edit_birth_date():
     db.session.commit()  # Guardamos los cambios
 
     return jsonify({"message": "Fecha de nacimiento actualizada correctamente"}), 200
+

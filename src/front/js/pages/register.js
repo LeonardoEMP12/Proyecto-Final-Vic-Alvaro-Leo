@@ -1,7 +1,7 @@
-import React, { useState } from "react";  // Asegúrate de importar useState
+import React, { useState } from "react";
 import "../../styles/register.css";
 
-const Register = () => {
+export const Register = () => {
   
   const [formData, setFormData] = useState({
     name: "",
@@ -47,9 +47,7 @@ const Register = () => {
       .then((data) => {
         if (data.message) {
           alert("Registro exitoso");
-        } else {
-			console.log("else");
-			
+        } else {			
           alert(data.error || "Hubo un problema con el registro");
         }
       })
@@ -135,5 +133,3 @@ const Register = () => {
     </div>
   );
 };
-
-export default Register;
