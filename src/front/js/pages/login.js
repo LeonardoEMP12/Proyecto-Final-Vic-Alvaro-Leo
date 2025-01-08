@@ -46,9 +46,9 @@ const Login = () => {
   };
 
   return (
-    <div className="container d-flex align-items-center">
+    <div className="container d-flex justify-content-center align-items-center">
       <div className="row">
-        <div className="col-12 formulario-contenedor">
+        <div className="col-12 formulario-contenedor mt-5">
           <h1 className="text-center mb-4 formulario-titulo">Login</h1>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
@@ -83,6 +83,9 @@ const Login = () => {
               <button type="submit" className="formulario-boton">Iniciar sesión</button>
             </div>
           </form>
+        <div>
+
+        </div>
         </div>
       </div>
     </div>
