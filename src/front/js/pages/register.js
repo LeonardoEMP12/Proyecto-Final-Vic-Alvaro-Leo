@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "../../styles/register.css";
 import OMNIAlogo from "../../img/LogoOM.png"
 import { useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 
 
 const Register = () => {
+
+const { actions } = useContext(Context);
 const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -49,7 +52,9 @@ const navigate = useNavigate();
     })
       .then((response) => response.json())
       .then((data) => {
+        // console.log(data.message.id);
         if (data.message) {
+          actions.setId(data.message.id);
           navigate("/selectfavgenre");
         } else {
           alert(data.error || "Hubo un problema con el registro");
@@ -68,7 +73,7 @@ const navigate = useNavigate();
       <div className="col-12 col-md-6 formulario-contenedor d-flex justify-content-center align-items-center">
         <div>
           <h1 className="text-center mb-4 formulario-titulo">Formulario de Registro</h1>
-          <form autocomplete="off" onSubmit={handleSubmit}>
+          <form autoComplete="off" onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="name" className="formulario-label">Nombre</label>
               <input
