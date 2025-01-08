@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import "../../styles/register.css";
 import OMNIAlogo from "../../img/LogoOM.png"
+import { useNavigate } from "react-router-dom";
+
+
 
 const Register = () => {
-
+const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -47,7 +50,7 @@ const Register = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.message) {
-          alert("Registro exitoso");
+          navigate("/login");
         } else {
           alert(data.error || "Hubo un problema con el registro");
         }
