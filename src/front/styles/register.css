@@ -9,7 +9,7 @@ body {
 
 .formulario-contenedor {
   background-color: #141414;
-  padding: 40px;
+  padding: 5vh;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border: 2px solid #ffd200;
@@ -49,9 +49,53 @@ body {
   font-weight: bold;
   padding: 12px 20px;
   border-radius: 5px;
+  font-size: 2vh;
 }
 
 .formulario-boton:hover {
   background-color: #aa8b01;
   color: #000;
+}
+
+@media (max-width: 576px) {
+  .formulario-contenedor {
+    padding: 4vh 2vh;
+  }
+
+  .formulario-titulo {
+    font-size: 1.5rem;
+  }
+
+  .formulario-boton {
+    font-size: 1rem;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 20px 10px;
+  }
+
+  .formulario-titulo {
+    font-size: 1.5rem;
+  }
+
+  .formulario-input {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .formulario-label {
+    font-size: 0.85rem;
+  }
+
+  .formulario-boton {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .img-fluid {
+    width: 100%;
+  }
 }
