@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			token: localStorage.getItem("userId"),
 			message: null,
 			demo: [
 				{
@@ -16,6 +17,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
+
+			setId : (userId) => {
+				console.log(userId);
+                setStore({"userId":(userId)});
+                if (userId) {
+                    localStorage.setItem("userId", userId);
+                } else {
+                    localStorage.removeItem("userId");
+                }
+            },
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
