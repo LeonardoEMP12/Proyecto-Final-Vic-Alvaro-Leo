@@ -60,19 +60,20 @@ const Register = () => {
   };
 
   return (
-    <div className="container min-vh-100 d-flex align-items-center">
-      <div className="row w-100">
-        <div className="col-md-6 formulario-contenedor">
+    <div className="container min-vh-100 d-flex align-items-center justify-content-center">
+    <div className="row w-100">
+      <div className="col-12 col-md-6 formulario-contenedor d-flex justify-content-center align-items-center">
+        <div>
           <h1 className="text-center mb-4 formulario-titulo">Formulario de Registro</h1>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label htmlFor="nombre" className="formulario-label">Nombre</label>
+              <label htmlFor="name" className="formulario-label">Nombre</label>
               <input
                 type="text"
                 className="formulario-input"
                 id="name"
                 name="name"
-                value={formData.nombre}
+                value={formData.name}
                 onChange={handleChange}
                 placeholder="Ingresa tu nombre"
                 required
@@ -126,13 +127,14 @@ const Register = () => {
             </div>
           </form>
         </div>
+      </div>
 
-        <div className="col-md-6 d-none d-md-flex justify-content-center align-items-center">
-          <img src={OMNIAlogo} />
-        </div>
+      <div className="col-12 col-md-6 d-flex justify-content-center align-items-center mt-5">
+        <img src={OMNIAlogo} className="img-fluid w-75" alt="Logo OMNIA" />
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default Register;
