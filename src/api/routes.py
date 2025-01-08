@@ -7,10 +7,14 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt 
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+from datetime import timedelta
+from flask_mail import Mail, Message
 
 
 api = Blueprint('api', __name__)
 bcrypt = Bcrypt() 
+mail = Mail()
+
 
 # Allow CORS requests to this API
 CORS(api)
@@ -136,3 +140,29 @@ def remove_genres():
     db.session.commit()  # Actualizamos la base de datos
 
     return jsonify({"message": "Se ha eliminado de favoritos"}), 200
+
+# Endpoint de resteo de password
+@api.route('/forgot-password', methods=['POST'])
+def forgot_password():
+    email = request.json.get('email')
+    user = User.query.filter_by(email = email).first()
+    if not user:
+        return jsonify({"message":"Correo no existente"}), 404
+    token=create_access_token(identity = user.id)
+    template_html = f"""
+    <html>
+        <body>
+            <h1>Resetea tu contraseña</h1>
+            <p>Haz click en el siguente enlace para resetear tu contraseña</p>
+            <a href="http://localhost:3000/resetPassword?token={token}">Resetea tu contraseña</a>
+        </body>
+    </html>
+    """
+    msg=Message(
+        "Peticion de reseteo de contraseña",
+        sender="noreply@exapmle.com",
+        recipients=[user.email],
+        html=template_html
+    )
+    mail.send(msg)
+    return jsonify({"msg":"Email de reseteo enviado"}), 200
