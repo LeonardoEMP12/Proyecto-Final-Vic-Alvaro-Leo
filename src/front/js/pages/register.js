@@ -50,7 +50,7 @@ const navigate = useNavigate();
       .then((response) => response.json())
       .then((data) => {
         if (data.message) {
-          navigate("/login");
+          navigate("/selectfavgenre");
         } else {
           alert(data.error || "Hubo un problema con el registro");
         }
@@ -68,7 +68,7 @@ const navigate = useNavigate();
       <div className="col-12 col-md-6 formulario-contenedor d-flex justify-content-center align-items-center">
         <div>
           <h1 className="text-center mb-4 formulario-titulo">Formulario de Registro</h1>
-          <form onSubmit={handleSubmit}>
+          <form autocomplete="off" onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="name" className="formulario-label">Nombre</label>
               <input
