@@ -1,9 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Context } from "../store/appContext";
+import ButtonComponent from './Buttoncomponent.jsx';
+import { Link } from 'react-router-dom';
 
 const FavGenreComponent = () => {
+  const { store } = useContext(Context);
   const [genres, setGenres] = useState([]);
   const API_KEY = '02f82a6de2d04510bf98339e6e960f2c';
   const API_URL = `https://api.rawg.io/api/genres?key=${API_KEY}`;
+
+  const userId = store.userId;
 
   const fetchGenres = async () => {
     try {
@@ -29,16 +35,16 @@ const FavGenreComponent = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          user_id: 1,
+          user_id: userId,
           genre_id: id
         }),
       });
 
       if (response.ok) {
         const data = await response.json();
-        alert('Juego añadido a favoritos:', data);
+        ('Juego añadido a favoritos:', data);
       } else {
-        alert('Error al añadir a favoritos:', response.statusText);
+        ('Error al añadir a favoritos:', response.statusText);
       }
     } catch (error) {
       alert('Error en la solicitud', error);
@@ -67,6 +73,7 @@ const FavGenreComponent = () => {
           </div>
         ))}
       </div>
+      <Link to="/login">Ir al login</Link>
     </div>
   );
 };
