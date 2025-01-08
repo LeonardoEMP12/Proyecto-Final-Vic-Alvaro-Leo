@@ -1,5 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap');
+
 body {
   background: #000000;
+  font-family: "Rowdies", serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .formulario-contenedor {
@@ -7,6 +12,7 @@ body {
   padding: 40px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ffd200;
 }
 
 .formulario-titulo {

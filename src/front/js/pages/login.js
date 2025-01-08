@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../../styles/register.css";
+import OMNIAlogo from "../../img/LogoOM.png"
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -17,12 +18,12 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    fetch(process.env.BACKEND_URL+"/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: formData.email, password: formData.password }),
-      })
+
+    fetch(process.env.BACKEND_URL + "/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: formData.email, password: formData.password }),
+    })
 
       .then((response) => {
         if (!response.ok) {
@@ -83,9 +84,9 @@ const Login = () => {
               <button type="submit" className="formulario-boton">Iniciar sesión</button>
             </div>
           </form>
-        <div>
-
-        </div>
+          <div className="text-center mb-4 mt-5">
+            <img src={OMNIAlogo}/>
+          </div>
         </div>
       </div>
     </div>
