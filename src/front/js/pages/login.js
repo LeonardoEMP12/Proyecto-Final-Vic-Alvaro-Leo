@@ -38,9 +38,9 @@ const Login = () => {
           alert(data.error || "Hubo un problema con el inicio de sesión");
         } else {
           alert("Inicio de sesión exitoso");
-          console.log("Datos del usuario:", data.user.name);
           actions.setName(data.user.name);
           actions.setId(data.user.id);
+          actions.setToken(data.token);
         }
       })
       .catch((error) => {
