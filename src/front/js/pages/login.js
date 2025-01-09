@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "../../styles/register.css";
 import OMNIAlogo from "../../img/LogoOM.png";
+// import { useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 const Login = () => {
+  const { actions } = useContext(Context);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -35,7 +38,9 @@ const Login = () => {
           alert(data.error || "Hubo un problema con el inicio de sesión");
         } else {
           alert("Inicio de sesión exitoso");
-          console.log("Datos del usuario:", data);
+          console.log("Datos del usuario:", data.user.name);
+          actions.setName(data.user.name);
+          actions.setId(data.user.id);
         }
       })
       .catch((error) => {

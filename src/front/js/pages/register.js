@@ -52,8 +52,7 @@ const navigate = useNavigate();
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log(data.message.id);
-        if (data.message) {
+          if (data.message) {
           actions.setId(data.message.id);
           navigate("/selectfavgenre");
         } else {
@@ -71,7 +70,10 @@ const navigate = useNavigate();
     <div className="container min-vh-100 d-flex align-items-center justify-content-center">
     <div className="row w-100">
       <div className="col-12 col-md-6 formulario-contenedor d-flex justify-content-center align-items-center">
+         
+      
         <div>
+        <img src={OMNIAlogo} className="img-fluid w-75 mx-auto d-block mt-5 mb-5 d-block d-sm-block d-md-none" alt="Logo OMNIA"/>
           <h1 className="text-center mb-4 formulario-titulo">Formulario de Registro</h1>
           <form autoComplete="off" onSubmit={handleSubmit}>
             <div className="mb-4">
@@ -136,8 +138,7 @@ const navigate = useNavigate();
           </form>
         </div>
       </div>
-
-      <div className="col-12 col-md-6 d-flex justify-content-center align-items-center mt-5">
+      <div className="col-12 col-md-6 d-flex justify-content-center align-items-center mt-5 d-none d-md-flex">
         <img src={OMNIAlogo} className="img-fluid w-75" alt="Logo OMNIA" />
       </div>
     </div>
