@@ -28,6 +28,16 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+			setToken : (userToken) => {
+				console.log(userToken);
+                setStore({"userToken":(userToken)});
+                if (userToken) {
+                    localStorage.setItem("userToken", userToken);
+                } else {
+                    localStorage.removeItem("userToken");
+                }
+            },
+
 			setName : (userName) => {
 				console.log(userName);
                 setStore({"userName":(userName)});
