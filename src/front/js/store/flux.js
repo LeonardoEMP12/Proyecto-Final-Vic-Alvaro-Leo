@@ -27,6 +27,17 @@ const getState = ({ getStore, getActions, setStore }) => {
                     localStorage.removeItem("userId");
                 }
             },
+
+			setName : (userName) => {
+				console.log(userName);
+                setStore({"userName":(userName)});
+                if (userName) {
+                    localStorage.setItem("userName", userName);
+                } else {
+                    localStorage.removeItem("userName");
+                }
+			},
+			
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
