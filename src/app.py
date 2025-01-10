@@ -10,7 +10,12 @@ from api.models import db
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
-from flask_jwt_extended import JWTManager
+from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
+from flask_mail import Mail, Message
+from api.models import db, User
+from flask_cors import CORS
+
+
 
 
 # from models import Person
@@ -19,7 +24,16 @@ ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
+CORS(app)
 app.url_map.strict_slashes = False
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_USERNAME'] = 'omniasiteofgamers@gmail.com'
+app.config['MAIL_PASSWORD'] = 'gkvs qcba rkrz wmjw'
+mail = Mail(app)
+
 
 # Se crea una clave
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Esta es la clave para desencriptar el token cambiarla siempre
@@ -76,3 +90,4 @@ def serve_any_other_file(path):
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)
+
