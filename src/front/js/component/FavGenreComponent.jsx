@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from "../store/appContext";
-import ButtonComponent from './Buttoncomponent.jsx';
 import { Link } from 'react-router-dom';
 
 const FavGenreComponent = () => {
