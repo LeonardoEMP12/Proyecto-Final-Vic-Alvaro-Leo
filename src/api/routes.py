@@ -121,6 +121,7 @@ def register_genres():
 
     return jsonify({"message": "Se ha añadido a favoritos"}), 200
 
+
 #Endpoint eliminar categoria de favoritas
 @api.route('/remove-genres', methods=['DELETE'])
 def remove_genres():
@@ -141,15 +142,21 @@ def remove_genres():
 
     return jsonify({"message": "Se ha eliminado de favoritos"}), 200
 
-# Endpoint de resteo de password
+
+# Endpoint de envio de correo de reset de password
 @api.route('/forgot-password', methods=['POST'])
 def forgot_password():
-    email = request.json.get('email')
-    user = User.query.filter_by(email = email).first()
-    if not user:
-        return jsonify({"message":"Correo no existente"}), 404
-    token=create_access_token(identity = user.id)
-    template_html = f"""
+
+    email = request.json.get('email') # Recogemos el email del usuario
+    user = User.query.filter_by(email = email).first() # Buscamos el usuario con ese email
+
+    if not user: # Validamos si existe ese usuario o no
+        return jsonify({"message":"Correo no existente"}), 404 
+    
+    token=create_access_token(identity = user.email) # Si existe creamos el token
+
+    #Creamos un template de como será el correo enviado
+    template_html = f""" 
     <html>
         <body>
             <h1>Resetea tu contraseña</h1>
@@ -158,11 +165,36 @@ def forgot_password():
         </body>
     </html>
     """
+
+    # Establecemos el asunto, quien lo envia, destinatario y el cuerpo del correo
     msg=Message(
         "Peticion de reseteo de contraseña",
         sender="noreply@exapmle.com",
         recipients=[user.email],
         html=template_html
     )
-    mail.send(msg)
-    return jsonify({"msg":"Email de reseteo enviado"}), 200
+
+    mail.send(msg) # Mandamos el correo de reset de password
+    return jsonify({"msg":"Email de reseteo enviado",
+                    "token": token}), 200
+
+
+# Endpoint de cambio de contraseña
+@api.route('/reset-password', methods=['POST'])
+@jwt_required()
+def reset_password():
+    user_mail = get_jwt_identity() # Recogemos el token del usuario que ha solicitado el cambio de contraseña
+    password = request.json.get('password') # Recogemos la nueva contraseña 
+    user = User.query.filter_by(email=user_mail).first() # Encontramos al usuario mediante el token
+
+    # Comprobamos si existe el usuario
+    if not user:
+        return jsonify({"message":"No se encuentra el usuario"}), 404
+
+    # Si existe hacemos la peticion de que se actualice el campo password de ese usuario con la nueva contraseña
+    user.password = bcrypt.generate_password_hash(password).decode('utf-8')
+    db.session.commit()
+
+    return jsonify({"message":"La contraseña ha sido actualizada"}), 200
+
+
