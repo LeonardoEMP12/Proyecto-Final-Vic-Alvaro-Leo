@@ -6,6 +6,7 @@ import { Context } from "../store/appContext";
 
 const Login = () => {
   const { actions } = useContext(Context);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -96,5 +97,3 @@ const Login = () => {
     </div>
   );
 };
-
-export default Login;

@@ -4,8 +4,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap');
 
 body {
-  background: #000000;
-  font-family: "Rowdies", serif;
-  font-weight: 400;
-  font-style: normal;
+    background-color: #000030;
+    color: #333;
+    font-family: "Raleway", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+  }
+
+.text-white {
+    color: #FAFAFA
+  }
+
+.btn-green {
+    background-color: #6CE690;
+    border-color: #6CE690;
+}
+
+.btn-green:hover {
+    border-color:rgb(88, 186, 89);
+}
+
+.btn-white {
+  background-color: #FAFAFA;
+  border-color: #F0F0F0;
+}
+
+.btn-white:hover {
+  border-color:rgb(220, 220, 220);
 }
