@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import "../../styles/register.css";
 import OMNIAlogo from "../../img/LogoOM.png";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 const Login = () => {
@@ -97,3 +97,5 @@ const Login = () => {
     </div>
   );
 };
+
+export default Login;
