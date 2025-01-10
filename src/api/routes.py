@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from datetime import datetime
-from api.models import db, User, Profile, Genres, FavoritesGenres
+from api.models import db, User, Profile, Genres, FavoritesGenres, Platforms, Tags, Developers, Videogames
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt 
@@ -144,36 +144,6 @@ def remove_genres():
     return jsonify({"message": "Se ha eliminado de favoritos"}), 200
 
 #-------------------------------ENDPOINTS PROFILES-------------------------------#
-
-#Get de todos los perfiles
-@api.route('/profiles', methods=['GET'])
-def get_all_profiles():
-    try:
-        # Realizamos una consulta que incluye la relación con la tabla User
-        profiles = db.session.query(Profile, User).join(User, User.id == Profile.user_id).all()
-
-        # Serializamos los resultados para incluir los datos del usuario y el perfil
-        profiles_serialized = [
-            {
-                "profile_id": profile[0].id,
-                "username": profile[0].username,
-                "description": profile[0].description,
-                "birth_date": profile[0].birth_date,
-                "user": {
-                    "id": profile[1].id,
-                    "name": profile[1].name,
-                    "email": profile[1].email,
-                    "creation_date": profile[1].creation_date
-                }
-            }
-            for profile in profiles
-        ]
-        return jsonify(profiles_serialized), 200
-    except Exception as e:
-        return jsonify({"message": "Error al obtener los perfiles", "error": str(e)}), 500
-
-
-
 #Get de perfil por ID
 @api.route('/profiles/<int:profile_id>', methods=['GET'])
 def get_profile_by_id(profile_id):
@@ -282,21 +252,23 @@ def get_all_profiles():
         profiles = db.session.query(Profile, User).join(User, User.id == Profile.user_id).all()
 
         # Serializamos los resultados para incluir los datos del usuario y el perfil
-        profiles_serialized = [
-            {
-                "profile_id": profile[0].id,
-                "username": profile[0].username,
-                "description": profile[0].description,
-                "birth_date": profile[0].birth_date,
-                "user": {
-                    "id": profile[1].id,
-                    "name": profile[1].name,
-                    "email": profile[1].email,
-                    "creation_date": profile[1].creation_date
+        for profile in profiles:
+            profiles_serialized = [
+                
+                {
+                    "profile_id": profile[0].id,
+                    "username": profile[0].username,
+                    "description": profile[0].description,
+                    "birth_date": profile[0].birth_date,
+                    "user": {
+                        "id": profile[1].id,
+                        "name": profile[1].name,
+                        "email": profile[1].email,
+                        "creation_date": profile[1].creation_date
+                    }
                 }
-            }
-            for profile in profiles
-        ]
+                
+            ]
         return jsonify(profiles_serialized), 200
     except Exception as e:
         return jsonify({"message": "Error al obtener los perfiles", "error": str(e)}), 500
@@ -314,18 +286,22 @@ def get_profile_by_id(profile_id):
             return jsonify({"message": "Perfil no encontrado"}), 404
 
         # Serializamos los resultados para incluir los datos del usuario y el perfil
-        profile_serialized = {
-            "profile_id": profile[0].id,
-            "username": profile[0].username,
-            "description": profile[0].description,
-            "birth_date": profile[0].birth_date,
-            "user": {
-                "id": profile[1].id,
-                "name": profile[1].name,
-                "email": profile[1].email,
-                "creation_date": profile[1].creation_date
+        profile_serialized = [
+        
+            {
+                "profile_id": profile[0].id,
+                "username": profile[0].username,
+                "description": profile[0].description,
+                "birth_date": profile[0].birth_date,
+                "user": {
+                    "id": profile[1].id,
+                    "name": profile[1].name,
+                    "email": profile[1].email,
+                    "creation_date": profile[1].creation_date
+                }
             }
-        }
+            
+        ]
         return jsonify(profile_serialized), 200
     except Exception as e:
         return jsonify({"message": "Error al obtener el perfil", "error": str(e)}), 500
@@ -455,3 +431,50 @@ def reset_password():
 
     return jsonify({"message":"La contraseña ha sido actualizada"}), 200
 
+
+# Endpoint Get platforms
+@api.route('/platforms', methods=['GET'])
+def get_platforms():
+
+    # Creamos las variables para los personajes de la tabla Personajes
+    platforms=Platforms.query.all()
+    all_platforms = [platforms.serialize() for platforms in platforms]
+
+    # Retornamos todos los personajes de la tabla Personajes
+    return jsonify(all_platforms), 200
+
+
+# Endpoint Get get_tags
+@api.route('/tags', methods=['GET'])
+def get_tags():
+
+    # Creamos las variables para los personajes de la tabla Personajes
+    tags=Tags.query.all()
+    all_tags = [tags.serialize() for tags in tags]
+
+    # Retornamos todos los personajes de la tabla Personajes
+    return jsonify(all_tags), 200
+
+
+# Endpoint Get developers
+@api.route('/developers', methods=['GET'])
+def get_developers():
+
+    # Creamos las variables para los personajes de la tabla Personajes
+    developers=Developers.query.all()
+    all_developers = [developers.serialize() for developers in developers]
+
+    # Retornamos todos los personajes de la tabla Personajes
+    return jsonify(all_developers), 200
+
+
+# Endpoint Get videogame
+@api.route('/videogame', methods=['GET'])
+def get_videogame():
+
+    # Creamos las variables para los personajes de la tabla Personajes
+    videogame=Videogames.query.all()
+    all_videogame = [videogame.serialize() for videogame in videogame]
+
+    # Retornamos todos los personajes de la tabla Personajes
+    return jsonify(all_videogame), 200
