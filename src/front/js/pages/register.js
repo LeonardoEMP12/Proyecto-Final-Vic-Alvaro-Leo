@@ -6,10 +6,12 @@ import { Context } from "../store/appContext";
 
 
 
+
 const Register = () => {
 
 const { actions } = useContext(Context);
 const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -142,6 +144,8 @@ const navigate = useNavigate();
         <img src={OMNIAlogo} className="img-fluid w-75" alt="Logo OMNIA" />
       </div>
     </div>
+
+
   </div>
 );
 };

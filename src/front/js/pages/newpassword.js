@@ -33,17 +33,16 @@ const NewPassword = () => {
       return;
     }
 
-
+  const token =new URLSearchParams(location.search).get("token");
     fetch(process.env.BACKEND_URL + "/api/reset-password", {
       method: "POST",
       headers: {
+        'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczNjUzMjY4NiwianRpIjoiMzIxNDE3NjUtZmFmNC00ZWM2LTk5NzktNmEwYmY5OWU1ZDRmIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Imxlb0BnbWFpbC5jb20iLCJuYmYiOjE3MzY1MzI2ODYsImNzcmYiOiJjYTk2OTczZi02YTMxLTRkMmQtOTA5Yy1iMDRiNGRhNTZiNDQiLCJleHAiOjE3MzY1MzM1ODZ9.Sg8MD8WcxnmvFFQOyOUPE7NKr1FuAVougVHHp9TPuf4',
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         password: formData.password,
         confirm_password: formData.confirm_password,
-        userId: userId, // Si necesitas asociarlo al usuario
-        token: token // Si usas un token para validar
       }),
     })
       .then((response) => response.json())
