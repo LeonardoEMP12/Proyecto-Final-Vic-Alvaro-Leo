@@ -37,7 +37,7 @@ const NewPassword = () => {
     fetch(process.env.BACKEND_URL + "/api/reset-password", {
       method: "POST",
       headers: {
-        'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczNjUzMjY4NiwianRpIjoiMzIxNDE3NjUtZmFmNC00ZWM2LTk5NzktNmEwYmY5OWU1ZDRmIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Imxlb0BnbWFpbC5jb20iLCJuYmYiOjE3MzY1MzI2ODYsImNzcmYiOiJjYTk2OTczZi02YTMxLTRkMmQtOTA5Yy1iMDRiNGRhNTZiNDQiLCJleHAiOjE3MzY1MzM1ODZ9.Sg8MD8WcxnmvFFQOyOUPE7NKr1FuAVougVHHp9TPuf4',
+        'Authorization' : `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -49,7 +49,7 @@ const NewPassword = () => {
       .then((data) => {
         if (data.message) {
           actions.setId(data.message.id);
-          navigate("/selectfavgenre");
+          navigate("/login");
         } else {
           alert(data.error || "Hubo un problema con el registro");
         }
