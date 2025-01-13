@@ -83,7 +83,7 @@ const Login = () => {
                 required
               />
             </div>
-{/* Boton inicio de sesion */}
+            {/* Boton inicio de sesion */}
             <div className="d-grid">
               <button type="submit" className="formulario-boton">Iniciar sesión</button>
             </div>
@@ -91,7 +91,7 @@ const Login = () => {
               <Link to="/email" id="enlace-login">He olvidado mi contraseña</Link>
             </div>
           </form>
-          
+
           <div className="text-center mt-5">
             <img src={OMNIAlogo} alt="OMNIA Logo" className="img-fluid" />
           </div>
