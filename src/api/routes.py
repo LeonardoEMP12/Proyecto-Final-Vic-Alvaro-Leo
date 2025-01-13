@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from datetime import datetime
-from api.models import db, User, Profile, Genres, FavoritesGenres, Platforms, Tags, Developers, Videogames
+from api.models import db, User, Profile, Genres, FavoritesGenres, Platforms, Tags, Developers, Videogames, Post, Comments
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt 
@@ -312,3 +312,12 @@ def get_videogame():
 
     # Retornamos todos los videogame de la tabla Videogames
     return jsonify(all_videogame), 200
+
+# -------------------------------ENDPOINTS PUBLICACIONES------------------------------- #
+
+# GET
+@api.route('/posts', methods=['GET'])
+def get_aal_posts():
+    posts = Post.query.all()
+
+    all_post = []
