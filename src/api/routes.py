@@ -317,7 +317,22 @@ def get_videogame():
 
 # GET
 @api.route('/posts', methods=['GET'])
-def get_aal_posts():
+def get_all_posts():
     posts = Post.query.all()
 
     all_post = []
+
+    for post in posts:
+        user = User.query.get(post.user_id)
+        comment = Comments.query.get(post.comment_id)
+
+
+        post_data = post.serialize()
+
+        post_data["user"] = user.serialize() if user else None
+        post_data["text"] = comment.serialize() if comment else None
+
+
+        all_post.append(post_data)
+
+    return jsonify({"messge":all_post})
