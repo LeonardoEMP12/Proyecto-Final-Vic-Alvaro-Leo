@@ -12,6 +12,7 @@ import { Footer } from "./component/footer";
 import Register from "./pages/register";
 import Login from "./pages/login";
 import NewPassword from "./pages/newpassword";
+import Email from "./pages/email";
 
 //create your first component
 const Layout = () => {
@@ -30,6 +31,7 @@ const Layout = () => {
                         <Route element={<Register />} path="/register" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<NewPassword />} path="/newpassword"  />
+                        <Route element={<Email />} path="/email"  />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<LandingPage />} path="/" />
                         <Route element={<SelectFavGenre />} path="/selectfavgenre" />
