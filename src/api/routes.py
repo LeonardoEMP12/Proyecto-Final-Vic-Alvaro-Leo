@@ -91,11 +91,11 @@ def handle_login():
 @api.route('/genres', methods=['GET'])
 def get_genres():
 
-    # Creamos las variables para los personajes de la tabla Personajes
+    # Creamos las variables para los generos de la tabla Genres
     genre=Genres.query.all()
     all_genres = [genres.serialize() for genres in genre]
 
-    # Retornamos todos los personajes de la tabla Personajes
+    # Retornamos todos los generos de la tabla Genres
     return jsonify(all_genres), 200
 
 
@@ -436,11 +436,11 @@ def reset_password():
 @api.route('/platforms', methods=['GET'])
 def get_platforms():
 
-    # Creamos las variables para los personajes de la tabla Personajes
+    # Creamos las variables para los platforms de la tabla Platforms
     platforms=Platforms.query.all()
     all_platforms = [platforms.serialize() for platforms in platforms]
 
-    # Retornamos todos los personajes de la tabla Personajes
+    # Retornamos todos los platforms de la tabla Platforms
     return jsonify(all_platforms), 200
 
 
@@ -448,11 +448,11 @@ def get_platforms():
 @api.route('/tags', methods=['GET'])
 def get_tags():
 
-    # Creamos las variables para los personajes de la tabla Personajes
+    # Creamos las variables para los tags de la tabla Tags
     tags=Tags.query.all()
     all_tags = [tags.serialize() for tags in tags]
 
-    # Retornamos todos los personajes de la tabla Personajes
+    # Retornamos todos los tags de la tabla Tags
     return jsonify(all_tags), 200
 
 
@@ -460,11 +460,11 @@ def get_tags():
 @api.route('/developers', methods=['GET'])
 def get_developers():
 
-    # Creamos las variables para los personajes de la tabla Personajes
+    # Creamos las variables para los developers de la tabla Developers
     developers=Developers.query.all()
     all_developers = [developers.serialize() for developers in developers]
 
-    # Retornamos todos los personajes de la tabla Personajes
+    # Retornamos todos los developers de la tabla Developers
     return jsonify(all_developers), 200
 
 
@@ -472,9 +472,9 @@ def get_developers():
 @api.route('/videogame', methods=['GET'])
 def get_videogame():
 
-    # Creamos las variables para los personajes de la tabla Personajes
+    # Creamos las variables para los videogame de la tabla Videogames
     videogame=Videogames.query.all()
     all_videogame = [videogame.serialize() for videogame in videogame]
 
-    # Retornamos todos los personajes de la tabla Personajes
+    # Retornamos todos los videogame de la tabla Videogames
     return jsonify(all_videogame), 200
