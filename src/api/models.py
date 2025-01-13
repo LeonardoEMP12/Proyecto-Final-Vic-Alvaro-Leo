@@ -176,35 +176,15 @@ class FavoritesGenres(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             "genre_id": self.videogame_id,
-        }  
-    
-
-class Comments(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.String(500), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
-    user = db.relationship('User')
-
-
-    def __repr__(self):
-        return f'<Comment {self.text}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "text": self.text,
-            "user_id": self.user_id,
-        }  
+        }   
 
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(500), nullable=False)
-    like = db.Column(db.Integer, nullable=False)
+    like = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
-    comment_id = db.Column(db.Integer, db.ForeignKey(Comments.id), nullable=False)
     user = db.relationship('User')
-    comment = db.relationship('Comments')
 
 
     def __repr__(self):
@@ -218,3 +198,24 @@ class Post(db.Model):
             "user_id": self.user_id,
             "comment_id": self.comment_id,
         }
+    
+
+class Comments(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(500), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
+    user = db.relationship('User')
+    post_id = db.Column(db.Integer, db.ForeignKey(Post.id))
+    
+
+
+
+    def __repr__(self):
+        return f'<Comment {self.text}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "text": self.text,
+            "user_id": self.user_id,
+        } 
