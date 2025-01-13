@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import "../../styles/register.css";
 import OMNIAlogo from "../../img/LogoOM.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 const Login = () => {
@@ -86,6 +86,9 @@ const Login = () => {
 {/* Boton inicio de sesion */}
             <div className="d-grid">
               <button type="submit" className="formulario-boton">Iniciar sesión</button>
+            </div>
+            <div className="mt-4">
+              <Link to="/email" id="enlace-login">He olvidado mi contraseña</Link>
             </div>
           </form>
           
