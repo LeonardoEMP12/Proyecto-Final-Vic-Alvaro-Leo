@@ -13,6 +13,7 @@ import Register from "./pages/register";
 import Login from "./pages/login";
 import NewPassword from "./pages/newpassword";
 import Email from "./pages/email";
+import Generos from "./pages/generos";
 
 //create your first component
 const Layout = () => {
@@ -29,6 +30,7 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Register />} path="/register" />
+                        <Route element={<Generos />} path="/generos" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<NewPassword />} path="/newpassword"  />
                         <Route element={<Email />} path="/email"  />
