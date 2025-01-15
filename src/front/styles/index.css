@@ -1,7 +1,7 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap');
 
 body {
     background-color: #000030;
@@ -15,20 +15,12 @@ body {
     color: #FAFAFA
   }
 
-.btn-green {
-    background-color: #6CE690;
-    border-color: #6CE690;
-}
-
-.btn-green:hover {
-    border-color:rgb(88, 186, 89);
+.btn-yellow {
+    background-color: #ffd200;
+    border-color: #dfd200;
 }
 
 .btn-white {
   background-color: #FAFAFA;
   border-color: #F0F0F0;
-}
-
-.btn-white:hover {
-  border-color:rgb(220, 220, 220);
 }

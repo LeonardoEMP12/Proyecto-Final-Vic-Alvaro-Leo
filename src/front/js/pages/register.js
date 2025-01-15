@@ -1,14 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "../../styles/register.css";
+import OMNIAlogo from "../../img/LogoOM.png"
+import { useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 
-export const Register = () => {
-  
+
+
+
+const Register = () => {
+
+const { actions } = useContext(Context);
+const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     confirm_password: "",
-	creation_date:new Date()
+    creation_date: new Date()
   });
 
   const handleChange = (e) => {
@@ -19,17 +28,17 @@ export const Register = () => {
     });
   };
 
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    
+
     if (formData.password !== formData.confirm_password) {
       alert("Las contraseñas no coinciden");
       return;
     }
 
-    
+
     fetch(process.env.BACKEND_URL + "/api/signup", {
       method: "POST",
       headers: {
@@ -39,39 +48,44 @@ export const Register = () => {
         name: formData.name,
         email: formData.email,
         password: formData.password,
-		confirm_password: formData.confirm_password,
-		creation_date: formData.creation_date
+        confirm_password: formData.confirm_password,
+        creation_date: formData.creation_date
       }),
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.message) {
-          alert("Registro exitoso");
-        } else {			
+          if (data.message) {
+          actions.setId(data.message.id);
+          navigate("/selectfavgenre");
+        } else {
           alert(data.error || "Hubo un problema con el registro");
         }
       })
       .catch((error) => {
-		console.log("catch");
+        console.log("catch");
         alert("Hubo un problema con el registro");
         console.error(error);
       });
   };
 
   return (
-    <div className="container min-vh-100 d-flex align-items-center">
-      <div className="row w-100">
-        <div className="col-md-6 formulario-contenedor">
+    <div className="container min-vh-100 d-flex align-items-center justify-content-center">
+    <div className="row w-100">
+      <div className="col-12 col-md-6 formulario-contenedor d-flex justify-content-center align-items-center">
+         
+      
+        <div>
+        <img src={OMNIAlogo} className="img-fluid w-75 mx-auto d-block mt-5 mb-5 d-block d-sm-block d-md-none" alt="Logo OMNIA"/>
           <h1 className="text-center mb-4 formulario-titulo">Formulario de Registro</h1>
-          <form onSubmit={handleSubmit}>
+          <form autoComplete="off" onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label htmlFor="nombre" className="formulario-label">Nombre</label>
+              <label htmlFor="name" className="formulario-label">Nombre</label>
               <input
                 type="text"
                 className="formulario-input"
                 id="name"
                 name="name"
-                value={formData.nombre}
+                value={formData.name}
                 onChange={handleChange}
                 placeholder="Ingresa tu nombre"
                 required
@@ -125,11 +139,15 @@ export const Register = () => {
             </div>
           </form>
         </div>
-
-        <div className="col-md-6 d-none d-md-flex justify-content-center align-items-center">
-          <h1>Imagen logo</h1>
-        </div>
+      </div>
+      <div className="col-12 col-md-6 d-flex justify-content-center align-items-center mt-5 d-none d-md-flex">
+        <img src={OMNIAlogo} className="img-fluid w-75" alt="Logo OMNIA" />
       </div>
     </div>
-  );
+
+
+  </div>
+);
 };
+
+export default Register;

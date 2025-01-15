@@ -1,29 +1,33 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "../../styles/register.css";
+import OMNIAlogo from "../../img/LogoOM.png";
+import { Link, useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 
-export const Login = () => {
+const Login = () => {
+  const { actions } = useContext(Context);
+
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    fetch(process.env.BACKEND_URL+"/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: formData.email, password: formData.password }),
-      })
 
+    fetch(process.env.BACKEND_URL + "/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: formData.email, password: formData.password }),
+    })
       .then((response) => {
         if (!response.ok) {
           throw new Error("Error al comunicarse con el servidor");
@@ -35,8 +39,9 @@ export const Login = () => {
           alert(data.error || "Hubo un problema con el inicio de sesión");
         } else {
           alert("Inicio de sesión exitoso");
-          // Aquí puedes manejar la redirección o almacenamiento de tokens
-          console.log("Datos del usuario:", data);
+          actions.setName(data.user.name);
+          actions.setId(data.user.id);
+          actions.setToken(data.token);
         }
       })
       .catch((error) => {
@@ -46,9 +51,9 @@ export const Login = () => {
   };
 
   return (
-    <div className="container d-flex align-items-center">
-      <div className="row">
-        <div className="col-12 formulario-contenedor">
+    <div className="container d-flex justify-content-center align-items-center vh-100">
+      <div className="row w-100">
+        <div className="col-12 col-md-8 col-lg-6 formulario-contenedor mx-auto mt-5">
           <h1 className="text-center mb-4 formulario-titulo">Login</h1>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
@@ -78,13 +83,22 @@ export const Login = () => {
                 required
               />
             </div>
-
+            {/* Boton inicio de sesion */}
             <div className="d-grid">
               <button type="submit" className="formulario-boton">Iniciar sesión</button>
             </div>
+            <div className="mt-4">
+              <Link to="/email" id="enlace-login">He olvidado mi contraseña</Link>
+            </div>
           </form>
+
+          <div className="text-center mt-5">
+            <img src={OMNIAlogo} alt="OMNIA Logo" className="img-fluid" />
+          </div>
         </div>
       </div>
     </div>
   );
 };
+
+export default Login;

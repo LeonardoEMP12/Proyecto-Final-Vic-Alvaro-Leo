@@ -3,15 +3,19 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from datetime import datetime
-from api.models import db, User, Profile, Genres, FavoritesGenres
+from api.models import db, User, Profile, Genres, FavoritesGenres, Platforms, Tags, Developers, Videogames, Post, Comments
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt 
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+from datetime import timedelta
+from flask_mail import Mail, Message
 
 
 api = Blueprint('api', __name__)
 bcrypt = Bcrypt() 
+mail = Mail()
+
 
 # Allow CORS requests to this API
 CORS(api)
@@ -87,11 +91,11 @@ def handle_login():
 @api.route('/genres', methods=['GET'])
 def get_genres():
 
-    # Creamos las variables para los personajes de la tabla Personajes
+    # Creamos las variables para los generos de la tabla Genres
     genre=Genres.query.all()
     all_genres = [genres.serialize() for genres in genre]
 
-    # Retornamos todos los personajes de la tabla Personajes
+    # Retornamos todos los generos de la tabla Genres
     return jsonify(all_genres), 200
 
 
@@ -118,6 +122,7 @@ def register_genres():
 
     return jsonify({"message": "Se ha añadido a favoritos"}), 200
 
+
 #Endpoint eliminar categoria de favoritas
 @api.route('/remove-genres', methods=['DELETE'])
 def remove_genres():
@@ -137,133 +142,339 @@ def remove_genres():
     db.session.commit()  # Actualizamos la base de datos
 
     return jsonify({"message": "Se ha eliminado de favoritos"}), 200
+# -------------------------------ENDPOINTS PERFIL------------------------------- #
 
-#-------------------------------ENDPOINTS PROFILES-------------------------------#
+# Endpoint para actualizar el username del perfil
+@api.route('/profile/<int:profile_id>/username', methods=['PUT'])
+def update_username(profile_id):
+    data = request.json
+    profile = Profile.query.get(profile_id)
 
-#Get de todos los perfiles
-@api.route('/profiles', methods=['GET'])
-def get_all_profiles():
+    if not profile:
+        return jsonify({"error": "Perfil no encontrado"}), 404
+
+    if 'username' not in data:
+        return jsonify({"error": "El campo 'username' es obligatorio"}), 400
+
+    profile.username = data['username']
+
     try:
-        # Realizamos una consulta que incluye la relación con la tabla User
-        profiles = db.session.query(Profile, User).join(User, User.id == Profile.user_id).all()
-
-        # Serializamos los resultados para incluir los datos del usuario y el perfil
-        profiles_serialized = [
-            {
-                "profile_id": profile[0].id,
-                "username": profile[0].username,
-                "description": profile[0].description,
-                "birth_date": profile[0].birth_date,
-                "user": {
-                    "id": profile[1].id,
-                    "name": profile[1].name,
-                    "email": profile[1].email,
-                    "creation_date": profile[1].creation_date
-                }
-            }
-            for profile in profiles
-        ]
-        return jsonify(profiles_serialized), 200
+        db.session.commit()
+        return jsonify(profile.serialize()), 200
     except Exception as e:
-        return jsonify({"message": "Error al obtener los perfiles", "error": str(e)}), 500
+        db.session.rollback()
+        return jsonify({"error": "Error al actualizar el username", "details": str(e)}), 500
 
 
+# Endpoint para actualizar la description del perfil
+@api.route('/profile/<int:profile_id>/description', methods=['PUT'])
+def update_description(profile_id):
+    data = request.json
+    profile = Profile.query.get(profile_id)
 
-#Get de perfil por ID
-@api.route('/profiles/<int:profile_id>', methods=['GET'])
-def get_profile_by_id(profile_id):
+    if not profile:
+        return jsonify({"error": "Perfil no encontrado"}), 404
+
+    if 'description' not in data:
+        return jsonify({"error": "El campo 'description' es obligatorio"}), 400
+
+    profile.description = data['description']
+
     try:
-        # Realizamos una consulta que incluye la relación con la tabla User
-        profile = db.session.query(Profile, User).join(User, User.id == Profile.user_id).filter(Profile.id == profile_id).first()
+        db.session.commit()
+        return jsonify(profile.serialize()), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": "Error al actualizar la descripción", "details": str(e)}), 500
 
-        if not profile:
-            return jsonify({"message": "Perfil no encontrado"}), 404
 
-        # Serializamos los resultados para incluir los datos del usuario y el perfil
-        profile_serialized = {
-            "profile_id": profile[0].id,
-            "username": profile[0].username,
-            "description": profile[0].description,
-            "birth_date": profile[0].birth_date,
-            "user": {
-                "id": profile[1].id,
-                "name": profile[1].name,
-                "email": profile[1].email,
-                "creation_date": profile[1].creation_date
-            }
+# Endpoint para actualizar el birth_date del perfil
+@api.route('/profile/<int:profile_id>/birth_date', methods=['PUT'])
+def update_birth_date(profile_id):
+    data = request.json
+    profile = Profile.query.get(profile_id)
+
+    if not profile:
+        return jsonify({"error": "Perfil no encontrado"}), 404
+
+    if 'birth_date' not in data:
+        return jsonify({"error": "El campo 'birth_date' es obligatorio"}), 400
+
+    profile.birth_date = data['birth_date']  # Almacena directamente como string
+
+    try:
+        db.session.commit()
+        return jsonify(profile.serialize()), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": "Error al actualizar la fecha de nacimiento", "details": str(e)}), 500
+
+
+
+# Endpoint de envio de correo de reset de password
+@api.route('/forgot-password', methods=['POST'])
+def forgot_password():
+
+    email = request.json.get('email') # Recogemos el email del usuario
+    user = User.query.filter_by(email = email).first() # Buscamos el usuario con ese email
+
+    if not user: # Validamos si existe ese usuario o no
+        return jsonify({"message":"Correo no existente"}), 404 
+    
+    token=create_access_token(identity = user.email) # Si existe creamos el token
+
+    #Creamos un template de como será el correo enviado
+    template_html = f""" 
+    <html>
+        <body>
+            <h1>Resetea tu contraseña</h1>
+            <p>Haz click en el siguente enlace para resetear tu contraseña</p>
+            <a href="https://sturdy-goldfish-7vr7w6p9w4qrcrgpj-3000.app.github.dev/newpassword?token={token}">Resetea tu contraseña</a>
+        </body>
+    </html>
+    """
+
+    # Establecemos el asunto, quien lo envia, destinatario y el cuerpo del correo
+    msg=Message(
+        "Peticion de reseteo de contraseña",
+        sender="noreply@exapmle.com",
+        recipients=[user.email],
+        html=template_html
+    )
+
+    mail.send(msg) # Mandamos el correo de reset de password
+    return jsonify({"msg":"Email de reseteo enviado",
+                    "token": token}), 200
+
+
+# Endpoint de cambio de contraseña
+@api.route('/reset-password', methods=['POST'])
+@jwt_required()
+def reset_password():
+    user_mail = get_jwt_identity() # Recogemos el token del usuario que ha solicitado el cambio de contraseña
+    password = request.json.get('password') # Recogemos la nueva contraseña 
+    user = User.query.filter_by(email=user_mail).first() # Encontramos al usuario mediante el token
+
+    # Comprobamos si existe el usuario
+    if not user:
+        return jsonify({"message":"No se encuentra el usuario"}), 404
+
+    # Si existe hacemos la peticion de que se actualice el campo password de ese usuario con la nueva contraseña
+    user.password = bcrypt.generate_password_hash(password).decode('utf-8')
+    db.session.commit()
+
+    return jsonify({"message":"La contraseña ha sido actualizada"}), 200
+
+
+# Endpoint Get platforms
+@api.route('/platforms', methods=['GET'])
+def get_platforms():
+
+    # Creamos las variables para los platforms de la tabla Platforms
+    platforms=Platforms.query.all()
+    all_platforms = [platforms.serialize() for platforms in platforms]
+
+    # Retornamos todos los platforms de la tabla Platforms
+    return jsonify(all_platforms), 200
+
+
+# Endpoint Get get_tags
+@api.route('/tags', methods=['GET'])
+def get_tags():
+
+    # Creamos las variables para los tags de la tabla Tags
+    tags=Tags.query.all()
+    all_tags = [tags.serialize() for tags in tags]
+
+    # Retornamos todos los tags de la tabla Tags
+    return jsonify(all_tags), 200
+
+
+# Endpoint Get developers
+@api.route('/developers', methods=['GET'])
+def get_developers():
+
+    # Creamos las variables para los developers de la tabla Developers
+    developers=Developers.query.all()
+    all_developers = [developers.serialize() for developers in developers]
+
+    # Retornamos todos los developers de la tabla Developers
+    return jsonify(all_developers), 200
+
+
+# Endpoint Get videogame
+@api.route('/videogame', methods=['GET'])
+def get_videogame():
+
+    # Creamos las variables para los videogame de la tabla Videogames
+    videogame=Videogames.query.all()
+    all_videogame = [videogame.serialize() for videogame in videogame]
+
+    # Retornamos todos los videogame de la tabla Videogames
+    return jsonify(all_videogame), 200
+
+# -------------------------------ENDPOINTS PUBLICACIONES------------------------------- #
+
+# Crear un post
+@api.route('/create-posts', methods=['POST'])
+def create_post():
+    # Obtenemos los datos de la solicitud (en formato JSON)
+    request_body = request.get_json()
+    text = request_body.get('text') # Recogemos el campo text del request_body
+    user_id = request_body.get('user_id') # Recogemos el campo user_id del request_body
+    like = request_body.get('like') # Recogemos el campo like del request_body
+
+    # Validamos que los datos necesarios estén presentes
+    if not text or not user_id:
+        return jsonify({"message": "Rellena todos los datos"}), 400
+
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"message": "el usuario no existe"}), 400
+
+    # Creamos un nuevo objeto Post con los datos recibidos
+    new_post = Post(text = text, like = like, user_id = user_id)
+    
+    # Guardamos el nuevo post en la base de datos
+    db.session.add(new_post)
+    db.session.commit()
+
+    # Retornamos la respuesta con los datos de la nueva publicación
+    return jsonify({"message" : "Post creado"}), 200
+
+# Crear un comentario
+@api.route('/create-comment', methods=['POST'])
+def create_comment():
+    request_body = request.get_json()
+    text = request_body.get('text') # Recogemos el campo text del request_body
+    post_id = request_body.get('post_id') # Recogemos el campo post_id del request_body
+    user_id = request_body.get('user_id') # Recogemos el campo user_id del request_body
+
+    if not text or not user_id or not post_id:
+        return jsonify({"message": "Rellena todos los datos"}), 400
+    
+    user = User.query.get(user_id) # Buscamos dentro de la tabla user si hay ya un usuario que contenga los mismos datos
+    post = Post.query.get(post_id) # Buscamos dentro de la tabla user si hay ya un usuario que contenga los mismos datos
+
+    if not user:
+        return jsonify({"message": "el usuario no existe"}), 400
+    
+    if not post:
+        return jsonify({"message": "el post no existe"}), 400
+
+    # Creamos un nuevo objeto Post con los datos recibidos
+    new_comment = Comments(text = text, post_id = post_id, user_id = user_id)
+    
+    # Guardamos el nuevo post en la base de datos
+    db.session.add(new_comment)
+    db.session.commit()
+
+    # Retornamos la respuesta con los datos de la nueva publicación
+    return jsonify({"message" : "Post creado"}), 200
+
+# Get de los post
+@api.route('/posts', methods=['GET'])
+def get_all_posts():
+
+    posts = Post.query.all() # Obtenemos todos los datos de la tabla de Post
+    all_posts = [] # Creamos un array para almacenar los datos de los posts
+
+    for post in posts:
+        post_user = User.query.get(post.user_id) # Obtenemos los datos del usuario que creó la publicación
+        comments = Comments.query.filter_by( post_id = post.id).all() # Obtener los comentarios asociados a la publicación
+
+        comments_data = [] # Serializar los datos de los comentarios
+        for comment in comments:
+            comment_user = User.query.get(comment.user_id) # Obtener el usuario que hizo el comentario
+            
+            # Agregar el comentario con los datos del usuario
+            comments_data.append({
+                "comment_text": comment.text,
+                "comment_user": comment_user.serialize() if comment_user else None
+            })
+        
+        # Serializar los datos de la publicación
+        post_data = {
+            "post_text": post.text,
+            "post_user": post_user.serialize() if post_user else None,  # Datos del usuario que hizo la publicación
+            "comments": comments_data  # Lista de comentarios con los usuarios
         }
-        return jsonify(profile_serialized), 200
-    except Exception as e:
-        return jsonify({"message": "Error al obtener el perfil", "error": str(e)}), 500
+        # Agregar la publicación con los datos completos a la lista
+        all_posts.append(post_data)
+
+    return jsonify({"message" : all_posts}), 200
 
 
+# Delete de publicaciones
+@api.route('/delete-posts/<int:post_id>', methods=['DELETE'])
+def delete_post(post_id):
+    post = Post.query.get(post_id) # Buscamos el post segun su Id
 
-#Editar nombre de usuario
-@api.route('/profiles/username', methods=['PUT'])
-def edit_username():
-    request_body = request.json  # Recogemos los datos del body
-    profile_id = request_body.get('profile_id')  # ID del perfil a actualizar
-    new_username = request_body.get('username')  # Nuevo username
+    if not post: # Si no existe devolvemos error
+        return jsonify({"message" : "post no encontrado"}), 400
+    
+    comments = Comments.query.filter_by(post_id = post_id).all() # Recorremos todos los comentarios que tiene el post y los eliminamos
+    for comment in comments:
+        db.session.delete(comment)
 
-    if not profile_id or not new_username:
-        return jsonify({"message": "Datos incompletos"}), 400
+    db.session.delete(post) # Eliminamos el post
+    db.session.commit()
 
-    # Verificamos si el nuevo username ya está en uso por otro usuario
-    existing_profile = Profile.query.filter_by(username=new_username).first()
-    if existing_profile and existing_profile.id != profile_id:
-        return jsonify({"message": "El username ya está en uso"}), 409  # Código 409: Conflicto
-
-    profile = Profile.query.get(profile_id)  # Buscamos el perfil por ID
-    if not profile:
-        return jsonify({"message": "Perfil no encontrado"}), 404
-
-    profile.username = new_username  # Actualizamos el username
-    db.session.commit()  # Guardamos los cambios
-
-    return jsonify({"message": "Username actualizado correctamente"}), 200
+    return jsonify({"message" : "Se ha borrado el post"}), 200
 
 
-#Editar descripcion
-@api.route('/profiles/description', methods=['PUT'])
-def edit_description():
-    request_body = request.json  # Recogemos los datos del body
-    profile_id = request_body.get('profile_id')  # ID del perfil a actualizar
-    new_description = request_body.get('description')  # Nueva descripción
+# Delete de comentarios
+@api.route('/delete-comment/<int:comment_id>', methods=['DELETE'])
+def delete_comment(comment_id): 
+    comment = Comments.query.get(comment_id) # Buscamos el comentario segun su Id
 
-    if not profile_id or not new_description:
-        return jsonify({"message": "Datos incompletos"}), 400
+    if not comment: # Si no existe devolvemos error
+        return jsonify({"message" : "comentario no encontrado"}), 400
 
-    profile = Profile.query.get(profile_id)  # Buscamos el perfil por ID
-    if not profile:
-        return jsonify({"message": "Perfil no encontrado"}), 404
+    db.session.delete(comment) # Eliminamos el comentario
+    db.session.commit()
 
-    profile.description = new_description  # Actualizamos la descripción
-    db.session.commit()  # Guardamos los cambios
-
-    return jsonify({"message": "Descripción actualizada correctamente"}), 200
+    return jsonify({"message" : "Se ha borrado el comentario"}), 200
 
 
-#Editar fecha de nacimiento
-@api.route('/profiles/birth_date', methods=['PUT'])
-def edit_birth_date():
-    request_body = request.json  # Recogemos los datos del body
-    profile_id = request_body.get('profile_id')  # ID del perfil a actualizar
-    new_birth_date = request_body.get('birth_date')  # Nueva fecha de nacimiento
+# Editar post
+@api.route('/update-post/<int:post_id>', methods=['POST'])
+def update_post(post_id):
+    request_body = request.get_json()
+    text = request_body.get('text') # Recogemos el campo text del request_body
+    like = request_body.get('like') # Recogemos el campo like del request_body
+    
+    post = Post.query.get(post_id) # Buscamos el post segun su Id
 
-    if not profile_id or not new_birth_date:
-        return jsonify({"message": "Datos incompletos"}), 400
+    if not post: # Si no existe devolvemos error
+        return jsonify({"message" : "post no encontrado"}), 400
 
-    try:
-        parsed_birth_date = datetime.strptime(new_birth_date, '%Y-%m-%d').date()  # Convertimos a formato de fecha
-    except ValueError:
-        return jsonify({"message": "Formato de fecha inválido. Usa 'YYYY-MM-DD'"}), 400
+    if text: # Si el body trae un texto reemplazamos el original
+        post.text = text
 
-    profile = Profile.query.get(profile_id)  # Buscamos el perfil por ID
-    if not profile:
-        return jsonify({"message": "Perfil no encontrado"}), 404
+    if like: # Si el body trae un numero de likes reemplazamos el original
+        post.like = like
 
-    profile.birth_date = parsed_birth_date  # Actualizamos la fecha de nacimiento
-    db.session.commit()  # Guardamos los cambios
+    db.session.commit() # Actualizamos la base de datos
 
-    return jsonify({"message": "Fecha de nacimiento actualizada correctamente"}), 200
+    return jsonify({"message" : "Se ha editado el post"}), 200
 
+
+# Editar comentario
+@api.route('/update-comment/<int:comment_id>', methods=['POST'])
+def update_comment(comment_id):
+    request_body = request.get_json()
+    text = request_body.get('text') # Recogemos el campo text del request_body
+    
+    comment = Comments.query.get(comment_id) # Buscamos el comentario segun su Id
+
+    if not comment: # Si no existe devolvemos error
+        return jsonify({"message" : "comentario no encontrado"}), 400
+
+    if text: # Si el body trae un texto reemplazamos el original
+        comment.text = text
+
+
+    db.session.commit() # Actualizamos la base de datos
+
+    return jsonify({"message" : "Se ha editado el comentario"}), 200
