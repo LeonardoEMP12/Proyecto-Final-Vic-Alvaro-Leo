@@ -11,7 +11,6 @@ const SocialCard = ({ image, title, description, likes, comments }) => {
         <img src={image} alt={title} />
       </div>      
       <div className="card-actions">
-        <button className="like-btn">❤️ {likes}</button>
         <button className="comment-btn">💬 {comments}</button>
       </div>
     </div>
