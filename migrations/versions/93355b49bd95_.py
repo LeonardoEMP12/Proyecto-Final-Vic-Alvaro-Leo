@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 9a4555cad696
+Revision ID: 93355b49bd95
 Revises: 
-Create Date: 2025-01-15 18:07:26.398344
+Create Date: 2025-01-15 19:59:28.431933
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '9a4555cad696'
+revision = '93355b49bd95'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -62,6 +62,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('text', sa.String(length=500), nullable=False),
     sa.Column('like', sa.Integer(), nullable=True),
+    sa.Column('image', sa.String(length=50000), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -80,7 +81,7 @@ def upgrade():
     op.create_table('videogames',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=500), nullable=False),
-    sa.Column('image', sa.String(length=500), nullable=False),
+    sa.Column('image', sa.String(length=500000), nullable=False),
     sa.Column('rating', sa.Integer(), nullable=False),
     sa.Column('genre_id', sa.Integer(), nullable=True),
     sa.Column('developer_id', sa.Integer(), nullable=True),

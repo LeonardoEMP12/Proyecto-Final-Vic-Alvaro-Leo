@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SocialCard = ({ image, title, description, likes, comments }) => {
+const SocialCard = ({ image, title, description, comments }) => {
   return (
     <div className="social-card mt-4 text-start">
       <div className="card-content">
@@ -8,7 +8,7 @@ const SocialCard = ({ image, title, description, likes, comments }) => {
         <p>{description}</p>
       </div>
       <div className="card-image">
-        <img src={image} alt={title} />
+        <img src={image} alt={image} />
       </div>      
       <div className="card-actions">
         <button className="comment-btn">💬 {comments}</button>

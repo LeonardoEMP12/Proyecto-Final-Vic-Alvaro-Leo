@@ -14,6 +14,7 @@ import Login from "./pages/login";
 import NewPassword from "./pages/newpassword";
 import Email from "./pages/email";
 import Generos from "./pages/generos";
+import Muro from "./pages/muro";
 
 //create your first component
 const Layout = () => {
@@ -27,8 +28,8 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
                     <Routes>
+                        <Route element={<Muro />} path="/muro" />
                         <Route element={<Register />} path="/register" />
                         <Route element={<Generos />} path="/generos" />
                         <Route element={<Login />} path="/login" />

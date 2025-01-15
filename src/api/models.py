@@ -113,7 +113,7 @@ class Tags(db.Model):
 class Videogames(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(500), nullable=False)
-    image = db.Column(db.String(500), nullable=False)
+    image = db.Column(db.String(500000), nullable=False)
     rating = db.Column(db.Integer, nullable=False)
     genre_id = db.Column(db.Integer, db.ForeignKey(Genres.id))
     developer_id = db.Column(db.Integer, db.ForeignKey(Developers.id))
@@ -183,6 +183,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(500), nullable=False)
     like = db.Column(db.Integer)
+    image = image = db.Column(db.String(50000))
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
     user = db.relationship('User')
 
@@ -195,6 +196,7 @@ class Post(db.Model):
             "id": self.id,
             "text": self.text,
             "like": self.like,
+            "image": self.image,
             "user_id": self.user_id,
             "comment_id": self.comment_id,
         }
