@@ -15,20 +15,12 @@ body {
     color: #FAFAFA
   }
 
-.btn-green {
-    background-color: #6CE690;
-    border-color: #6CE690;
-}
-
-.btn-green:hover {
-    border-color:rgb(88, 186, 89);
+.btn-yellow {
+    background-color: #ffd200;
+    border-color: #dfd200;
 }
 
 .btn-white {
   background-color: #FAFAFA;
   border-color: #F0F0F0;
-}
-
-.btn-white:hover {
-  border-color:rgb(220, 220, 220);
 }
