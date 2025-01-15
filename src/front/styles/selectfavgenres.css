@@ -1,27 +1,5 @@
-body {
-    background: rgb(0,55,48);
-    background: linear-gradient(90deg, rgba(0,55,48,1) 0%, rgba(0,0,48,1) 100%);
-}
-
-.text-white {
-    color: #FAFAFA;
-}
-
-.text-black {
-    color: #000030;
-}
-
-.btn-green {
-    background-color: #6CE690;
-    border-color: #6CE690;
-}
-
-.btn-green:hover {
-    border-color: #58BB76;
-}
-
 .card-border {
-    border-image: linear-gradient(to right, #3acfd5 0%, #3a4ed5 100%) 1;
+    border-color: #ffd200;
     border-radius: 5px;
     border-width: 3px;
     border-style: solid;
@@ -33,7 +11,6 @@ body {
 
 .card-border:hover {
     transform: scale(1.05); /* Aumenta el tamaño al hacer hover */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Aumenta la sombra */
 }
 
 .card {
@@ -48,7 +25,7 @@ body {
 }
 
 .card-body {
-    background-color: #FAFAFA; /* Fondo de la parte inferior */
+    background-color: #ffd200; /* Fondo de la parte inferior */
     padding: 16px; /* Espaciado interno */
     text-align: center; /* Centra el contenido */
     height: 25%; /* La parte del texto ocupa el 25% */
@@ -61,6 +38,6 @@ body {
 
 .card-text {
     font-size: 0.85rem;
-    color: #555;
+    color: #000000;
     margin: 4px 0 0;
 }
