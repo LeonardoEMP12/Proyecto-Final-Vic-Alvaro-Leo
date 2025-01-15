@@ -320,6 +320,7 @@ def get_videogame():
 def create_post():
     # Obtenemos los datos de la solicitud (en formato JSON)
     request_body = request.get_json()
+    image = request_body.get('image') # Recogemos el campo text del request_body
     text = request_body.get('text') # Recogemos el campo text del request_body
     user_id = request_body.get('user_id') # Recogemos el campo user_id del request_body
     like = request_body.get('like') # Recogemos el campo like del request_body
@@ -333,7 +334,7 @@ def create_post():
         return jsonify({"message": "el usuario no existe"}), 400
 
     # Creamos un nuevo objeto Post con los datos recibidos
-    new_post = Post(text = text, like = like, user_id = user_id)
+    new_post = Post(text = text, like = like, user_id = user_id, image = image)
     
     # Guardamos el nuevo post en la base de datos
     db.session.add(new_post)
@@ -396,6 +397,7 @@ def get_all_posts():
         # Serializar los datos de la publicación
         post_data = {
             "post_text": post.text,
+            "post_image": post.image,
             "post_user": post_user.serialize() if post_user else None,  # Datos del usuario que hizo la publicación
             "comments": comments_data  # Lista de comentarios con los usuarios
         }
