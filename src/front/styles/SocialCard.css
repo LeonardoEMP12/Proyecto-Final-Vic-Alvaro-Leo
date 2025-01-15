@@ -1,0 +1,42 @@
+.social-card {
+    border-radius: 8px;
+    padding: 16px;
+    max-width: 40%;
+    margin: 16px auto;
+    background-color: #1c1c1c;
+  }
+  
+  
+  .card-image img {
+    width: 100%;
+    border-radius: 8px;
+  }
+  
+  .card-content h3 {
+    margin: 8px 0;
+    font-size: 1.5em;
+    color: #ffd200;
+  }
+  
+  .card-content p {
+    font-size: 1em;
+    color: #fff;
+  }
+  
+  .card-actions {
+    margin-top: 16px;
+    margin-right: 0,5vh;
+    display: flex;
+  }
+  
+  .like-btn, .comment-btn {
+    background-color: #1c1c1c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+  }
+  
+  .like-btn:hover, .comment-btn:hover {
+    background-color: #0f0f0f;
+  }
+  
