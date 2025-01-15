@@ -28,7 +28,7 @@ const Muro = () => {
             </div>
 
             <div className="col-md-8 fondo2">
-                <div className="d-flex justify-content-end">
+                <div className="d-flex justify-content-end mt-3">
                     <div className="me-3">Añadir publicacion</div>
                     <div>Editar Perfil</div>
                 </div>
