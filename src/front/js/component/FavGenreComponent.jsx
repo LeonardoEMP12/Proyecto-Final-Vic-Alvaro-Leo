@@ -72,7 +72,9 @@ const FavGenreComponent = () => {
           </div>
         ))}
       </div>
-      <Link to="/login">Ir al login</Link>
+      <Link className="btn text-white bg-dark mt-5" to="/login">
+  Ir al login
+</Link>
     </div>
   );
 };
