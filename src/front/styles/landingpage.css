@@ -1,12 +1,69 @@
-body {
-    background: rgb(0,55,48);
-background: linear-gradient(90deg, rgba(0,55,48,1) 0%, rgba(0,0,48,1) 100%);
+.welcome-banner {
+  background-color: #000000; /* Color de fondo claro */
 }
 
-.text-white {
-    color: #FAFAFA;
+.content-wrapper {
+  max-width: 1200px;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
 }
 
-.text-black {
-    color: #000030;
+.button-section {
+  margin-bottom: 20px;
 }
+
+.custom-btn {
+  width: 200px;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+}
+
+.logo-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-logo {
+  max-width: 300px;
+  height: auto;
+}
+
+.formulario-contenedor {
+    background-color: #141414;
+    padding: 5vh;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ffd200;
+  }
+
+  .btn-yellow {
+    background-color: #ffd200;
+    border: none;
+    color: #000;
+    font-weight: bold;
+    padding: 12px 20px;
+    border-radius: 5px;
+    width: 50%;
+  }
+  
+  .btn-yellow:hover {
+    background-color: #aa8b01;
+    color: #000;
+  }
+
+  .btn-white {
+    background-color: #FFFFFF;
+    border: none;
+    color: #000;
+    font-weight: bold;
+    padding: 12px 20px;
+    border-radius: 5px;
+    width: 50%;
+  }
+  
+  .btn-white:hover {
+    background-color: #D0D0D0;
+    color: #000;
+  }
