@@ -403,3 +403,78 @@ def get_all_posts():
         all_posts.append(post_data)
 
     return jsonify({"message" : all_posts}), 200
+
+
+# Delete de publicaciones
+@api.route('/delete-posts/<int:post_id>', methods=['DELETE'])
+def delete_post(post_id):
+    post = Post.query.get(post_id) # Buscamos el post segun su Id
+
+    if not post: # Si no existe devolvemos error
+        return jsonify({"message" : "post no encontrado"}), 400
+    
+    comments = Comments.query.filter_by(post_id = post_id).all() # Recorremos todos los comentarios que tiene el post y los eliminamos
+    for comment in comments:
+        db.session.delete(comment)
+
+    db.session.delete(post) # Eliminamos el post
+    db.session.commit()
+
+    return jsonify({"message" : "Se ha borrado el post"}), 200
+
+
+# Delete de comentarios
+@api.route('/delete-comment/<int:comment_id>', methods=['DELETE'])
+def delete_comment(comment_id): 
+    comment = Comments.query.get(comment_id) # Buscamos el comentario segun su Id
+
+    if not comment: # Si no existe devolvemos error
+        return jsonify({"message" : "comentario no encontrado"}), 400
+
+    db.session.delete(comment) # Eliminamos el comentario
+    db.session.commit()
+
+    return jsonify({"message" : "Se ha borrado el comentario"}), 200
+
+
+# Editar post
+@api.route('/update-post/<int:post_id>', methods=['POST'])
+def update_post(post_id):
+    request_body = request.get_json()
+    text = request_body.get('text') # Recogemos el campo text del request_body
+    like = request_body.get('like') # Recogemos el campo like del request_body
+    
+    post = Post.query.get(post_id) # Buscamos el post segun su Id
+
+    if not post: # Si no existe devolvemos error
+        return jsonify({"message" : "post no encontrado"}), 400
+
+    if text: # Si el body trae un texto reemplazamos el original
+        post.text = text
+
+    if like: # Si el body trae un numero de likes reemplazamos el original
+        post.like = like
+
+    db.session.commit() # Actualizamos la base de datos
+
+    return jsonify({"message" : "Se ha editado el post"}), 200
+
+
+# Editar comentario
+@api.route('/update-comment/<int:comment_id>', methods=['POST'])
+def update_comment(comment_id):
+    request_body = request.get_json()
+    text = request_body.get('text') # Recogemos el campo text del request_body
+    
+    comment = Comments.query.get(comment_id) # Buscamos el comentario segun su Id
+
+    if not comment: # Si no existe devolvemos error
+        return jsonify({"message" : "comentario no encontrado"}), 400
+
+    if text: # Si el body trae un texto reemplazamos el original
+        comment.text = text
+
+
+    db.session.commit() # Actualizamos la base de datos
+
+    return jsonify({"message" : "Se ha editado el comentario"}), 200
