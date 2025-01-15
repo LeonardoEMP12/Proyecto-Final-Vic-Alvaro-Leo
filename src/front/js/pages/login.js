@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react";
 import "../../styles/register.css";
 import OMNIAlogo from "../../img/LogoOM.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 const Login = () => {
   const { actions } = useContext(Context);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -38,7 +39,7 @@ const Login = () => {
         if (data.error) {
           alert(data.error || "Hubo un problema con el inicio de sesión");
         } else {
-          alert("Inicio de sesión exitoso");
+          navigate("/muro");
           actions.setName(data.user.name);
           actions.setId(data.user.id);
           actions.setToken(data.token);

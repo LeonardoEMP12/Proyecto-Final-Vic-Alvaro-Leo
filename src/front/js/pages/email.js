@@ -39,7 +39,7 @@ const navigate = useNavigate();
       .then((data) => {
           alert("Se ha enviado un correo para el cambio de contraseña");
           // Modal de se ha mandado un correo
-          navigate("/newpassword");
+          navigate("/");
        
       })
       .catch((error) => {
