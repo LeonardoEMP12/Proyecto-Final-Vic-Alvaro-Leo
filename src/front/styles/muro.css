@@ -3,7 +3,7 @@
 }
 
 .fondo1{
-    background-color: red;
+    background-color: #141414;
 }
 
 .fondo2{
@@ -12,7 +12,7 @@
 }
 
 .fondo3{
-    background-color: orange;
+    background-color: #141414;
 }
 
 #botonPost {
@@ -44,4 +44,72 @@
     background-color: #1c1c1c;
     border-color: #ffd200;
     color: #fff;
+}
+
+#TextoPost{
+    box-shadow: 0 0 5px #ffffff;
+    border-color: #ffffff;
+}
+
+#PerfilBoton{
+    background-color: #141414;
+    color: #ffffff;
+    border-color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+#PerfilBoton:hover {
+    background-color: #181818;
+    color: #ffd200;
+    border-color: #ffffff;
+    cursor: pointer;
+}
+
+#PerfilBoton:focus {
+    outline: none;
+    box-shadow: 0 0 5px #000000;
+}
+
+#Cerrar{
+    background-color: #141414;
+    color: #ffffff;
+    border-color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+#Cerrar:hover {
+    background-color: #181818;
+    color: #ffd200;
+    border-color: #ffffff;
+    cursor: pointer;
+}
+
+#Cerrar:focus {
+    outline: none;
+    box-shadow: 0 0 5px #000000;
+}
+
+#Publicar{
+    background-color: #ffd200;
+    color: #1c1c1c;
+    border-color: #ffd200;
+    transition: all 0.3s ease;
+}
+
+#Publicar:hover {
+    background-color: #e6ba00;
+    color: #000;
+    border-color: #e6ba00;
+    cursor: pointer;
+}
+
+#Publicar:focus {
+    outline: none;
+    box-shadow: 0 0 5px #ffd200;
+}
+
+#Publicar:active {
+    background-color: #cda600;
+    border-color: #cda600;
+    transform: scale(0.98);
 }
