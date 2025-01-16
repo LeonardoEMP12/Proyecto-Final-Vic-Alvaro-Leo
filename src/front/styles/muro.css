@@ -14,3 +14,34 @@
 .fondo3{
     background-color: orange;
 }
+
+#botonPost {
+    background-color: #ffd200;
+    color: #1c1c1c;
+    border-color: #ffd200;
+    transition: all 0.3s ease;
+}
+
+#botonPost:hover {
+    background-color: #e6ba00;
+    color: #000;
+    border-color: #e6ba00;
+    cursor: pointer;
+}
+
+#botonPost:focus {
+    outline: none;
+    box-shadow: 0 0 5px #ffd200;
+}
+
+#botonPost:active {
+    background-color: #cda600;
+    border-color: #cda600;
+    transform: scale(0.98);
+}
+
+#PostModal {
+    background-color: #1c1c1c;
+    border-color: #ffd200;
+    color: #fff;
+}
