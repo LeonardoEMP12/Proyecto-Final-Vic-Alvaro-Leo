@@ -1,12 +1,13 @@
 .body{
     height: 100%;
+    width: 100%;
 }
 
 .fondo1{
     background-color: #141414;
 }
 
-.container {
+#navegacion {
     background-color: #141414;
     padding: 5vh;
     border-radius: 12px;

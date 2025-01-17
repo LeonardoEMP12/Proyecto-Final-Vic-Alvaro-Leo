@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from datetime import datetime
-from api.models import db, User, Profile, Genres, FavoritesGenres, Platforms, Tags, Developers, Videogames, Post, Comments
+from api.models import db, User, Profile, Genres, FavoritesGenres, Platforms, Tags, Developers, Videogames, Post, Comments, Profile
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt 
@@ -41,6 +41,10 @@ def handle_register():
     confirm_password = request_body.get('confirm_password')# Recogemos el campo repita contraseña del request_body
     creation_date = request_body.get('creation_date') # Recogemos el campo creation_date del request_body
 
+    # Datos del perfil
+    username = name  # Recogemos el campo username para el perfil
+    description = "pon aqui la descripcion de tu perfil"  # Recogemos la descripción del perfil
+
     if password != confirm_password: # Validamos si las contraseñas coinciden
         return jsonify({"message": "Las contraseñas no coinciden"}), 400
     
@@ -58,6 +62,11 @@ def handle_register():
 
     db.session.add(usuario_add) # Realizamos la insercion
     db.session.commit() # Actualizamos la base de datos
+
+    # Ahora creamos el perfil asociado al usuario recién creado
+    profile_add = Profile(username=username, description=description, user_id=usuario_add.id)
+    db.session.add(profile_add)  # Añadimos el perfil a la base de datos
+    db.session.commit()  # Confirmamos la transacción para guardar el perfil
 
      # Retornamos los datos añadidos
     usuario_add_serialize = usuario_add.serialize()
@@ -382,23 +391,31 @@ def get_all_posts():
 
     for post in posts:
         post_user = User.query.get(post.user_id) # Obtenemos los datos del usuario que creó la publicación
+        post_profile = Profile.query.filter_by(user_id=post.user_id).first()  # Obtenemos el perfil del usuario
+
         comments = Comments.query.filter_by( post_id = post.id).all() # Obtener los comentarios asociados a la publicación
 
         comments_data = [] # Serializar los datos de los comentarios
         for comment in comments:
             comment_user = User.query.get(comment.user_id) # Obtener el usuario que hizo el comentario
+            comment_profile = Profile.query.filter_by(user_id=comment.user_id).first()  # Obtener el perfil del comentario
+
             
             # Agregar el comentario con los datos del usuario
             comments_data.append({
                 "comment_text": comment.text,
-                "comment_user": comment_user.serialize() if comment_user else None
+                "comment_user": comment_user.serialize() if comment_user else None,
+                "username": comment_profile.username if comment_profile else None  # Usamos el username del perfil
             })
         
         # Serializar los datos de la publicación
         post_data = {
             "post_text": post.text,
             "post_image": post.image,
-            "post_user": post_user.serialize() if post_user else None,  # Datos del usuario que hizo la publicación
+            "post_user": {
+                "id": post_user.id,
+                "username": post_profile.username if post_profile else None  # Usamos el username del perfil
+            },  # Datos del usuario que hizo la publicación
             "comments": comments_data  # Lista de comentarios con los usuarios
         }
         # Agregar la publicación con los datos completos a la lista
