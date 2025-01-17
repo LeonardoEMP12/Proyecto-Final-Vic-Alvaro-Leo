@@ -7,7 +7,6 @@ import Landing from "./pages/landingpage";
 import { SelectFavGenre } from "./pages/selectfavgenre";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
-import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import Register from "./pages/register";
 import Login from "./pages/login";
