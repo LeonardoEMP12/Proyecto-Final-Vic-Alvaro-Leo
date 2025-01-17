@@ -160,18 +160,7 @@ const Muro = () => {
     </div>
 </div>
 
-<div 
-    className="col-md-2 fondo3"
-    onClick={() => window.open('https://www.nintendo.com/successor/es-es/index.html?srsltid=AfmBOormJY7WxHvSLOif5f5Gir8cLHWAruBG8ep78xeYP_0PRaKtpKRw')} 
-    style={{ cursor: 'pointer' }} // Cambia el cursor a "pointer" para indicar que es clickeable
->
-    <div className="card card-border card-noticia">
-        <img src="https://media.discordapp.net/attachments/846027562860675156/1329896793315610775/switch2.jpg?ex=678c0267&is=678ab0e7&hm=ce1e6b365ff1cf8abee8c8685866a2dcfdef1b2bc4e0a072f2631b062ae0ea10&=&format=webp&width=450&height=252" />
-        <div className="card-body">
-            <h5 className="titular-noticia">Se anuncia la Nintendo Switch 2</h5>
-        </div>
-    </div>
-</div>
+
 
         </div>
     );
