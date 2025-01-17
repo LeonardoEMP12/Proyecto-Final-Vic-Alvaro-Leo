@@ -39,10 +39,10 @@ const Login = () => {
         if (data.error) {
           alert(data.error || "Hubo un problema con el inicio de sesión");
         } else {
-          navigate("/muro");
           actions.setName(data.user.name);
           actions.setId(data.user.id);
           actions.setToken(data.token);
+          navigate("/muro");
         }
       })
       .catch((error) => {
@@ -80,7 +80,7 @@ const Login = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                placeholder="Crea una contraseña"
+                placeholder="Ingresa tu contraseña"
                 required
               />
             </div>

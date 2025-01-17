@@ -86,10 +86,10 @@ const Muro = () => {
                         </div>
                     </div>
                 </div>
-                {post.map((post) => (
-                    <div className="cuerpo">
+                {post.map((post, index) => (
+                    <div className="cuerpo" key={index}>
                         <SocialCard
-                            title={post.post_user.name}
+                            title={post.post_user.username}
                             description={post.post_text}
                             image={post.post_image} />
                     </div>

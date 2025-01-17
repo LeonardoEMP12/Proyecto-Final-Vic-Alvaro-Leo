@@ -1,11 +1,10 @@
 .social-card {
     border-radius: 8px;
     padding: 16px;
-    max-width: 40%;
+    max-width: 60%;
     margin: 16px auto;
     background-color: #1c1c1c;
-    border-color: white;
-    border: solid;
+    border: #977b00 solid;
   }
   
   
@@ -16,8 +15,9 @@
   
   .card-content h3 {
     margin: 8px 0;
-    font-size: 1.5em;
+    font-size: 1em;
     color: #ffd200;
+    justify-self: right;
   }
   
   .card-content p {
