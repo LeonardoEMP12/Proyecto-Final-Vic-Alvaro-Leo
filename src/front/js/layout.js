@@ -5,7 +5,6 @@ import { BackendURL } from "./component/backendURL";
 import Landing from "./pages/landingpage";
 import { SelectFavGenre } from "./pages/selectfavgenre";
 import injectContext from "./store/appContext";
-import { Footer } from "./component/footer";
 import Register from "./pages/register";
 import Login from "./pages/login";
 import NewPassword from "./pages/newpassword";
@@ -35,7 +34,6 @@ const Layout = () => {
                         <Route path="/newpassword" element={<PrivateRoute Component={NewPassword} />} />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
-                    <Footer />
                 </ScrollToTop>
             </BrowserRouter>
         </div>

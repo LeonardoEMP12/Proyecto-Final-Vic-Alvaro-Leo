@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../styles/muro.css";
 import SocialCard from "../component/SocialCard.jsx";
 import OMNIAlogo from "../../img/LogoOM.png";
-import FavGenreComponent from "../component/FavGenreComponent.jsx";
+import { Footer } from "../component/footer.js";
 
 const Muro = () => {
     const [post, setPost] = useState([]);
@@ -27,7 +27,7 @@ const Muro = () => {
 
             {/* Navbar lateral */}
             <div className="d-flex col-md-2">
-                <nav className="navbar flex-column container">
+                <nav className="navbar flex-column" id="navegacion">
                     <a
                         href="#"
                         className={`navigate-icon ${activeTab === "publicaciones" ? "active" : ""}`}
@@ -64,15 +64,15 @@ const Muro = () => {
                             <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
                         </svg>
                     </a>
-                    <a
-                        href="#"
+                    <button
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
                         className={`navigate-icon my-5 ${activeTab === "configuracion" ? "active" : ""}`}
-                        onClick={() => setActiveTab("configuracion")}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
                             <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0" />
                         </svg>
-                    </a>
+                    </button>
                 </nav>
             </div>
 
@@ -85,22 +85,53 @@ const Muro = () => {
                 {activeTab === "publicaciones" && (
                     <div>
                         <div className="d-flex justify-content-end mt-3">
-                            <button
-                                id="botonPost"
-                                type="button"
-                                className="btn btn-primary me-3"
-                                data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"
-                            >
-                                Añadir publicación
-                            </button>
-                            <button
-                                id="PerfilBoton"
-                                type="button"
-                                className="btn btn-primary me-3"
-                            >
-                                Editar Perfil
-                            </button>
+                        <div
+                        className="modal fade"
+                        id="exampleModal"
+                        tabIndex="-1"
+                        aria-labelledby="exampleModalLabel"
+                        aria-hidden="true"
+                    >
+                        <div className="modal-dialog">
+                            <div id="PostModal" className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="exampleModalLabel">Nueva publicación</h5>
+                                    <button
+                                        type="button"
+                                        className="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                    ></button>
+                                </div>
+                                <div className="modal-body">
+                                    <form>
+                                        <div className="mb-3">
+                                            <label htmlFor="message-text" className="col-form-label">
+                                                ¿Listo para jugar?:
+                                            </label>
+                                            <textarea className="form-control" id="TextoPost"></textarea>
+                                            <label className="mt-4" for="fileInput">Selecciona una imagen para subir:</label>
+                                            <input type="file" id="fileInput" name="image" accept="image/*" required></input>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div className="modal-footer">
+                                    <button
+                                    id="Cerrar"
+                                        type="button"
+                                        className="btn btn-secondary"
+                                        data-bs-dismiss="modal"
+                                    >
+                                        Cerrar
+                                    </button>
+                                    <button id="Publicar" type="button" className="btn btn-primary">
+                                        Publicar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                         </div>
                         {post.map((post, index) => (
                             <div className="cuerpo" key={index}>
@@ -135,7 +166,7 @@ const Muro = () => {
 
             {/* Noticias */}
             <div
-                className="col-md-2 fondo3"
+                className="col-md-2 fondo3 mt-3"
                 onClick={() => window.open('https://www.nintendo.com/successor/es-es/index.html?srsltid=AfmBOormJY7WxHvSLOif5f5Gir8cLHWAruBG8ep78xeYP_0PRaKtpKRw')}
                 style={{ cursor: 'pointer' }} // Cambia el cursor a "pointer" para indicar que es clickeable
             >
@@ -146,6 +177,7 @@ const Muro = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };
