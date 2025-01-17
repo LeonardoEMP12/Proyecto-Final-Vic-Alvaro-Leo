@@ -1,14 +1,28 @@
 import React from "react";
-import WelcomeBanner from "../component/WelcomeBanner.jsx";
 import "../../styles/landingpage.css";
+import OMNIAlogo from "../../img/LogoOM.png";
+import landingomnia from "../../img/landingomnia.png";
+import { Link } from "react-router-dom";
 
-//create your first component
-export const LandingPage = () => {
+const Landing = () => {
 	return (
-		<div className="text-center">
-
-            <WelcomeBanner/>
-
+		<div className="container-fluid vh-100 p-0">
+			<div className="row">
+				<div id="FondoLanding" className="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center vh-100 p-0">
+					<div id="ContLanding" className="col-10 col-md-8 col-lg-6 d-flex flex-column justify-content-center align-items-center formulario-contenedor mx-auto mt-5">
+					<Link to="/login"><button id="Inicio" type="button" className="btn btn-secondary">Iniciar sesion</button></Link>
+					<Link to="/register"><button id="Registro" type="button" className="btn btn-secondary mt-4">Registrarse</button></Link>
+						<div className="text-center mt-5">
+							<img src={OMNIAlogo} alt="OMNIA Logo" className="img-fluid" />
+						</div>
+					</div>
+				</div>
+				<div className="col-6 d-none d-md-flex d-flex justify-content-center align-items-center bg-succes">
+					<img src={landingomnia} alt="OMNIA Landing" className="img-fluid" />
+				</div>
+			</div>
 		</div>
 	);
 };
+
+export default Landing;

@@ -1,67 +1,58 @@
-.welcome-banner {
-  background-color: #000000; /* Color de fondo claro */
+#Registro{
+  background-color: #141414;
+  color: #ffffff;
+  border-color: #ffffff;
+  transition: all 0.3s ease;
+  padding: 20px 40px;
+  font-size: 24px;
+  border-radius: 8px;
 }
 
-.content-wrapper {
-  max-width: 1200px;
-  width: 100%;
-  padding: 20px;
-  text-align: center;
+#Registro:hover {
+  background-color: #272727;
+  color: #ffd200;
+  border-color: #ffffff;
+  cursor: pointer;
 }
 
-.button-section {
-  margin-bottom: 20px;
+#Registro:focus {
+  outline: none;
+  box-shadow: 0 0 5px #000000;
 }
 
-.custom-btn {
-  width: 200px;
-  font-size: 1.2rem;
-  padding: 10px 20px;
+#Inicio{
+  background-color: #ffd200;
+  color: #1c1c1c;
+  border-color: #ffd200;
+  transition: all 0.3s ease;
+  padding: 20px 40px;
+  font-size: 24px;
+  border-radius: 8px;
 }
 
-.logo-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+#Inicio:hover {
+  background-color: #685501;
+  color: #ffffff;
+  border-color: #e6ba00;
+  cursor: pointer;
 }
 
-.custom-logo {
-  max-width: 300px;
-  height: auto;
+#Inicio:focus {
+  outline: none;
+  box-shadow: 0 0 5px #ffd200;
 }
 
-.formulario-contenedor {
-    background-color: #141414;
-    padding: 5vh;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border: 2px solid #ffd200;
-  }
+#Inicio:active {
+  background-color: #cda600;
+  border-color: #cda600;
+  transform: scale(0.98);
+}
 
-  .btn-yellow {
-    background-color: #ffd200;
-    border: none;
-    color: #000;
-    font-weight: bold;
-    padding: 12px 20px;
-    border-radius: 5px;
-  }
-  
-  .btn-yellow:hover {
-    background-color: #aa8b01;
-    color: #000;
-  }
+#ContLanding{
+  background-color: #141414;
+  border-color: #ffffff;
+}
 
-  .btn-white {
-    background-color: #FFFFFF;
-    border: none;
-    color: #000;
-    font-weight: bold;
-    padding: 12px 20px;
-    border-radius: 5px;
-  }
-  
-  .btn-white:hover {
-    background-color: #D0D0D0;
-    color: #000;
-  }
+#FondoLanding{
+  background-color: #ffd200;
+}
