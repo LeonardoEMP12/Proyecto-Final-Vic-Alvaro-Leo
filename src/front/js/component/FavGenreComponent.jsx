@@ -5,14 +5,13 @@ import { Link } from 'react-router-dom';
 const FavGenreComponent = () => {
   const { store } = useContext(Context);
   const [genres, setGenres] = useState([]);
-  const API_KEY = '02f82a6de2d04510bf98339e6e960f2c';
-  const API_URL = `https://api.rawg.io/api/genres?key=${API_KEY}`;
+  const API_URL = process.env.BACKEND_URL + "/api/genres";
 
   const userId = store.userId;
 
   const fetchGenres = async () => {
     try {
-      const response = await fetch(API_URL);
+      const response = await fetch("API_URL");
       const data = await response.json();
       setGenres(data.results); // Guardamos solo el array de "results"
     } catch (error) {
