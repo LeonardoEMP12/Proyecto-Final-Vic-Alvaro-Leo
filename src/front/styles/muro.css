@@ -15,7 +15,8 @@
     flex-direction: column;
     align-items: center;
     background-color: #141414;
-    margin: 2vw;
+    margin: 1vw;
+    margin-left: 1.2vw;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     border: 2px solid #ffd200;
@@ -163,4 +164,47 @@
     background-color: #cda600;
     border-color: #cda600;
     transform: scale(0.98);
+}
+
+.navigate-icon {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+}
+
+.navigate-icon svg {
+    transition: opacity 0.3s ease;
+}
+
+.navigate-icon .hover-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffd200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+#publicar-btn{
+    height: 4rem;
+    width: 8rem;
+    border-radius: 1rem;
+    background-color: #ffd200;
+    color: #131313;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navigate-icon:hover svg {
+    opacity: 0;
+}
+
+.navigate-icon:hover .hover-text {
+    opacity: 1;
 }
