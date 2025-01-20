@@ -1,4 +1,6 @@
 import React from 'react';
+import "../../styles/SocialCard.css";
+
 
 const SocialCard = ({ image, title, description, comments }) => {
   return (

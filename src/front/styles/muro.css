@@ -1,9 +1,30 @@
 .body{
     height: 100%;
+    width: 100%;
 }
 
 .fondo1{
     background-color: #141414;
+}
+
+#navegacion {
+    background-color: #141414;
+    padding: 5vh;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ffd200;
+  }
+
+.navigate-icon {
+    color: #ffd200;
+}
+
+.card-noticia {
+    height: 220px;
+}
+
+.titular-noticia {
+    font-size: 20px;
 }
 
 .fondo2{
