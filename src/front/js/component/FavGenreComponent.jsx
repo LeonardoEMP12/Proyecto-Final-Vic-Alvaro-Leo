@@ -11,9 +11,9 @@ const FavGenreComponent = () => {
 
   const fetchGenres = async () => {
     try {
-      const response = await fetch("API_URL");
+      const response = await fetch(API_URL);
       const data = await response.json();
-      setGenres(data.results); // Guardamos solo el array de "results"
+      setGenres(data.message); // Guardamos solo el array de "results"
     } catch (error) {
       console.error('Error fetching genres:', error);
     }
@@ -59,7 +59,7 @@ const FavGenreComponent = () => {
               onClick={() => handleAddToFavorites(genre.id)}
             >
               <img
-                src={`${genre.image_background}`}
+                src={`${genre.image}`}
                 className="card-img-top"
                 alt={`imagen de ${genre.name}`}
               />

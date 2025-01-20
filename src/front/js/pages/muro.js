@@ -64,7 +64,7 @@ const Muro = () => {
             </nav>
 
             {/* Div vacío para el espacio que ocupa la navbar */}
-            <div className="d-flex col-md-2">
+            <div className="d-flex fondo2 col-md-2">
 
             </div>
 
