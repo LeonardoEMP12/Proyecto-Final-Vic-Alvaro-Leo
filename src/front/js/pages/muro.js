@@ -31,8 +31,8 @@ const Muro = () => {
                 </a>
 
                 <a
-                    className={`navigate-icon my-0 ${activeTab === "perfil" ? "active" : ""}`}
-                    onClick={() => setActiveTab("perfil")}
+                    className={`navigate-icon my-0 ${activeTab === "videojuegos" ? "active" : ""}`}
+                    onClick={() => setActiveTab("videojuegos")}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-controller" viewBox="0 0 16 16">
                         <path d="M11.5 6.027a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m-1.5 1.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m2.5-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m-1.5 1.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m-6.5-3h1v1h1v1h-1v1h-1v-1h-1v-1h1z" />
@@ -53,7 +53,7 @@ const Muro = () => {
                 <a
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
-                    className={`navigate-icon my-3 ${activeTab === "configuracion" ? "active" : ""}`}
+                    className="navigate-icon my-3"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
                         <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0" />
@@ -138,8 +138,58 @@ const Muro = () => {
                     </div>
                 )}
 
-                {activeTab === "perfil" && (
+                {activeTab === "videojuegos" && (
+
                     <div>
+                        <div className="d-flex justify-content-end mt-3">
+                            <div
+                                className="modal fade"
+                                id="exampleModal"
+                                tabIndex="-1"
+                                aria-labelledby="exampleModalLabel"
+                                aria-hidden="true"
+                            >
+                                <div className="modal-dialog">
+                                    <div id="PostModal" className="modal-content">
+                                        <div className="modal-header">
+                                            <h5 className="modal-title" id="exampleModalLabel">Nueva publicación</h5>
+                                            <button
+                                                type="button"
+                                                className="btn-close"
+                                                data-bs-dismiss="modal"
+                                                aria-label="Close"
+                                            ></button>
+                                        </div>
+                                        <div className="modal-body">
+                                            <form>
+                                                <div className="mb-3">
+                                                    <label htmlFor="message-text" className="col-form-label">
+                                                        ¿Listo para jugar?:
+                                                    </label>
+                                                    <textarea className="form-control" id="TextoPost"></textarea>
+                                                    <label className="mt-4" for="fileInput">Selecciona una imagen para subir:</label>
+                                                    <input type="file" id="fileInput" name="image" accept="image/*" required></input>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div className="modal-footer">
+                                            <button
+                                                id="Cerrar"
+                                                type="button"
+                                                className="btn btn-secondary"
+                                                data-bs-dismiss="modal"
+                                            >
+                                                Cerrar
+                                            </button>
+                                            <button id="Publicar" type="button" className="btn btn-primary">
+                                                Publicar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                         <h2>Videojuegos</h2>
                         <p>Vista de todos los videojuegos aquí, tambien se puede hacer otro componente para ponerlo aqui dentro</p>
                     </div>
@@ -147,6 +197,55 @@ const Muro = () => {
 
                 {activeTab === "configuracion" && (
                     <div>
+                        <div className="d-flex justify-content-end mt-3">
+                            <div
+                                className="modal fade"
+                                id="exampleModal"
+                                tabIndex="-1"
+                                aria-labelledby="exampleModalLabel"
+                                aria-hidden="true"
+                            >
+                                <div className="modal-dialog">
+                                    <div id="PostModal" className="modal-content">
+                                        <div className="modal-header">
+                                            <h5 className="modal-title" id="exampleModalLabel">Nueva publicación</h5>
+                                            <button
+                                                type="button"
+                                                className="btn-close"
+                                                data-bs-dismiss="modal"
+                                                aria-label="Close"
+                                            ></button>
+                                        </div>
+                                        <div className="modal-body">
+                                            <form>
+                                                <div className="mb-3">
+                                                    <label htmlFor="message-text" className="col-form-label">
+                                                        ¿Listo para jugar?:
+                                                    </label>
+                                                    <textarea className="form-control" id="TextoPost"></textarea>
+                                                    <label className="mt-4" for="fileInput">Selecciona una imagen para subir:</label>
+                                                    <input type="file" id="fileInput" name="image" accept="image/*" required></input>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div className="modal-footer">
+                                            <button
+                                                id="Cerrar"
+                                                type="button"
+                                                className="btn btn-secondary"
+                                                data-bs-dismiss="modal"
+                                            >
+                                                Cerrar
+                                            </button>
+                                            <button id="Publicar" type="button" className="btn btn-primary">
+                                                Publicar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                         <h2>Configuración</h2>
                         <p>Opciones de configuración de la cuenta.</p>
                     </div>
