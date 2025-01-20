@@ -3,13 +3,14 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from datetime import datetime
-from api.models import db, User, Profile, Genres, FavoritesGenres, Platforms, Tags, Developers, Videogames, Post, Comments, Profile
+from api.models import db, User, Profile, Genres, FavoritesGenres, Platforms, Tags, Developers, Videogames, Post, Comments, Profile, FavoritesVideogames
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt 
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from datetime import timedelta
 from flask_mail import Mail, Message
+import random
 
 
 api = Blueprint('api', __name__)
@@ -42,7 +43,7 @@ def handle_register():
     creation_date = request_body.get('creation_date') # Recogemos el campo creation_date del request_body
 
     # Datos del perfil
-    username = name  # Recogemos el campo username para el perfil
+    username = random.randint(0, 10000000000000000000000000000000000000000000000000000000000000000000000)  # Recogemos el campo username para el perfil
     description = "pon aqui la descripcion de tu perfil"  # Recogemos la descripción del perfil
 
     if password != confirm_password: # Validamos si las contraseñas coinciden
@@ -497,3 +498,27 @@ def update_comment(comment_id):
     db.session.commit() # Actualizamos la base de datos
 
     return jsonify({"message" : "Se ha editado el comentario"}), 200
+
+
+# Endpoint añadir Videojuegos a favoritos
+@api.route('/register-games', methods=['POST'])
+def register_games():
+
+    request_body = request.json # Recogemos los datos del body mandado  
+    user_id = request_body.get('user_id') # Recogemos el user_id del request_body
+    videogame_id = request_body.get('videogame_id') # Recogemos el videogame_id del request_body
+
+    if not user_id or not videogame_id:
+        return jsonify({"message": "No se ha podido añadir a favoritos"}), 400
+    
+    videogames = FavoritesVideogames.query.filter_by(user_id = user_id, videogame_id = videogame_id).first()
+
+    if videogames:
+        return jsonify({"message": "Ya está en favoritos"}), 400
+    
+    videogames__add = FavoritesVideogames(user_id = user_id, videogame_id = videogame_id)
+
+    db.session.add(videogames__add) # Realizamos la insercion
+    db.session.commit() # Actualizamos la base de datos
+
+    return jsonify({"message": "Se ha añadido a favoritos"}), 200

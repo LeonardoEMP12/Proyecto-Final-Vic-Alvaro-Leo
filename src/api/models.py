@@ -24,8 +24,8 @@ class User(db.Model):
 
 class Profile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(500), unique=True, nullable=False)
-    description = db.Column(db.String(500), unique=True, nullable=False)
+    username = db.Column(db.String(500), nullable=False, unique=True)
+    description = db.Column(db.String(500))
     birth_date = db.Column(db.Date)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
     user = db.relationship('User')
