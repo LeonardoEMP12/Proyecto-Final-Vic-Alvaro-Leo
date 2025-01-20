@@ -80,7 +80,7 @@ const Login = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                placeholder="Crea una contraseña"
+                placeholder="Ingresa tu contraseña"
                 required
               />
             </div>

@@ -8,6 +8,8 @@
   border-radius: 8px;
 }
 
+
+
 #Registro:hover {
   background-color: #272727;
   color: #ffd200;
@@ -50,9 +52,13 @@
 
 #ContLanding{
   background-color: #141414;
-  border-color: #ffffff;
+  border-color: #ffd200;
+}
+
+#BackgroundLanding{
+  background-color: #141414;
 }
 
 #FondoLanding{
-  background-color: #ffd200;
+  background-color: #000000;
 }

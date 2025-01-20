@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const Landing = () => {
 	return (
-		<div className="container-fluid vh-100 p-0">
+		<div id="BackgroundLanding" className="container-fluid vh-100 p-0">
 			<div className="row">
 				<div id="FondoLanding" className="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center vh-100 p-0">
 					<div id="ContLanding" className="col-10 col-md-8 col-lg-6 d-flex flex-column justify-content-center align-items-center formulario-contenedor mx-auto mt-5">
