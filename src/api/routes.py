@@ -106,7 +106,7 @@ def get_genres():
     all_genres = [genres.serialize() for genres in genre]
 
     # Retornamos todos los generos de la tabla Genres
-    return jsonify(all_genres), 200
+    return jsonify({"message":all_genres}), 200
 
 
 # Endpoint añadir categoria a favoritas
@@ -288,7 +288,7 @@ def get_platforms():
     return jsonify(all_platforms), 200
 
 
-# Endpoint Get get_tags
+# Endpoint Get tags
 @api.route('/tags', methods=['GET'])
 def get_tags():
 
