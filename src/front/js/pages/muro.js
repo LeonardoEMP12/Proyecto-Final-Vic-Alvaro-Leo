@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../styles/muro.css";
 import SocialCard from "../component/SocialCard.jsx";
 import OMNIAlogo from "../../img/LogoOM.png";
 import { Footer } from "../component/footer.js";
+import { Context } from "../store/appContext";
+
 
 const Muro = () => {
+    const { actions } = useContext(Context);
+    
     const [post, setPost] = useState([]);
     const [activeTab, setActiveTab] = useState("publicaciones");
 
@@ -72,6 +76,9 @@ const Muro = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
                             <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0" />
                         </svg>
+                    </button>
+                    <button onClick={()=>{actions.setToken(null)}}>
+                        Cerrar sesion
                     </button>
                 </nav>
             </div>
