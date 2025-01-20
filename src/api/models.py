@@ -131,6 +131,8 @@ class Videogames(db.Model):
     title = db.Column(db.String(500), nullable=False)
     image = db.Column(db.String(500000), nullable=False)
     rating = db.Column(db.Integer, nullable=False)
+    genre_id = db.Column(db.Integer, db.ForeignKey(Genres.id), nullable=False)
+    genre = db.relationship('Genres')
     developers = db.relationship('Developers', secondary=videogame_developer, backref='Videogames')
     platforms = db.relationship('Platforms', secondary=videogame_platform, backref='Videogames')
     tags = db.relationship('Tags', secondary=videogame_tag, backref='Videogames')
@@ -144,6 +146,7 @@ class Videogames(db.Model):
             "title": self.title,
             "image": self.image,
             "rating": self.rating,
+            "genre_id": self.genre_id,
             "developers": [developer.serialize() for developer in self.developers],
             "platforms": [platform.serialize() for platform in self.platforms],
             "tags": [tag.serialize() for tag in self.tags]
