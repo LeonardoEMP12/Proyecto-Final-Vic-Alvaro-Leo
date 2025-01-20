@@ -24,7 +24,7 @@ class User(db.Model):
 
 class Profile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(500), nullable=False, unique=True)
+    username = db.Column(db.String(500), nullable=False, unique=True, autoincrement=True)
     description = db.Column(db.String(500))
     birth_date = db.Column(db.Date)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
@@ -43,7 +43,7 @@ class Profile(db.Model):
             "birth_date": self.birth_date,
             # do not serialize the password, its a security breach
         }
-
+    
 
 class Genres(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -76,7 +76,7 @@ class Developers(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-        } 
+        }
     
 
 class Platforms(db.Model):
@@ -90,14 +90,12 @@ class Platforms(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-        }         
-
+        }
+    
 
 class Tags(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(500), nullable=False)
-    pegi = db.Column(db.String(500), nullable=False) 
-
 
     def __repr__(self):
         return f'<Tag {self.name}>'
@@ -106,8 +104,26 @@ class Tags(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "pegi": self.pegi,
         }
+    
+videogame_developer = db.Table('videogame_developer',
+    db.Column('videogame_id', db.Integer, db.ForeignKey('videogames.id'), primary_key=True),
+    db.Column('developer_id', db.Integer, db.ForeignKey('developers.id'), primary_key=True)
+)
+    
+    
+# Tabla intermedia para la relación muchos a muchos entre Videojuegos y Plataformas
+videogame_platform = db.Table('videogame_platform',
+    db.Column('videogame_id', db.Integer, db.ForeignKey('videogames.id'), primary_key=True),
+    db.Column('platform_id', db.Integer, db.ForeignKey('platforms.id'), primary_key=True)
+)  
+        
+
+# Tabla intermedia para la relación muchos a muchos entre Videojuegos y Etiquetas
+videogame_tag = db.Table('videogame_tag',
+    db.Column('videogame_id', db.Integer, db.ForeignKey('videogames.id'), primary_key=True),
+    db.Column('tag_id', db.Integer, db.ForeignKey('tags.id'), primary_key=True)
+)    
 
 
 class Videogames(db.Model):
@@ -115,15 +131,9 @@ class Videogames(db.Model):
     title = db.Column(db.String(500), nullable=False)
     image = db.Column(db.String(500000), nullable=False)
     rating = db.Column(db.Integer, nullable=False)
-    genre_id = db.Column(db.Integer, db.ForeignKey(Genres.id))
-    developer_id = db.Column(db.Integer, db.ForeignKey(Developers.id))
-    platform_id = db.Column(db.Integer, db.ForeignKey(Platforms.id))
-    tag_id = db.Column(db.Integer, db.ForeignKey(Tags.id))
-    genre = db.relationship('Genres')
-    developer = db.relationship('Developers')
-    platform = db.relationship('Platforms')
-    tag = db.relationship('Tags')
-
+    developers = db.relationship('Developers', secondary=videogame_developer, backref='Videogames')
+    platforms = db.relationship('Platforms', secondary=videogame_platform, backref='Videogames')
+    tags = db.relationship('Tags', secondary=videogame_tag, backref='Videogames')
 
     def __repr__(self):
         return f'<Videogame {self.title}>'
@@ -134,12 +144,11 @@ class Videogames(db.Model):
             "title": self.title,
             "image": self.image,
             "rating": self.rating,
-            "genre_id":self.genre_id,
-            "developer_id":self.genre_id,
-            "platform_id":self.genre_id,
-            "tag_id":self.genre_id
+            "developers": [developer.serialize() for developer in self.developers],
+            "platforms": [platform.serialize() for platform in self.platforms],
+            "tags": [tag.serialize() for tag in self.tags]
         }
-
+    
 
 class FavoritesVideogames(db.Model):
     id = db.Column(db.Integer, primary_key=True)
