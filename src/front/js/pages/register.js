@@ -39,7 +39,7 @@ const navigate = useNavigate();
     }
 
 
-    fetch(process.env.BACKEND_URL + "/api/signup", {
+    fetch(process.env.BACKEND_URL + "api/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
