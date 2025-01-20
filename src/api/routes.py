@@ -643,21 +643,57 @@ def insert_tags():
 # Insertar Videojuegos
 @api.route('/insertar-videogames', methods=['POST'])
 def insert_videogames():
-    datos = request.json # Recogemos los datos del body mandado  
+    data = request.get_json()
 
-    if not datos:
-        return jsonify({"message":"Faltan datos"}), 400
-    
-    registros = [] # Creamos un array que recogera todos los datos de la request
+    if not isinstance(data, list):
+        return jsonify({"error": "Se espera una lista de videojuegos."}), 400
 
-    for registro in datos:
-        if 'title' not in registro or 'image' not in registro or 'rating':
-            return jsonify({"error": "Faltan datos en algún registro"}), 400
-         
-        nuevo_registro = Videogames(title=registro['title'], image=registro['image'], rating=registro['rating'])
-        registros.append(nuevo_registro)
-        
-    db.session.add_all(registros)
-    db.session.commit()
+    errors = []
+
+    for videogame_data in data:
+        title = videogame_data.get('title')
+        image = videogame_data.get('image')
+        rating = videogame_data.get('rating')
+        genre_id = videogame_data.get('genre_id')
+        developer_ids = videogame_data.get('developer_ids', [])
+        platform_ids = videogame_data.get('platform_ids', [])
+        tag_ids = videogame_data.get('tag_ids', [])
+
+        # Validaciones de datos
+        if not title or not image or not rating or not genre_id:
+            errors.append({"error": "Faltan datos obligatorios", "videojuego": videogame_data})
+            continue
+
+        # Crear el videojuego
+        new_videogame = Videogames(
+            title=title,
+            image=image,
+            rating=rating,
+            genre_id=genre_id
+        )
+
+        # Asociar desarrolladores, plataformas y etiquetas
+        developers = Developers.query.filter(Developers.id.in_(developer_ids)).all()
+        platforms = Platforms.query.filter(Platforms.id.in_(platform_ids)).all()
+        tags = Tags.query.filter(Tags.id.in_(tag_ids)).all()
+
+        if len(developers) != len(developer_ids):
+            errors.append({"error": "Algunos desarrolladores no existen", "videojuego": videogame_data})
+            continue
+        if len(platforms) != len(platform_ids):
+            errors.append({"error": "Algunas plataformas no existen", "videojuego": videogame_data})
+            continue
+        if len(tags) != len(tag_ids):
+            errors.append({"error": "Algunas etiquetas no existen", "videojuego": videogame_data})
+            continue
+
+        # Asignar las relaciones
+        new_videogame.developers.extend(developers)
+        new_videogame.platforms.extend(platforms)
+        new_videogame.tags.extend(tags)
+
+        # Guardar en la base de datos
+        db.session.add(new_videogame)
+        db.session.commit()
 
     return jsonify({"message": "Se han añadido todos los registros"}), 200
