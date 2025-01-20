@@ -10,6 +10,7 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from datetime import timedelta
 from flask_mail import Mail, Message
+import random
 
 
 api = Blueprint('api', __name__)
@@ -42,7 +43,7 @@ def handle_register():
     creation_date = request_body.get('creation_date') # Recogemos el campo creation_date del request_body
 
     # Datos del perfil
-    username = name  # Recogemos el campo username para el perfil
+    username = random.randint(0, 10000000000000000000000000000000000000000000000000000000000000000000000)  # Recogemos el campo username para el perfil
     description = "pon aqui la descripcion de tu perfil"  # Recogemos la descripción del perfil
 
     if password != confirm_password: # Validamos si las contraseñas coinciden
