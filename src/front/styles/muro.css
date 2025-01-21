@@ -7,40 +7,6 @@
     background-color: #141414;
 }
 
-#navegacion {
-    position: fixed; /* Para mantenerla fija al hacer scroll */
-    height: 95vh;
-    width: 15vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #141414;
-    margin: 1vw;
-    margin-left: 1.2vw;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border: 2px solid #ffd200;
-}
-
-.navigate-icon {
-    color: #ffd200;
-    text-align: center;
-    transition: transform 0.3s ease, color 0.3s ease;
-}
-
-.navigate-icon img {
-    max-width: 60%;
-}
-
-.navigate-icon:hover {
-    transform: scale(1.1);
-    color: #fff;
-}
-
-#add-post-btn{
-    background: transparent;
-}
-
 .card-noticia {
     height: 35vh;
 }
@@ -166,14 +132,28 @@
     transform: scale(0.98);
 }
 
+/* General Styles */
 .navigate-icon {
     position: relative;
     display: inline-block;
     text-align: center;
     cursor: pointer;
+    color: #ffd200;
+    text-align: center;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.navigate-icon:hover {
+    transform: scale(1.1);
+    color: #fff;
+}
+
+.navigate-icon img {
+    max-width: 60%;
 }
 
 .navigate-icon svg {
+    width: 38.2%;
     transition: opacity 0.3s ease;
 }
 
@@ -190,7 +170,16 @@
     transition: opacity 0.3s ease;
 }
 
-#publicar-btn{
+.navigate-icon:hover svg {
+    opacity: 0;
+}
+
+.navigate-icon:hover .hover-text {
+    opacity: 1;
+}
+
+/* Specific Styles */
+#publicar-btn {
     height: 4rem;
     width: 8rem;
     border-radius: 1rem;
@@ -201,10 +190,41 @@
     justify-content: center;
 }
 
-.navigate-icon:hover svg {
+#icon-omnia {
+    transition: opacity 0.3s ease;
+}
+
+#text-omnia {
+    width: 100%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+#icon-omnia:hover {
     opacity: 0;
 }
 
-.navigate-icon:hover .hover-text {
+#text-omnia:hover {
     opacity: 1;
+}
+
+/* Navbar Container Styles */
+#navegacion {
+    position: fixed; /* Para mantenerla fija al hacer scroll */
+    height: 95vh;
+    width: 15vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #141414;
+    margin: 1vw;
+    margin-left: 1.2vw;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ffd200;
+}
+
+#add-post-btn{
+    background: transparent;
 }
