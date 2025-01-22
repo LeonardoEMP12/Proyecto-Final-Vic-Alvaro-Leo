@@ -7,15 +7,15 @@ const Carousel = () => {
 
   const fetchVideogames = () => {
     fetch(process.env.BACKEND_URL + "/api/videogame")
-            .then((response) => response.json())
-            .then((response) => setVideogames(response.message))
-            .catch((error) => console.error(error));
+      .then((response) => response.json())
+      .then((response) => setVideogames(response.message))
+      .catch((error) => console.error(error));
   };
-
+  console.log(videogames)
   useEffect(() => {
-    
+
     fetchVideogames();
-    console.log(videogames)
+    // console.log(videogames)
   }, []);
 
   if (error) {
@@ -23,15 +23,15 @@ const Carousel = () => {
   }
 
   return (
-  <div className="videogames-list">
-  {videogames.map((videogame, index) => (
-  <div key={videogame.id || index} className="game-item">
-  <GameCard titulo={videogame.title} imagen={videogame.image} />
-   </div>
- ))}
- </div>
- 
-);
+    <div className="videogames-list">
+      {videogames.map((videogame, index) => (
+        <div key={videogame.id || index} className="game-item">
+          <GameCard title={videogame.title} image={videogame.image} />
+        </div>
+      ))}
+    </div>
+
+  );
 };
 
 export default Carousel;
