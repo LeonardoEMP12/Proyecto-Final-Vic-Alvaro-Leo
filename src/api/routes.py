@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from datetime import datetime
-from api.models import db, User, Profile, Genres, FavoritesGenres, Platforms, Tags, Developers, Videogames, Post, Comments, Profile, FavoritesVideogames
+from api.models import db, User, Profile, Genres, FavoritesGenres, Videogames, Post, Comments, Profile, FavoritesVideogames
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt 
@@ -276,52 +276,17 @@ def reset_password():
     return jsonify({"message":"La contraseña ha sido actualizada"}), 200
 
 
-# Endpoint Get platforms
-@api.route('/platforms', methods=['GET'])
-def get_platforms():
-
-    # Creamos las variables para los platforms de la tabla Platforms
-    platforms=Platforms.query.all()
-    all_platforms = [platforms.serialize() for platforms in platforms]
-
-    # Retornamos todos los platforms de la tabla Platforms
-    return jsonify({"message":all_platforms}), 200
-
-
-# Endpoint Get tags
-@api.route('/tags', methods=['GET'])
-def get_tags():
-
-    # Creamos las variables para los tags de la tabla Tags
-    tags=Tags.query.all()
-    all_tags = [tags.serialize() for tags in tags]
-
-    # Retornamos todos los tags de la tabla Tags
-    return jsonify({"message":all_tags}), 200
-
-
-# Endpoint Get developers
-@api.route('/developers', methods=['GET'])
-def get_developers():
-
-    # Creamos las variables para los developers de la tabla Developers
-    developers=Developers.query.all()
-    all_developers = [developers.serialize() for developers in developers]
-
-    # Retornamos todos los developers de la tabla Developers
-    return jsonify({"message":all_developers}), 200
-
-
 # Endpoint Get videogame
 @api.route('/videogame', methods=['GET'])
 def get_videogame():
 
     # Creamos las variables para los videogame de la tabla Videogames
-    videogame=Videogames.query.all()
-    all_videogame = [videogame.serialize() for videogame in videogame]
+    videogames=Videogames.query.all()
+    all_videogame = [videogame.serialize() for videogame in videogames]
 
     # Retornamos todos los videogame de la tabla Videogames
     return jsonify({"message":all_videogame}), 200
+
 
 # -------------------------------ENDPOINTS PUBLICACIONES------------------------------- #
 
@@ -573,128 +538,24 @@ def insert_genres():
     return jsonify({"message": "Se han añadido todos los registros"}), 200
 
 
-# Insertar Developers
-@api.route('/insertar-developers', methods=['POST'])
-def insert_developers():
-    datos = request.json # Recogemos los datos del body mandado  
-
-    if not datos:
-        return jsonify({"message":"Faltan datos"}), 400
-    
-    registros = [] # Creamos un array que recogera todos los datos de la request
-
-    for registro in datos:
-        if 'name' not in registro:
-            return jsonify({"error": "Cada registro debe tener 'name'"}), 400
-         
-        nuevo_registro = Developers(name=registro['name'])
-        registros.append(nuevo_registro)
-        
-    db.session.add_all(registros)
-    db.session.commit()
-
-    return jsonify({"message": "Se han añadido todos los registros"}), 200
-
-
-# Insertar Plataformas
-@api.route('/insertar-platforms', methods=['POST'])
-def insert_platforms():
-    datos = request.json # Recogemos los datos del body mandado  
-
-    if not datos:
-        return jsonify({"message":"Faltan datos"}), 400
-    
-    registros = [] # Creamos un array que recogera todos los datos de la request
-
-    for registro in datos:
-        if 'name' not in registro:
-            return jsonify({"error": "Cada registro debe tener 'name'"}), 400
-         
-        nuevo_registro = Platforms(name=registro['name'])
-        registros.append(nuevo_registro)
-        
-    db.session.add_all(registros)
-    db.session.commit()
-
-    return jsonify({"message": "Se han añadido todos los registros"}), 200
-
-
-# Insertar Tags
-@api.route('/insertar-tags', methods=['POST'])
-def insert_tags():
-    datos = request.json # Recogemos los datos del body mandado  
-
-    if not datos:
-        return jsonify({"message":"Faltan datos"}), 400
-    
-    registros = [] # Creamos un array que recogera todos los datos de la request
-
-    for registro in datos:
-        if 'name' not in registro:
-            return jsonify({"error": "Cada registro debe tener 'name'"}), 400
-         
-        nuevo_registro = Tags(name=registro['name'])
-        registros.append(nuevo_registro)
-        
-    db.session.add_all(registros)
-    db.session.commit()
-
-    return jsonify({"message": "Se han añadido todos los registros"}), 200
-
 # Insertar Videojuegos
 @api.route('/insertar-videogames', methods=['POST'])
 def insert_videogames():
-    data = request.get_json()
+    datos = request.json # Recogemos los datos del body mandado  
 
-    if not isinstance(data, list):
-        return jsonify({"error": "Se espera una lista de videojuegos."}), 400
+    if not datos:
+        return jsonify({"message":"Faltan datos"}), 400
+    
+    registros = [] # Creamos un array que recogera todos los datos de la request
 
-    errors = []
-
-    for videogame_data in data:
-        title = videogame_data.get('title')
-        image = videogame_data.get('image')
-        rating = videogame_data.get('rating')
-        genre_id = videogame_data.get('genre_id')
-        developer_ids = videogame_data.get('developer_ids', [])
-        platform_ids = videogame_data.get('platform_ids', [])
-        tag_ids = videogame_data.get('tag_ids', [])
-
-        # Validaciones de datos
-        if not title or not image or not rating or not genre_id:
-            errors.append({"error": "Faltan datos obligatorios", "videojuego": videogame_data})
-            continue
-
-        # Crear el videojuego
-        new_videogame = Videogames(
-            title=title,
-            image=image,
-            rating=rating,
-            genre_id=genre_id
-        )
-
-        # Asociar desarrolladores, plataformas y etiquetas
-        developers = Developers.query.filter(Developers.id.in_(developer_ids)).all()
-        platforms = Platforms.query.filter(Platforms.id.in_(platform_ids)).all()
-        tags = Tags.query.filter(Tags.id.in_(tag_ids)).all()
-
-        if len(developers) != len(developer_ids):
-            errors.append({"error": "Algunos desarrolladores no existen", "videojuego": videogame_data})
-            continue
-        if len(platforms) != len(platform_ids):
-            errors.append({"error": "Algunas plataformas no existen", "videojuego": videogame_data})
-            continue
-        if len(tags) != len(tag_ids):
-            errors.append({"error": "Algunas etiquetas no existen", "videojuego": videogame_data})
-            continue
-
-        # Asignar las relaciones
-        new_videogame.developers.extend(developers)
-        new_videogame.platforms.extend(platforms)
-        new_videogame.tags.extend(tags)
-
-        # Guardar en la base de datos
-        db.session.add(new_videogame)
-        db.session.commit()
+    for registro in datos:
+        if 'name' not in registro or 'image' not in registro:
+            return jsonify({"error": "Cada registro debe tener 'name'"}), 400
+         
+        nuevo_registro = Videogames(name=registro['name'], image=registro['image'])
+        registros.append(nuevo_registro)
+        
+    db.session.add_all(registros)
+    db.session.commit()
 
     return jsonify({"message": "Se han añadido todos los registros"}), 200
