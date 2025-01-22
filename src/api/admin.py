@@ -1,7 +1,7 @@
   
 import os
 from flask_admin import Admin
-from .models import db, User, Videogames, FavoritesVideogames, Developers, Genres, FavoritesGenres, Platforms, Tags, Comments, Post, Profile
+from .models import db, User, Videogames, FavoritesVideogames, Genres, FavoritesGenres, Comments, Post, Profile
 from flask_admin.contrib.sqla import ModelView
 
 def setup_admin(app):
@@ -18,11 +18,8 @@ def setup_admin(app):
     admin.add_view(userAdmin(Profile, db.session))
     admin.add_view(userAdmin(Videogames, db.session))
     admin.add_view(userAdmin(FavoritesVideogames, db.session))
-    admin.add_view(userAdmin(Developers, db.session))
     admin.add_view(userAdmin(Genres, db.session))
     admin.add_view(userAdmin(FavoritesGenres, db.session))
-    admin.add_view(userAdmin(Platforms, db.session))
-    admin.add_view(userAdmin(Tags, db.session))
     admin.add_view(userAdmin(Comments, db.session))
     admin.add_view(userAdmin(Post, db.session))
     
