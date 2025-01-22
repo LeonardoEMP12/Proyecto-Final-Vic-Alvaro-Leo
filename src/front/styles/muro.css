@@ -13,6 +13,7 @@
 
 .card-noticia  img {
     height: 61.8%;
+    object-fit: cover;
 }
 
 .header-noticias{
