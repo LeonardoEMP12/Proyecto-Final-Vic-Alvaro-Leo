@@ -5,6 +5,7 @@ import OMNIAicon from "../../img/OMNIAicon.png";
 import OMNIAtext from "../../img/OMNIAtext.png";
 import { Footer } from "../component/footer.js";
 import Carousel from "../component/Carousel.jsx";
+import SingleVideogameView from "../component/SingleVideogameView.js";
 
 const Muro = () => {
     const [post, setPost] = useState([]);
