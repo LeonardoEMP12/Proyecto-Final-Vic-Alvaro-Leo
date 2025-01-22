@@ -62,80 +62,12 @@ class Genres(db.Model):
             "description": self.description,
             "image": self.image,
         }
-    
-
-class Developers(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(500), nullable=False)
-
-
-    def __repr__(self):
-        return f'<Developer {self.name}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-        }
-    
-
-class Platforms(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(500), nullable=False)
-
-    def __repr__(self):
-        return f'<Platform {self.name}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-        }
-    
-
-class Tags(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(500), nullable=False)
-
-    def __repr__(self):
-        return f'<Tag {self.name}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-        }
-    
-videogame_developer = db.Table('videogame_developer',
-    db.Column('videogame_id', db.Integer, db.ForeignKey('videogames.id'), primary_key=True),
-    db.Column('developer_id', db.Integer, db.ForeignKey('developers.id'), primary_key=True)
-)
-    
-    
-# Tabla intermedia para la relación muchos a muchos entre Videojuegos y Plataformas
-videogame_platform = db.Table('videogame_platform',
-    db.Column('videogame_id', db.Integer, db.ForeignKey('videogames.id'), primary_key=True),
-    db.Column('platform_id', db.Integer, db.ForeignKey('platforms.id'), primary_key=True)
-)  
-        
-
-# Tabla intermedia para la relación muchos a muchos entre Videojuegos y Etiquetas
-videogame_tag = db.Table('videogame_tag',
-    db.Column('videogame_id', db.Integer, db.ForeignKey('videogames.id'), primary_key=True),
-    db.Column('tag_id', db.Integer, db.ForeignKey('tags.id'), primary_key=True)
-)    
 
 
 class Videogames(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(500), nullable=False)
     image = db.Column(db.String(500000), nullable=False)
-    rating = db.Column(db.Integer, nullable=False)
-    genre_id = db.Column(db.Integer, db.ForeignKey(Genres.id), nullable=False)
-    genre = db.relationship('Genres')
-    developers = db.relationship('Developers', secondary=videogame_developer, backref='Videogames')
-    platforms = db.relationship('Platforms', secondary=videogame_platform, backref='Videogames')
-    tags = db.relationship('Tags', secondary=videogame_tag, backref='Videogames')
 
     def __repr__(self):
         return f'<Videogame {self.title}>'
@@ -145,11 +77,6 @@ class Videogames(db.Model):
             "id": self.id,
             "title": self.title,
             "image": self.image,
-            "rating": self.rating,
-            "genre_id": self.genre_id,
-            "developers": [developer.serialize() for developer in self.developers],
-            "platforms": [platform.serialize() for platform in self.platforms],
-            "tags": [tag.serialize() for tag in self.tags]
         }
     
 
