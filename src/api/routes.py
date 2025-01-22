@@ -489,6 +489,30 @@ def register_games():
     return jsonify({"message": "Se ha añadido a favoritos"}), 200
 
 
+# Endpoint Get categorias
+@api.route('/favorites-genres', methods=['GET'])
+def get_favoritesgenres():
+
+    # Creamos las variables para los generos de la tabla Genres
+    genre=Genres.query.all()
+    all_genres = [genres.serialize() for genres in genre]
+
+    # Retornamos todos los generos de la tabla Genres
+    return jsonify({"message":all_genres}), 200
+
+
+# Endpoint Get categorias
+@api.route('/favorites-videogames', methods=['GET'])
+def get_favoritesvideogames():
+
+    # Creamos las variables para los generos de la tabla Genres
+    genre=Genres.query.all()
+    all_genres = [genres.serialize() for genres in genre]
+
+    # Retornamos todos los generos de la tabla Genres
+    return jsonify({"message":all_genres}), 200
+
+
 
 
 
