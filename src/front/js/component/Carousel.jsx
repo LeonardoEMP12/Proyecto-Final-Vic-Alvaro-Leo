@@ -6,20 +6,16 @@ const Carousel = () => {
   const [error, setError] = useState(null);
 
   const fetchVideogames = () => {
-    fetch(process.env.BACKEND_URL + "/admin/videogame")
-      .then((response) => {
-        if (!response.ok) throw new Error("Error al obtener los datos");
-        return response.json();
-      })
-      .then((data) => setVideogames(data))
-      .catch((err) => {
-        console.error(err);
-        setError("No se pudo cargar la información de los videojuegos.");
-      });
+    fetch(process.env.BACKEND_URL + "/api/videogame")
+            .then((response) => response.json())
+            .then((response) => setVideogames(response.message))
+            .catch((error) => console.error(error));
   };
 
   useEffect(() => {
+    
     fetchVideogames();
+    console.log(videogames)
   }, []);
 
   if (error) {
@@ -27,54 +23,16 @@ const Carousel = () => {
   }
 
   return (
-    <div
-      id="carouselExampleIndicators"
-      className="carousel slide"
-      data-bs-ride="carousel"
-    >
-      <div className="carousel-indicators">
-        {videogames.map((_, index) => (
-          <button
-            key={index}
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to={index}
-            className={index === 0 ? "active" : ""}
-            aria-current={index === 0 ? "true" : undefined}
-            aria-label={`Slide ${index + 1}`}
-          ></button>
-        ))}
-      </div>
-      <div className="carousel-inner">
-        {videogames.map((game, index) => (
-          <div
-            key={game.id}
-            className={`carousel-item ${index === 0 ? "active" : ""}`}
-          >
-            <GameCard titulo={game.title} imagen={game.image} />
-          </div>
-        ))}
-      </div>
-      <button
-        className="carousel-control-prev"
-        type="button"
-        data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="prev"
-      >
-        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span className="visually-hidden">Previous</span>
-      </button>
-      <button
-        className="carousel-control-next"
-        type="button"
-        data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="next"
-      >
-        <span className="carousel-control-next-icon" aria-hidden="true"></span>
-        <span className="visually-hidden">Next</span>
-      </button>
-    </div>
-  );
+  <div className="videogames-list">
+  {videogames.map((videogame, index) => (
+  <div key={videogame.id || index} className="game-item">
+  <GameCard titulo={videogame.title} imagen={videogame.image} />
+   </div>
+ ))}
+ </div>
+ 
+);
 };
 
 export default Carousel;
+
