@@ -68,6 +68,7 @@ class Videogames(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(500), nullable=False)
     image = db.Column(db.String(500000), nullable=False)
+    api_id = db.Column(db.Integer)
 
     def __repr__(self):
         return f'<Videogame {self.title}>'
@@ -77,6 +78,7 @@ class Videogames(db.Model):
             "id": self.id,
             "title": self.title,
             "image": self.image,
+            "api_id": self.api_id
         }
     
 
