@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 import "../../styles/GameCard.css";
 
-const GameCard = ({ titulo, imagen }) => {
+const GameCard = ({ imagen, titulo }) => {
   return (
-    <div id='CardJuego' className="card border-warning mb-3">
-      <div className="card-header">{titulo}hola texto 1</div>
+    <div id="CardJuego" className="card border-warning mb-3">
+      <div className="card-header">{titulo}</div>
       <div className="card-body text-warning">
-        <p className="card-text">{imagen}imagen del juego</p>
+        <img src={imagen} alt={titulo} className="img-fluid" />
       </div>
     </div>
   );

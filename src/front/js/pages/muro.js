@@ -194,9 +194,9 @@ const Muro = () => {
                             </div>
 
                         </div>
-                        <h2>Videojuegos</h2>
-                        <p>Vista de todos los videojuegos aquí, tambien se puede hacer otro componente para ponerlo aqui dentro</p>
+                        <div className="m-3" >
                         <Carousel />
+                        </div>
                     </div>
                 )}
 
