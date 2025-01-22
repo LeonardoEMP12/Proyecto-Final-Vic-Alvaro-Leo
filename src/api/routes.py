@@ -549,10 +549,10 @@ def insert_videogames():
     registros = [] # Creamos un array que recogera todos los datos de la request
 
     for registro in datos:
-        if 'name' not in registro or 'image' not in registro:
-            return jsonify({"error": "Cada registro debe tener 'name'"}), 400
+        if 'title' not in registro or 'image' not in registro:
+            return jsonify({"error": "Cada registro debe tener 'title'"}), 400
          
-        nuevo_registro = Videogames(name=registro['name'], image=registro['image'])
+        nuevo_registro = Videogames(title=registro['title'], image=registro['image'])
         registros.append(nuevo_registro)
         
     db.session.add_all(registros)
