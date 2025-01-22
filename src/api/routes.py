@@ -285,7 +285,7 @@ def get_platforms():
     all_platforms = [platforms.serialize() for platforms in platforms]
 
     # Retornamos todos los platforms de la tabla Platforms
-    return jsonify(all_platforms), 200
+    return jsonify({"message":all_platforms}), 200
 
 
 # Endpoint Get tags
@@ -297,7 +297,7 @@ def get_tags():
     all_tags = [tags.serialize() for tags in tags]
 
     # Retornamos todos los tags de la tabla Tags
-    return jsonify(all_tags), 200
+    return jsonify({"message":all_tags}), 200
 
 
 # Endpoint Get developers
@@ -309,7 +309,7 @@ def get_developers():
     all_developers = [developers.serialize() for developers in developers]
 
     # Retornamos todos los developers de la tabla Developers
-    return jsonify(all_developers), 200
+    return jsonify({"message":all_developers}), 200
 
 
 # Endpoint Get videogame
@@ -321,7 +321,7 @@ def get_videogame():
     all_videogame = [videogame.serialize() for videogame in videogame]
 
     # Retornamos todos los videogame de la tabla Videogames
-    return jsonify(all_videogame), 200
+    return jsonify({"message":all_videogame}), 200
 
 # -------------------------------ENDPOINTS PUBLICACIONES------------------------------- #
 
