@@ -3,6 +3,7 @@ import "../../styles/muro.css";
 import SocialCard from "../component/SocialCard.jsx";
 import OMNIAlogo from "../../img/LogoOM.png";
 import { Footer } from "../component/footer.js";
+import Carousel from "../component/Carousel.jsx";
 
 const Muro = () => {
     const [post, setPost] = useState([]);
@@ -191,6 +192,7 @@ const Muro = () => {
                         </div>
                         <h2>Videojuegos</h2>
                         <p>Vista de todos los videojuegos aquí, tambien se puede hacer otro componente para ponerlo aqui dentro</p>
+                        <Carousel />
                     </div>
                 )}
 
