@@ -6,10 +6,18 @@ import OMNIAtext from "../../img/OMNIAtext.png";
 import { Footer } from "../component/footer.js";
 import Carousel from "../component/Carousel.jsx";
 import SingleVideogameView from "../component/SingleVideogameView.js";
+import { useNavigate } from "react-router-dom";
 
 const Muro = () => {
     const [post, setPost] = useState([]);
     const [activeTab, setActiveTab] = useState("publicaciones");
+
+
+    const navigate = useNavigate();
+
+    const goToGame = () => {
+        navigate("/game/41"); 
+      };
 
     const publicaciones = () =>
         fetch(process.env.BACKEND_URL + "/api/posts")
