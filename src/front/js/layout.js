@@ -11,6 +11,7 @@ import NewPassword from "./pages/newpassword";
 import Email from "./pages/email";
 import Muro from "./pages/muro";
 import PrivateRoute from "./component/privateRoute";
+import VideogameCard from "./component/VideogameCard";
 
 //create your first component
 const Layout = () => {
@@ -32,6 +33,7 @@ const Layout = () => {
                         {/* Private route implementation  */}
                         <Route path="/muro" element={<PrivateRoute Component={Muro} />} />
                         <Route path="/newpassword" element={<PrivateRoute Component={NewPassword} />} />
+                        <Route path="/game/:id" element={<PrivateRoute Component={VideogameCard} />} />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                 </ScrollToTop>

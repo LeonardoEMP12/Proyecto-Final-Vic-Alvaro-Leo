@@ -5,10 +5,18 @@ import OMNIAicon from "../../img/OMNIAicon.png";
 import OMNIAtext from "../../img/OMNIAtext.png";
 import { Footer } from "../component/footer.js";
 import Carousel from "../component/Carousel.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Muro = () => {
     const [post, setPost] = useState([]);
     const [activeTab, setActiveTab] = useState("publicaciones");
+
+
+    const navigate = useNavigate();
+
+    const goToGame = () => {
+        navigate("/game/41"); 
+      };
 
     const publicaciones = () =>
         fetch(process.env.BACKEND_URL + "/api/posts")
@@ -196,7 +204,7 @@ const Muro = () => {
                         </div>
                         <h2>Videojuegos</h2>
                         <p>Vista de todos los videojuegos aquí, tambien se puede hacer otro componente para ponerlo aqui dentro</p>
-                        <Carousel />
+                        <Carousel/>
                     </div>
                 )}
 
