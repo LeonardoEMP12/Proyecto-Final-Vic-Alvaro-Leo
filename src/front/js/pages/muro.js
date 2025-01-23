@@ -5,7 +5,6 @@ import OMNIAicon from "../../img/OMNIAicon.png";
 import OMNIAtext from "../../img/OMNIAtext.png";
 import { Footer } from "../component/footer.js";
 import Carousel from "../component/Carousel.jsx";
-import SingleVideogameView from "../component/SingleVideogameView.js";
 import { useNavigate } from "react-router-dom";
 
 const Muro = () => {
@@ -205,7 +204,7 @@ const Muro = () => {
                         </div>
                         <h2>Videojuegos</h2>
                         <p>Vista de todos los videojuegos aquí, tambien se puede hacer otro componente para ponerlo aqui dentro</p>
-                        <Carousel />
+                        <Carousel/>
                     </div>
                 )}
 
