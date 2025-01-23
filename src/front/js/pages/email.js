@@ -25,7 +25,6 @@ const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
 
-
     fetch(process.env.BACKEND_URL + "/api/forgot-password", {
       method: "POST",
       headers: {

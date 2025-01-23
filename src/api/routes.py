@@ -32,7 +32,8 @@ def handle_hello():
     return jsonify(response_body), 200
 
 
-# Endpoint de registro de Usuario
+# ------------------------------- ENDPOINTS DE REGISTRP DE USUARIO ------------------------------- #
+
 @api.route('/signup', methods=['POST'])
 def handle_register():
     request_body = request.json # Recogemos los datos del body mandado  
@@ -74,7 +75,9 @@ def handle_register():
     return jsonify({"message":usuario_add_serialize}), 200
 
 
-#Endpoint login de usuario
+
+# ------------------------------- ENDPOINTS DE INICIO DE SESION ------------------------------- #
+
 @api.route('/login', methods=['POST'])
 def handle_login(): 
     request_body = request.json # Recogemos los datos del body mandado    
@@ -97,6 +100,8 @@ def handle_login():
                     "user":user_serialize}), 200
 
 
+# ------------------------------- ENDPOINTS GET CATEGORIAS ------------------------------- #
+
 # Endpoint Get categorias
 @api.route('/genres', methods=['GET'])
 def get_genres():
@@ -108,6 +113,9 @@ def get_genres():
     # Retornamos todos los generos de la tabla Genres
     return jsonify({"message":all_genres}), 200
 
+
+
+# ------------------------------- ENDPOINTS AÑDIR/ELIMINAR GENEROS FAVORITOS ------------------------------- #
 
 # Endpoint añadir categoria a favoritas
 @api.route('/register-genres', methods=['POST'])
@@ -152,7 +160,10 @@ def remove_genres():
     db.session.commit()  # Actualizamos la base de datos
 
     return jsonify({"message": "Se ha eliminado de favoritos"}), 200
-# -------------------------------ENDPOINTS PERFIL------------------------------- #
+
+
+
+# ------------------------------- ENDPOINTS PERFIL ------------------------------- #
 
 # Endpoint para actualizar el username del perfil
 @api.route('/profile/<int:profile_id>/username', methods=['PUT'])
@@ -220,6 +231,7 @@ def update_birth_date(profile_id):
         return jsonify({"error": "Error al actualizar la fecha de nacimiento", "details": str(e)}), 500
 
 
+# ------------------------------- ENDPOINTS RESETEO DE CONTRASEÑA ------------------------------- #
 
 # Endpoint de envio de correo de reset de password
 @api.route('/forgot-password', methods=['POST'])
@@ -276,6 +288,9 @@ def reset_password():
     return jsonify({"message":"La contraseña ha sido actualizada"}), 200
 
 
+
+# ------------------------------- ENDPOINTS GET DE LOS VIDEOJUEGOS ------------------------------- #
+
 # Endpoint Get videogame
 @api.route('/videogame', methods=['GET'])
 def get_videogame():
@@ -286,6 +301,7 @@ def get_videogame():
 
     # Retornamos todos los videogame de la tabla Videogames
     return jsonify({"message":all_videogame}), 200
+
 
 
 # -------------------------------ENDPOINTS PUBLICACIONES------------------------------- #
@@ -465,6 +481,9 @@ def update_comment(comment_id):
     return jsonify({"message" : "Se ha editado el comentario"}), 200
 
 
+
+# ------------------------------- ENDPOINTS AÑADIR/ELIMINAR UN VIDEOJUEGOS A FAVORITOS ------------------------------- #
+
 # Endpoint añadir Videojuegos a favoritos
 @api.route('/register-games', methods=['POST'])
 def register_games():
@@ -489,51 +508,84 @@ def register_games():
     return jsonify({"message": "Se ha añadido a favoritos"}), 200
 
 
-# Endpoint Get categorias
-@api.route('/favorites-genres', methods=['GET'])
-def get_favoritesgenres():
+#Endpoint eliminar Videojuegos de favoritas
+@api.route('/remove-genres', methods=['DELETE'])
+def remove_genres():
+    request_body = request.json  # Recogemos los datos del body enviado
+    user_id = request_body.get('user_id')  # Recogemos el user_id del request_body
+    videogame_id = request_body.get('videogame_id')  # Recogemos el videogame_id del request_body
 
-    # Creamos las variables para los generos de la tabla Genres
-    genre=Genres.query.all()
-    all_genres = [genres.serialize() for genres in genre]
+    if not user_id or not videogame_id:
+        return jsonify({"message": "No se ha podido eliminar de favoritos"}), 400
 
-    # Retornamos todos los generos de la tabla Genres
-    return jsonify({"message":all_genres}), 200
+    videogames = FavoritesGenres.query.filter_by(user_id=user_id, videogame_id=videogame_id).first()
 
+    if not videogames:
+        return jsonify({"message": "El género no está en favoritos"}), 404
 
-# Endpoint Get categorias
-@api.route('/favorites-videogames', methods=['GET'])
-def get_favoritesvideogames():
+    db.session.delete(videogames)  # Eliminamos el registro
+    db.session.commit()  # Actualizamos la base de datos
 
-    # Creamos las variables para los generos de la tabla Genres
-    genre=Genres.query.all()
-    all_genres = [genres.serialize() for genres in genre]
-
-    # Retornamos todos los generos de la tabla Genres
-    return jsonify({"message":all_genres}), 200
+    return jsonify({"message": "Se ha eliminado de favoritos"}), 200
 
 
 
+# ------------------------------- ENDPOINTS GET VIDEOJUEGOS Y GENEROS FAVORITOS ------------------------------- #
 
 
+@api.route('/favorites-genres/<int:user_id>', methods=['GET'])
+def get_favorites_genres(user_id):
+    # Verifica si el usuario existe
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    # Obtén los géneros favoritos del usuario
+    favorite_genres = FavoritesGenres.query.filter_by(user_id=user_id).all()
+
+    # Si no hay géneros favoritos, devuelve un mensaje
+    if not favorite_genres:
+        return jsonify({"message": "No favorite genres found for this user"}), 404
+
+    # Serializa los géneros favoritos
+    genres = [
+        {
+            "id": favorite_genre.genre.id,
+            "name": favorite_genre.genre.name 
+        }
+        for favorite_genre in favorite_genres
+    ]
+
+    return jsonify({"message": {"user_id": user_id, "favorite_genres": genres}}), 200
 
 
+@api.route('/favorites-games/<int:user_id>', methods=['GET'])
+def get_favorites_games(user_id):
+    # Verifica si el usuario existe
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"message": "User not found"}), 404
 
+    # Obtén los géneros favoritos del usuario
+    # Obtén los videojuegos favoritos del usuario
+    favorites = FavoritesVideogames.query.filter_by(user_id=user_id).all()
 
+    # Si no hay videojuegos favoritos, devuelve un mensaje
+    if not favorites:
+        return jsonify({"message": "No favorite videogames found for this user"}), 404
 
+    # Serializa los datos junto con los detalles del videojuego
+    serialized_favorites = [
+        {   
+            "id": favorite.videogame.id,
+            "name": favorite.videogame.title,     
+            "api_id": favorite.videogame.api_id, 
+        }
+        for favorite in favorites
+    ]
 
-
-
-
-
-
-
-
-
-
-
-
-
+    return jsonify({"message": {"user_id": user_id, "favorite_games": serialized_favorites}}), 200
+    
 
 
 # ------------------------------- ENDPOINTS INSERCCIONES A LA BASE DE DATOS ------------------------------- #
@@ -573,10 +625,10 @@ def insert_videogames():
     registros = [] # Creamos un array que recogera todos los datos de la request
 
     for registro in datos:
-        if 'title' not in registro or 'image' not in registro:
+        if 'title' not in registro or 'image' not in registro or 'api_id' not in registro:
             return jsonify({"error": "Cada registro debe tener 'title'"}), 400
          
-        nuevo_registro = Videogames(title=registro['title'], image=registro['image'])
+        nuevo_registro = Videogames(title=registro['title'], image=registro['image'], api_id=registro['api_id'])
         registros.append(nuevo_registro)
         
     db.session.add_all(registros)
