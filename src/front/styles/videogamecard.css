@@ -97,7 +97,7 @@ body {
 }
 
 .info-column p {
-  margin: 0.5rem 0;
+  margin: 0.5rem;
   font-size: 0.9rem;
 }
 
@@ -264,7 +264,7 @@ body {
 
 .description-collapsed {
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* Límite de líneas */
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -277,27 +277,6 @@ body {
 
 
 /* Estilos del modal */
-.modal-content {
-  background-color: #1c1c1c; /* Fondo oscuro para el modal */
-  border-radius: 12px; /* Bordes redondeados */
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); /* Sombra suave */
-  color: #ccc; /* Color de texto */
-  border: 2px solid #ffd200; /* Borde dorado */
-}
-
-.btn-close {
-  background: none;
-  border: none;
-  color: #ffd200; /* Botón de cierre dorado */
-  font-size: 1.2rem;
-  transition: transform 0.3s ease, color 0.3s ease;
-}
-
-.btn-close:hover {
-  transform: scale(1.2);
-  color: #fff;
-}
-
 .modal-body {
   display: flex;
   justify-content: center;
@@ -305,7 +284,68 @@ body {
   padding: 2rem;
 }
 
+.modal-body img{
+  width: 100%;
+  border: 2px solid #ffd200;
+  border-radius: 15px;
+  object-fit: cover;
+}
+
+
 .modal-backdrop.show {
   background-color: rgba(0, 0, 0, 0.8); 
   transition: background-color 0.5s ease; 
+}
+
+/* Estilos de ratings */
+.ratings {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #ffd200;
+  color: #ffd200;
+  border-radius: 12px;
+  padding: 0.5rem;
+  margin: 1rem;
+}
+
+.rating {
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+  color: #fff;
+  border-top: 1px solid #ffd200;
+  padding:6px;
+}
+
+.rating-exceptional {
+  color: #80ed99;
+}
+
+.rating-recommended {
+  color: #6ccff6;
+}
+
+.rating-meh {
+  color: #bbbbbb;
+}
+
+.rating-skip {
+  color: #db2b39;
+}
+
+.rating strong {
+  font-weight: bold;
+  color: #ffd200;
+}
+
+/* Asegurando que la sección de ratings esté alineada a la derecha */
+.game-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  align-items: flex-start;
+}
+
+.ratings {
+  flex-shrink: 0;
+  margin-left: 20px;
 }

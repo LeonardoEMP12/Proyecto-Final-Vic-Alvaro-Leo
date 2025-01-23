@@ -20,32 +20,45 @@ const VideogameCard = () => {
     navigate(`/${tab}`);
   };
 
-  const API_KEY = "02f82a6de2d04510bf98339e6e960f2c";
+  const FLASK_APP_API_KEY = "02f82a6de2d04510bf98339e6e960f2c";
   const BASE_URL = "https://api.rawg.io/api";
 
-  useEffect(() => {
-    const fetchGameDetails = async () => {
-      try {
-        const response = await fetch(`${BASE_URL}/games/${id}?key=${API_KEY}`);
-        if (!response.ok) throw new Error("Error fetching game details");
-        const data = await response.json();
+useEffect(() => {
+  const fetchGameDetails = async () => {
+    try {
+      // Fetch game details
+      const response = await fetch(`${BASE_URL}/games/${id}?key=${FLASK_APP_API_KEY}`);
+      if (!response.ok) throw new Error("Error fetching game details");
+      const data = await response.json();
 
-        // Fetch screenshots
-        const screenshotsResponse = await fetch(
-          `${BASE_URL}/games/${id}/screenshots?key=${API_KEY}`
-        );
-        const screenshotsData = await screenshotsResponse.json();
+      // Fetch screenshots
+      const screenshotsResponse = await fetch(
+        `${BASE_URL}/games/${id}/screenshots?key=${FLASK_APP_API_KEY}`
+      );
+      const screenshotsData = await screenshotsResponse.json();
 
-        setGame({ ...data, screenshots: screenshotsData.results });
-      } catch (error) {
-        console.error("Error:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+      // Fetch trailers
+      const trailersResponse = await fetch(
+        `${BASE_URL}/games/${id}/movies?key=${FLASK_APP_API_KEY}`
+      );
+      const trailersData = await trailersResponse.json();
 
-    fetchGameDetails();
-  }, [id]);
+      setGame({
+        ...data,
+        screenshots: screenshotsData.results,
+        trailers: trailersData.results,
+      });
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchGameDetails();
+}, [id]);
+
+
 
   if (loading) return <p>Loading...</p>;
   if (!game) return <p>Game not found!</p>;
@@ -102,40 +115,72 @@ const VideogameCard = () => {
         {/* Aquí puedes añadir más contenido si es necesario */}
       </div>
 
-      <div className="col-8 fondo2 game-details">
+      <div className="col-10 fondo2 game-details">
         <h1 className="banner-title">{game.name}</h1>
-        <div className="banner">
-          <img
-            src={game.background_image}
-            alt={game.name}
-            className="banner-image"
-          />
+
+        <div className="row">
+          <div className="banner col-10">
+            <img
+              src={game.background_image}
+              alt={game.name}
+              className="banner-image"
+            />
+          </div>
         </div>
 
 
+
         {/* Información por columnas */}
+
         <div className="game-info">
           <div className="info-column">
             <p>
-              <strong>Release date:</strong> {game.released}
+              <strong>Release date:</strong> <br /> {game.released}
             </p>
             <p>
-              <strong>Publisher:</strong>{" "}
+              <strong>Distribuidora:</strong>{" "}
+              <br />
               {game.publishers?.map((publisher) => publisher.name).join(", ") ||
+                "N/A"}
+            </p>
+            <p>
+              <strong>Plataformas:</strong>{" "}
+              <br />
+              {game.parent_platforms?.map((platform) => platform.platform.name).join(", ") ||
                 "N/A"}
             </p>
           </div>
 
           <div className="info-column">
             <p>
-              <strong>Genre:</strong>{" "}
+              <strong>Genero:</strong>{" "}
+              <br />
               {game.genres.map((genre) => genre.name).join(", ")}
             </p>
             <p>
-              <strong>Developer:</strong>{" "}
+              <strong>Desarrolladora:</strong>{" "}
+              <br />
               {game.developers?.map((developer) => developer.name).join(", ") ||
                 "N/A"}
             </p>
+            <p>
+              <strong>Tiendas:</strong>{" "}
+              <br />
+              {game.stores?.map((store) => store.store.name).join(", ") ||
+                "N/A"}
+            </p>
+          </div>
+
+          <div className="ratings">
+            <strong>Ratings:</strong>
+            {game.ratings?.map((rating) => (
+              <div key={rating.id} className="rating">
+                <span className={`rating-title rating-${rating.title}`}>
+                  {rating.title}
+                </span>
+                : {rating.percent}%
+              </div>
+            ))}
           </div>
         </div>
 
@@ -182,6 +227,26 @@ const VideogameCard = () => {
       </div>
 
       <div className="col-2 game-image">
+        {/* Trailer */}
+        <div className="game-trailer">
+          {game.trailers && game.trailers.length > 0 ? (
+            <div className="trailer-container">
+              <h3>Trailer</h3>
+              <iframe
+                width="100%"
+                src={game.trailers[0].data.max}
+                title="Game Trailer"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture, fullscreen"
+                allowFullScreen
+                data-bs-toggle="modal"
+                data-bs-target="#trailerModal" // Modal para el trailer
+              ></iframe>
+            </div>
+          ) : (
+            <p>No trailer available.</p>
+          )}
+        </div>
+
         {/* Screenshots */}
         <div className="game-screenshots">
           <h3>Screenshots</h3>
@@ -204,7 +269,7 @@ const VideogameCard = () => {
           </div>
         </div>
 
-        {/* Modal */}
+        {/* Modal para Screenshots */}
         <div
           className="modal fade"
           id="screenshotModal"
@@ -213,24 +278,21 @@ const VideogameCard = () => {
           aria-hidden="true"
         >
           <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-body text-center">
-              <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
+            <div className="modal-content border-0 bg-transparent">
+              <div className="modal-body text-center p-0">
                 <img
                   src={modalImage}
                   alt="Screenshot Enlarged"
-                  className="img-fluid"
+                  className="img-fluid rounded"
                 />
               </div>
             </div>
           </div>
         </div>
       </div>
+
+
+
     </div>
   );
 };
