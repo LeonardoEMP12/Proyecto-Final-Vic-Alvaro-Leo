@@ -1,5 +1,4 @@
-#CardJuego{
-max-width: 12rem;
-background-color: rgb(222, 47, 47);
-color: #fff;
+#Carta{
+  background-color: #1c1c1c;
+  color:aquamarine;
 }

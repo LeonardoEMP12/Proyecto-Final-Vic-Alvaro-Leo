@@ -6,6 +6,7 @@ import OMNIAtext from "../../img/OMNIAtext.png";
 import { Footer } from "../component/footer.js";
 import Carousel from "../component/Carousel.jsx";
 import { useNavigate } from "react-router-dom";
+import ModalPost from "../component/modalpost.js";
 
 const Muro = () => {
     const [post, setPost] = useState([]);
@@ -15,8 +16,8 @@ const Muro = () => {
     const navigate = useNavigate();
 
     const goToGame = () => {
-        navigate("/game/41"); 
-      };
+        navigate("/game/41");
+    };
 
     const publicaciones = () =>
         fetch(process.env.BACKEND_URL + "/api/posts")
@@ -37,9 +38,9 @@ const Muro = () => {
                     className={`navigate-icon mt-4 mb-0 ${activeTab === "publicaciones" ? "active" : ""}`}
                     onClick={() => setActiveTab("publicaciones")}
                 >
-                    <img src={OMNIAicon} alt="OMNIA" className="img-fluid" id="icon-omnia"/>
+                    <img src={OMNIAicon} alt="OMNIA" className="img-fluid" id="icon-omnia" />
                     <span class="hover-text" id="text-omnia">
-                    <img src={OMNIAtext} alt="OMNIA" className="img-fluid" />
+                        <img src={OMNIAtext} alt="OMNIA" className="img-fluid" />
                     </span>
                 </a>
 
@@ -89,55 +90,7 @@ const Muro = () => {
             <div className="col-8 fondo2">
                 {activeTab === "publicaciones" && (
                     <div>
-                        <div className="d-flex justify-content-end mt-3">
-                            <div
-                                className="modal fade"
-                                id="exampleModal"
-                                tabIndex="-1"
-                                aria-labelledby="exampleModalLabel"
-                                aria-hidden="true"
-                            >
-                                <div className="modal-dialog">
-                                    <div id="PostModal" className="modal-content">
-                                        <div className="modal-header">
-                                            <h5 className="modal-title" id="exampleModalLabel">Nueva publicación</h5>
-                                            <button
-                                                type="button"
-                                                className="btn-close"
-                                                data-bs-dismiss="modal"
-                                                aria-label="Close"
-                                            ></button>
-                                        </div>
-                                        <div className="modal-body">
-                                            <form>
-                                                <div className="mb-3">
-                                                    <label htmlFor="message-text" className="col-form-label">
-                                                        ¿Listo para jugar?:
-                                                    </label>
-                                                    <textarea className="form-control" id="TextoPost"></textarea>
-                                                    <label className="mt-4" for="fileInput">Selecciona una imagen para subir:</label>
-                                                    <input type="file" id="fileInput" name="image" accept="image/*" required></input>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div className="modal-footer">
-                                            <button
-                                                id="Cerrar"
-                                                type="button"
-                                                className="btn btn-secondary"
-                                                data-bs-dismiss="modal"
-                                            >
-                                                Cerrar
-                                            </button>
-                                            <button id="Publicar" type="button" className="btn btn-primary">
-                                                Publicar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
+                        <ModalPost />
                         {post.map((post, index) => (
                             <div className="cuerpo" key={index}>
                                 <SocialCard
@@ -153,121 +106,17 @@ const Muro = () => {
                 {activeTab === "videojuegos" && (
 
                     <div>
-                        <div className="d-flex justify-content-end mt-3">
-                            <div
-                                className="modal fade"
-                                id="exampleModal"
-                                tabIndex="-1"
-                                aria-labelledby="exampleModalLabel"
-                                aria-hidden="true"
-                            >
-                                <div className="modal-dialog">
-                                    <div id="PostModal" className="modal-content">
-                                        <div className="modal-header">
-                                            <h5 className="modal-title" id="exampleModalLabel">Nueva publicación</h5>
-                                            <button
-                                                type="button"
-                                                className="btn-close"
-                                                data-bs-dismiss="modal"
-                                                aria-label="Close"
-                                            ></button>
-                                        </div>
-                                        <div className="modal-body">
-                                            <form>
-                                                <div className="mb-3">
-                                                    <label htmlFor="message-text" className="col-form-label">
-                                                        ¿Listo para jugar?:
-                                                    </label>
-                                                    <textarea className="form-control" id="TextoPost"></textarea>
-                                                    <label className="mt-4" for="fileInput">Selecciona una imagen para subir:</label>
-                                                    <input type="file" id="fileInput" name="image" accept="image/*" required></input>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div className="modal-footer">
-                                            <button
-                                                id="Cerrar"
-                                                type="button"
-                                                className="btn btn-secondary"
-                                                data-bs-dismiss="modal"
-                                            >
-                                                Cerrar
-                                            </button>
-                                            <button id="Publicar" type="button" className="btn btn-primary">
-                                                Publicar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <ModalPost />
+                        <div className="m-3" >
+                            <Carousel />
 
-                        </div>
-                        <div className="m-3" >
-                        <Carousel />                        
-                        </div>
-                        <div className="m-3" >
-                        <Carousel />                        
-                        </div>
-                        <div className="m-3" >
-                        <Carousel />                        
-                        </div>
-                        <div className="m-3" >
-                        <Carousel />                        
                         </div>
                     </div>
                 )}
 
                 {activeTab === "configuracion" && (
                     <div>
-                        <div className="d-flex justify-content-end mt-3">
-                            <div
-                                className="modal fade"
-                                id="exampleModal"
-                                tabIndex="-1"
-                                aria-labelledby="exampleModalLabel"
-                                aria-hidden="true"
-                            >
-                                <div className="modal-dialog">
-                                    <div id="PostModal" className="modal-content">
-                                        <div className="modal-header">
-                                            <h5 className="modal-title" id="exampleModalLabel">Nueva publicación</h5>
-                                            <button
-                                                type="button"
-                                                className="btn-close"
-                                                data-bs-dismiss="modal"
-                                                aria-label="Close"
-                                            ></button>
-                                        </div>
-                                        <div className="modal-body">
-                                            <form>
-                                                <div className="mb-3">
-                                                    <label htmlFor="message-text" className="col-form-label">
-                                                        ¿Listo para jugar?:
-                                                    </label>
-                                                    <textarea className="form-control" id="TextoPost"></textarea>
-                                                    <label className="mt-4" for="fileInput">Selecciona una imagen para subir:</label>
-                                                    <input type="file" id="fileInput" name="image" accept="image/*" required></input>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div className="modal-footer">
-                                            <button
-                                                id="Cerrar"
-                                                type="button"
-                                                className="btn btn-secondary"
-                                                data-bs-dismiss="modal"
-                                            >
-                                                Cerrar
-                                            </button>
-                                            <button id="Publicar" type="button" className="btn btn-primary">
-                                                Publicar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
+                        <ModalPost />
                         <h2>Configuración</h2>
                         <p>Opciones de configuración de la cuenta.</p>
                     </div>

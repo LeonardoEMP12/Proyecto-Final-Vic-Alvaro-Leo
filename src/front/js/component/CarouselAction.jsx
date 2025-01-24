@@ -3,7 +3,7 @@ import GameCard from "./GameCard.jsx";
 import "../../styles/Carousel.css";
 
 
-const Carousel = () => {
+const CarouselAction = () => {
   const [videogames, setVideogames] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [error, setError] = useState(null);
@@ -11,8 +11,19 @@ const Carousel = () => {
 
   const fetchVideogames = () => {
     fetch(process.env.BACKEND_URL + "/api/videogame")
-      .then((response) => response.json())
-      .then((response) => setVideogames(response.message))
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error al obtener los videojuegos");
+        }
+        return response.json();
+      })
+      .then((response) => {
+        // Filtrar los videojuegos que tengan el género "acción"
+        const filteredGames = response.message.filter(
+          (game) => game.genre && game.genre.toLowerCase() === "accion"
+        );
+        setVideogames(filteredGames); // Actualizar con los videojuegos filtrados
+      })
       .catch((error) => console.error(error));
   };
 
@@ -57,4 +68,4 @@ const Carousel = () => {
   );
 };
 
-export default Carousel;
+export default CarouselAction;

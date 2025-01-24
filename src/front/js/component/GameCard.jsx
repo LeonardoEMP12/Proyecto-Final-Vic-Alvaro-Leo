@@ -5,7 +5,7 @@ const GameCard = ({ image, title }) => {
   return (
     <div id="CardJuego" className="card border-warning mb-3">
       <div className="card-header">{title}</div>
-      <div className="card-body text-warning">
+      <div id="Carta" className="card-body">
         <img src={image} alt={title} className="img-fluid" />
       </div>
     </div>
