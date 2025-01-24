@@ -203,8 +203,16 @@ const Muro = () => {
 
                         </div>
                         <div className="m-3" >
-                        <Carousel />
-                        
+                        <Carousel />                        
+                        </div>
+                        <div className="m-3" >
+                        <Carousel />                        
+                        </div>
+                        <div className="m-3" >
+                        <Carousel />                        
+                        </div>
+                        <div className="m-3" >
+                        <Carousel />                        
                         </div>
                     </div>
                 )}

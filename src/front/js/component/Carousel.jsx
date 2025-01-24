@@ -11,11 +11,10 @@ const Carousel = () => {
       .then((response) => setVideogames(response.message))
       .catch((error) => console.error(error));
   };
-  console.log(videogames)
   useEffect(() => {
 
     fetchVideogames();
-    // console.log(videogames)
+  
   }, []);
 
   if (error) {
