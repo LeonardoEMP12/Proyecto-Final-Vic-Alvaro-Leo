@@ -97,6 +97,7 @@ const Muro = () => {
                     <div>
                         <ModalPost />
                         <div className="m-3" >
+                            <h2 id="TituloVideojuegos" className="m-5">Los mas buscados</h2>
                             <Carousel />
 
                         </div>

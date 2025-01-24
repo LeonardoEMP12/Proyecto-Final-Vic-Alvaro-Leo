@@ -166,6 +166,10 @@
 #add-post-btn{
     background: transparent;
 }
+
+#TituloVideojuegos{
+    color: #ffd200;
+}
   
   .noticias-content {
     height: 100vh; 

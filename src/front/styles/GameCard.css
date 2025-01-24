@@ -1,5 +1,26 @@
 #CardJuego{
-max-width: 12rem;
-background-color: rgb(222, 47, 47);
-color: #fff;
+    background-color: #ffd200;
+    color: black;
+    transition: transform 0.2s ease-in-out;
+}
+
+#CardJuego:hover {
+    transform: scale(1.04);  /* Aumenta el tamaño en un 10% */
+  }
+
+#Carta{
+  background-color: #1c1c1c;
+  display: flex; 
+  align-items: flex-end;
+  width: 100%; /* Asegura que la imagen ocupe todo el ancho de la card */
+  object-fit: cover; /* Recorta la imagen si es necesario y mantiene la proporción */
+}
+
+#Carta img {
+    border-radius: 5%;
+    max-width: 100%;  /* Ancho máximo */
+  min-width: 100%;  /* Ancho mínimo */
+  max-height: 30vh; /* Alto máximo */
+  min-height: 30vh; /* Alto mínimo */
+  object-fit: cover;
 }
