@@ -3,11 +3,12 @@ import GameCard from "./GameCard.jsx";
 import "../../styles/Carousel.css";
 
 
+
 const Carousel = () => {
   const [videogames, setVideogames] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [error, setError] = useState(null);
-  const visibleGames = 6; // Cantidad de juegos visibles al mismo tiempo
+  const visibleGames = 3; // Cantidad de juegos visibles al mismo tiempo
 
   const fetchVideogames = () => {
     fetch(process.env.BACKEND_URL + "/api/videogame")
@@ -41,7 +42,9 @@ const Carousel = () => {
   return (
     <div className="carousel-container">
       <button onClick={prevSlide} className="carousel-button prev">
-        Prev
+      <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 7l-5 5 5 5V7z" />
+      </svg> 
       </button>
       <div className="carousel-content">
         {videogames.slice(currentIndex, currentIndex + visibleGames).map((videogame, index) => (
@@ -51,7 +54,9 @@ const Carousel = () => {
         ))}
       </div>
       <button onClick={nextSlide} className="carousel-button next">
-        Next
+      <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 17l5-5-5-5v10z" />
+      </svg>
       </button>
     </div>
   );

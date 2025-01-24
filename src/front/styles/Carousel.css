@@ -1,3 +1,5 @@
+
+
 .carousel-container {
     display: flex;
     align-items: center;
@@ -6,7 +8,7 @@
     width: 100%;
     margin: auto;
     overflow: hidden; /* Oculta los juegos fuera del carrusel */
-    background-color: rgb(78, 78, 78);
+    background-color: transparent;
   }
   
   .carousel-content {
@@ -16,24 +18,23 @@
   }
   
   .game-item {
-    flex: 0 0 calc(100% / 6 - 10px); /* Divide en 3 columnas ajustadas al contenedor */
+    flex: 0 0 calc(100% / 3 - 10px);
     text-align: center;
     padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra (opcional) */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
   .carousel-button {
-    background-color: #000;
-    color: #fff;
-    border: none;
-    cursor: pointer;
+    background-color: #ffd200;
+    color: #000000;
     padding: 10px;
     margin: 0 10px;
     font-size: 14px;
+    border-radius: 10%;
   }
   
   .carousel-button:hover {
-    background-color: #444;
+    background-color: #a98a02;
+    transform: scale(1.2);
   }
   
