@@ -44,7 +44,7 @@ def handle_register():
     creation_date = request_body.get('creation_date') # Recogemos el campo creation_date del request_body
 
     # Datos del perfil
-    username = random.randint(0, 1000000000000000000000000000000000000000000000000000000000000)
+    username = name
     description = "pon aqui la descripcion de tu perfil"  # Recogemos la descripción del perfil
 
     if password != confirm_password: # Validamos si las contraseñas coinciden
@@ -66,6 +66,9 @@ def handle_register():
     db.session.commit() # Actualizamos la base de datos
 
     # Ahora creamos el perfil asociado al usuario recién creado
+    while Profile.query.filter_by(username=username).first():  # Verificamos si ya existe en la base de datos
+        username = f"{username}{random.randint(0, 1000)}"  # Si existe, generamos uno nuevo añadiendo números
+
     profile_add = Profile(username = username, description=description, user_id=usuario_add.id)
     db.session.add(profile_add)  # Añadimos el perfil a la base de datos
     db.session.commit()  # Confirmamos la transacción para guardar el perfil
