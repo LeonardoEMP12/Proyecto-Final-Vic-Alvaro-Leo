@@ -3,7 +3,7 @@ import "../../styles/muro.css";
 
 const NoticiasMuro = () => {
     return (
-        <div className="col-2 fondo1">
+        <div className="col-2 fondo1 noticias-content">
             <h5 className="header-noticias">Ultimas noticias y paginas de videojuegos</h5>
             <div
                 className="fondo3 mt-3 d-sm-none d-none d-md-block"

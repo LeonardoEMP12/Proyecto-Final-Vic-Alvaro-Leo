@@ -3,22 +3,13 @@ import "../../styles/muro.css";
 import SocialCard from "../component/SocialCard.jsx";
 import OMNIAicon from "../../img/OMNIAicon.png";
 import OMNIAtext from "../../img/OMNIAtext.png";
-import { Footer } from "../component/footer.js";
 import Carousel from "../component/Carousel.jsx";
-import { useNavigate } from "react-router-dom";
 import ModalPost from "../component/modalpost.js";
 import NoticiasMuro from "../component/noticiasMuro.js";
 
 const Muro = () => {
     const [post, setPost] = useState([]);
     const [activeTab, setActiveTab] = useState("publicaciones");
-
-
-    const navigate = useNavigate();
-
-    const goToGame = () => {
-        navigate("/game/41");
-    };
 
     const publicaciones = () =>
         fetch(process.env.BACKEND_URL + "/api/posts")
@@ -85,7 +76,7 @@ const Muro = () => {
 
 
             {/* Contenido dinámico */}
-            <div className="col-8 fondo2">
+            <div className="col-8 fondo2 muro-content">
                 {activeTab === "publicaciones" && (
                     <div>
                         <ModalPost />
@@ -124,8 +115,6 @@ const Muro = () => {
 
             {/* Noticias */}
             <NoticiasMuro/>
-
-            <Footer />
         </div>
     );
 };

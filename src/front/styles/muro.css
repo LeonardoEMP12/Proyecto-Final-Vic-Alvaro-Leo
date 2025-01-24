@@ -166,3 +166,21 @@
 #add-post-btn{
     background: transparent;
 }
+  
+  .noticias-content {
+    height: 100vh; 
+    overflow-y: auto; 
+  }
+  
+  .muro-content {
+    height: 100vh; 
+    overflow-y: auto;
+  }
+
+  .noticias-content::-webkit-scrollbar {
+    display: none; 
+  }
+
+  .muro-content::-webkit-scrollbar {
+    display: none; 
+  }
