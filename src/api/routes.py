@@ -509,8 +509,8 @@ def register_games():
 
 
 #Endpoint eliminar Videojuegos de favoritas
-@api.route('/remove-genres', methods=['DELETE'])
-def remove_genres():
+@api.route('/remove-games', methods=['DELETE'])
+def remove_games():
     request_body = request.json  # Recogemos los datos del body enviado
     user_id = request_body.get('user_id')  # Recogemos el user_id del request_body
     videogame_id = request_body.get('videogame_id')  # Recogemos el videogame_id del request_body
