@@ -67,7 +67,7 @@ def handle_register():
 
     # Ahora creamos el perfil asociado al usuario recién creado
     while Profile.query.filter_by(username=username).first():  # Verificamos si ya existe en la base de datos
-        username = f"{username}{random.randint(0, 1000)}"  # Si existe, generamos uno nuevo añadiendo números
+        username = f"{username}_{random.randint(0, 1000)}"  # Si existe, generamos uno nuevo añadiendo números
 
     profile_add = Profile(username = username, description=description, user_id=usuario_add.id)
     db.session.add(profile_add)  # Añadimos el perfil a la base de datos
