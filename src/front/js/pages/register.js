@@ -55,6 +55,7 @@ const navigate = useNavigate();
       .then((response) => response.json())
       .then((data) => {
           if (data.message) {
+            // Generar otro if por si ya esta generado con ese nombre 
           actions.setId(data.message.id);
           navigate("/selectfavgenre");
         } else {
