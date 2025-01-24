@@ -14,6 +14,10 @@ from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity
 from flask_mail import Mail, Message
 from api.models import db, User
 from flask_cors import CORS
+from flask import Flask, request, jsonify
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 
 
@@ -33,6 +37,12 @@ app.config['MAIL_USE_SSL'] = False
 app.config['MAIL_USERNAME'] = 'omniasiteofgamers@gmail.com'
 app.config['MAIL_PASSWORD'] = 'gkvs qcba rkrz wmjw'
 mail = Mail(app)
+
+cloudinary.config(
+    cloud_name="dct10gor2",
+    api_key="115758122546255",
+    api_secret="7tOsgqA8DrNlaa3iD2Ql7rt2iS4"
+)
 
 
 # Se crea una clave

@@ -11,6 +11,9 @@ from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_requir
 from datetime import timedelta
 from flask_mail import Mail, Message
 import random
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 
 api = Blueprint('api', __name__)
@@ -312,30 +315,35 @@ def get_videogame():
 # Crear un post
 @api.route('/create-posts', methods=['POST'])
 def create_post():
-    # Obtenemos los datos de la solicitud (en formato JSON)
-    request_body = request.get_json()
-    image = request_body.get('image') # Recogemos el campo text del request_body
-    text = request_body.get('text') # Recogemos el campo text del request_body
-    user_id = request_body.get('user_id') # Recogemos el campo user_id del request_body
-    like = request_body.get('like') # Recogemos el campo like del request_body
+    # Obtener los datos del formulario
+    text = request.form.get('text')  # 'text' es enviado como parte del formulario
+    user_id = request.form.get('user_id')  # 'user_id' es enviado como parte del formulario
+    like = request.form.get('like')  # Si tienes el campo 'like', lo puedes obtener así
 
-    # Validamos que los datos necesarios estén presentes
     if not text or not user_id:
         return jsonify({"message": "Rellena todos los datos"}), 400
 
     user = User.query.get(user_id)
     if not user:
-        return jsonify({"message": "el usuario no existe"}), 400
+        return jsonify({"message": "El usuario no existe"}), 400
 
-    # Creamos un nuevo objeto Post con los datos recibidos
-    new_post = Post(text = text, like = like, user_id = user_id, image = image)
+    # Subir la imagen a Cloudinary
+    if 'image' in request.files and request.files['image']:
+        image = request.files['image']  # El archivo debe ser enviado como parte de un formulario
+        upload_result = cloudinary.uploader.upload(image)
+        image_url = upload_result.get('secure_url')  # URL de la imagen subida
+        new_post = Post(text=text, like=like, user_id=user_id, image=image_url)
+
+
+    # Crear el nuevo post
+    new_post = Post(text=text, like=like, user_id=user_id)
     
-    # Guardamos el nuevo post en la base de datos
+    # Guardar el nuevo post en la base de datos
     db.session.add(new_post)
     db.session.commit()
 
-    # Retornamos la respuesta con los datos de la nueva publicación
-    return jsonify({"message" : "Post creado"}), 200
+    return jsonify({"message": "Post creado"}), 200
+
 
 # Crear un comentario
 @api.route('/create-comment', methods=['POST'])
@@ -638,3 +646,4 @@ def insert_videogames():
     db.session.commit()
 
     return jsonify({"message": "Se han añadido todos los registros"}), 200
+

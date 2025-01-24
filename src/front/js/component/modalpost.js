@@ -2,6 +2,36 @@ import React, { useEffect, useState } from "react";
 import "../../styles/muro.css";
 
 const ModalPost = () => {
+    const [image, setImage] = useState("")
+    const [text, setText] = useState("")
+    const user = localStorage.getItem("userId")
+    const handleImage = (event) => {
+        setImage(event.target.files)
+    }
+    const handleText = (event) => {
+        setText(event.target.value);
+    }
+
+    // Crear un objeto FormData
+    const formData = new FormData();
+
+    // Agregar los datos al FormData
+    formData.append('user_id', user);
+    formData.append('text', text);
+    formData.append('image', image[0] ? image[0] : ""); // Enviar solo el primer archivo, si es que hay varios
+
+    // Realizar la solicitud POST con FormData
+    const publicar = () => {
+        fetch(process.env.BACKEND_URL + "api/create-posts", {
+            method: "POST",
+            body: formData // No necesitas establecer el 'Content-Type' cuando usas FormData
+        })
+        .then((response) => response.json())
+        .then((response) => setPost(response.message))
+        .catch((error) => console.error(error));
+    }
+    
+
     return (
         <div className="d-flex justify-content-end mt-3">
             <div
@@ -28,9 +58,9 @@ const ModalPost = () => {
                                     <label htmlFor="message-text" className="col-form-label">
                                         ¿Listo para jugar?:
                                     </label>
-                                    <textarea className="form-control" id="TextoPost"></textarea>
+                                    <textarea className="form-control" id="TextoPost" name="text" onChange={handleText}></textarea>
                                     <label className="mt-4" for="fileInput">Selecciona una imagen para subir:</label>
-                                    <input type="file" id="fileInput" name="image" accept="image/*" required></input>
+                                    <input type="file" id="fileInput" name="image" accept="image/*" onChange={handleImage}></input>
                                 </div>
                             </form>
                         </div>
@@ -43,7 +73,7 @@ const ModalPost = () => {
                             >
                                 Cerrar
                             </button>
-                            <button id="Publicar" type="button" className="btn btn-primary">
+                            <button id="Publicar" type="button" className="btn btn-primary" onClick={publicar}>
                                 Publicar
                             </button>
                         </div>
