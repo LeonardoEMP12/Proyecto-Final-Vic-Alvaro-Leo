@@ -333,10 +333,9 @@ def create_post():
         upload_result = cloudinary.uploader.upload(image)
         image_url = upload_result.get('secure_url')  # URL de la imagen subida
         new_post = Post(text=text, like=like, user_id=user_id, image=image_url)
-
-
-    # Crear el nuevo post
-    new_post = Post(text=text, like=like, user_id=user_id)
+    else:
+        # Crear el nuevo post
+        new_post = Post(text=text, like=like, user_id=user_id)
     
     # Guardar el nuevo post en la base de datos
     db.session.add(new_post)
@@ -409,7 +408,8 @@ def get_all_posts():
                 "id": post_user.id,
                 "username": post_profile.username if post_profile else None  # Usamos el username del perfil
             },  # Datos del usuario que hizo la publicación
-            "comments": comments_data  # Lista de comentarios con los usuarios
+            "comments": comments_data,  # Lista de comentarios con los usuarios
+            "id": post.id
         }
         # Agregar la publicación con los datos completos a la lista
         all_posts.append(post_data)
@@ -596,6 +596,21 @@ def get_favorites_games(user_id):
     ]
 
     return jsonify({"message": {"user_id": user_id, "favorite_games": serialized_favorites}}), 200
+
+
+# ------------------------------- ENDPOINTS INSERCCIONES A LA BASE DE DATOS ------------------------------- #
+
+# Endpoint Get perfil
+@api.route('/perfil', methods=['GET'])
+def get_perfil():
+    request_body = request.json  # Recogemos los datos del body enviado
+    user_id = request_body.get('user_id')  # Recogemos el user_id del request_body
+    # Creamos las variables para los generos de la tabla Genres
+    perfiles=Profile.query.filter_by(user_id = user_id)
+    perfil_usuario = [perfil.serialize() for perfil in perfiles]
+
+    # Retornamos todos los generos de la tabla Genres
+    return jsonify({"message":perfil_usuario}), 200
     
 
 
