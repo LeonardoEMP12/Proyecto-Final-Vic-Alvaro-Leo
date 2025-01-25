@@ -85,7 +85,8 @@ const Muro = () => {
                                 <SocialCard
                                     title={post.post_user.username}
                                     description={post.post_text}
-                                    image={post.post_image} />
+                                    image={post.post_image} 
+                                    id = {post.id} />
                             </div>
 
                         ))}

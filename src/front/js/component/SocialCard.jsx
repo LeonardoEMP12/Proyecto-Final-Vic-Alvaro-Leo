@@ -1,9 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "../../styles/SocialCard.css";
 import OMNIAicon from "../../img/OMNIAicon.png"
 
 
-const SocialCard = ({ image, title, description, comments }) => {
+const SocialCard = ({ image, title, description, comments, id }) => {
+
+  const user = localStorage.getItem("userId");
+
+  const [text, setText] = useState("");
+  const handleComentario = (value) => {
+    setText(value.target.value)
+  }
+
+  const publicarComentario = () => {
+    fetch(process.env.BACKEND_URL + "api/create-comment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "text": text,
+        "post_id": id,
+        "user_id": user,
+      })
+    })
+      .then((response) => response.json())
+      .then((response) => console.log(response.message))
+      .catch((error) => console.error(error));
+  }
+
+
   return (
     <div className="social-card mt-4 text-start">
       <div className="card-content">
@@ -49,8 +75,9 @@ const SocialCard = ({ image, title, description, comments }) => {
               className="form-control"
               placeholder="Añade un comentario..."
               aria-describedby="button-addon2"
+              onChange={handleComentario}
             />
-            <button className="btn btn-outline-secondary" type="button" id="button-addon2">
+            <button className="btn btn-outline-secondary" type="button" id="button-addon2" onClick={publicarComentario}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
