@@ -1,36 +1,36 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from "../store/appContext";
 
-const FavGenreComponent = () => {
+const FavVideogameComponent = () => {
   const { store } = useContext(Context);
-  const [genres, setGenres] = useState([]);
-  const API_URL = process.env.BACKEND_URL + "/api/genres";
+  const [videogames, setVideogames] = useState([]);
+  const API_URL = process.env.BACKEND_URL + "/api/videogames";
 
   const userId = store.userId;
 
-  const fetchGenres = async () => {
+  const fetchVideogames = async () => {
     try {
       const response = await fetch(API_URL);
       const data = await response.json();
 
       // Agregar `isFavorite` como false inicialmente
-      const genresWithFavorites = data.message.map((genre) => ({
-        ...genre,
+      const videogamesWithFavorites = data.message.map((videogame) => ({
+        ...videogame,
         isFavorite: false,
       }));
 
-      setGenres(genresWithFavorites);
+      setVideogames(videogamesWithFavorites);
     } catch (error) {
-      console.error("Error fetching genres:", error);
+      console.error("Error fetching videogames:", error);
     }
   };
 
   useEffect(() => {
-    fetchGenres();
+    fetchVideogames();
   }, []);
 
   const handleAddToFavorites = async (id) => {
-    const url = process.env.BACKEND_URL + "/api/register-genres";
+    const url = process.env.BACKEND_URL + "/api/register-videogames";
 
     try {
       const response = await fetch(url, {
@@ -40,17 +40,17 @@ const FavGenreComponent = () => {
         },
         body: JSON.stringify({
           user_id: userId,
-          genre_id: id,
+          videogame_id: id,
         }),
       });
 
       if (response.ok) {
-        console.log("Género añadido a favoritos");
-        
-        // Alternar el estado de isFavorite en el género correspondiente
-        setGenres((prevGenres) =>
-          prevGenres.map((genre) =>
-            genre.id === id ? { ...genre, isFavorite: !genre.isFavorite } : genre
+        console.log("Videojuego añadido a favoritos");
+
+        // Alternar el estado de isFavorite en el videojuego correspondiente
+        setVideogames((prevVideogames) =>
+          prevVideogames.map((videogame) =>
+            videogame.id === id ? { ...videogame, isFavorite: !videogame.isFavorite } : videogame
           )
         );
       } else {
@@ -64,22 +64,22 @@ const FavGenreComponent = () => {
   return (
     <div className="container">
       <div className="row g-4">
-        {genres.map((genre) => (
+        {videogames.map((videogame) => (
           <div
-            className={`col-md-3 ${genre.isFavorite ? "favorite-card" : ""}`} // Agregar clase condicional
-            key={genre.id}
+            className={`col-md-3 ${videogame.isFavorite ? "favorite-card" : ""}`} // Agregar clase condicional
+            key={videogame.id}
           >
             <div
               className="card card-border"
-              onClick={() => handleAddToFavorites(genre.id)}
+              onClick={() => handleAddToFavorites(videogame.id)}
             >
               <img
-                src={`${genre.image}`}
+                src={`${videogame.image}`}
                 className="card-img-top"
-                alt={`imagen de ${genre.name}`}
+                alt={`imagen de ${videogame.name}`}
               />
               <div className="card-body">
-                <h5 className="card-title">{genre.name}</h5>
+                <h5 className="card-title">{videogame.name}</h5>
               </div>
             </div>
           </div>
@@ -89,4 +89,4 @@ const FavGenreComponent = () => {
   );
 };
 
-export default FavGenreComponent;
+export default FavVideogameComponent;

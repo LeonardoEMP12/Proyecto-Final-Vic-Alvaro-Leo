@@ -102,8 +102,9 @@ const Muro = () => {
                             <h2 id="TituloVideojuegos" className="m-5">Todos los juegos</h2>
                             <Carousel />
                             <h2 id="TituloGeneros" className="m-5">Generos</h2>
+                            <h4 id="SubtituloGeneros" className="m-5">Añade tus generos favoritos</h4>
                             <FavGenreComponent/>
-
+                            
                         </div>
                     </div>
                 )}
