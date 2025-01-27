@@ -97,7 +97,7 @@ const DatosPerfil = () => {
                 )
             })}
             <h1>Tus Generos favoritos</h1>
-            {genres !== "" ? (
+            {genres?.length > 0 ? (
                 //Mapeamos el array que tenemos en cada momento
                 genres.map((genre, index) => {
                     return (
