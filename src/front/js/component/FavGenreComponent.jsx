@@ -48,12 +48,11 @@ const FavGenreComponent = () => {
       alert("Error en la solicitud", error);
     }
   };
-
   return (
     <div className="container">
       <div className="row g-4">
         {genres.map((genre) => (
-          <div className="col-md-3" key={genre.id}>
+          <div className="col-md-3 m-4" key={genre.id}>
             <div
               className={`card card-border ${
                 favoriteGenres.includes(genre.id) ? "favorite" : ""
