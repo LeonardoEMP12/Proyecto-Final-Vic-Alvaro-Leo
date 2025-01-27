@@ -7,17 +7,18 @@ import CartaFavoritos from "./CartaFavoritos.js";
 const DatosPerfil = () => {
 
     const user = localStorage.getItem("userId");
-    const [perfil, setPerfil] = useState([]);
-    const [genres, setGenres] = useState([]);
-    const [games, setGames] = useState([]);
-    const [usuario, setUsuario] = useState([]);
+    const [perfil, setPerfil] = useState([""]);
+    const [genres, setGenres] = useState([""]);
+    const [games, setGames] = useState([""]);
+    const [usuario, setUsuario] = useState([""]);
     const [username, setUsername] = useState("");
     const [description, setDescription] = useState("");
     const [birth_date, setBirth_date] = useState("");
     const fetchPerfil = () => {
         fetch(process.env.BACKEND_URL + `api/perfil/${user}`)
             .then((response) => response.json())
-            .then((response) => {setPerfil(response.profiles)
+            .then((response) => {
+                setPerfil(response.profiles)
                 setUsuario(response.user)
             })
             .catch((error) => console.error(error));
@@ -97,21 +98,35 @@ const DatosPerfil = () => {
                 )
             })}
             <h1>Tus Juegos favoritos</h1>
-            {genres.map((genre, index) => {
-                return (
-                    <div key={index}>
-                        <CartaFavoritos title={genre.name}/>
-                    </div>
-                )
-            })}
+            {genres.length > 0 ? (
+                //Mapeamos el array que tenemos en cada momento
+                genres.map((genre, index) => {
+                    return (
+                        <div key={index}>
+                            <CartaFavoritos title={genre.name} />
+                        </div>
+                    );
+                })
+            ) : (
+                <div>
+                    <p>No tienes Generos favoritos</p>
+                </div>
+            )}
             <h1>Tus Juegos favoritos</h1>
-            {games.map((game, index) => {
-                return (
-                    <div key={index}>
-                        <CartaFavoritos title={game.name}/>
-                    </div>
-                )
-            })}
+            {games.length > 0 ? (
+                //Mapeamos el array que tenemos en cada momento
+                games.map((game, index) => {
+                    return (
+                        <div key={index}>
+                            <CartaFavoritos title={game.name} />
+                        </div>
+                    );
+                })
+            ) : (
+                <div>
+                    <p>No tienes Juegos favoritos</p>
+                </div>
+            )}
         </>
     );
 };

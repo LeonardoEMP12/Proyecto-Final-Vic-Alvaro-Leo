@@ -7,6 +7,7 @@ import Carousel from "../component/Carousel.jsx";
 import ModalPost from "../component/modalpost.js";
 import NoticiasMuro from "../component/noticiasMuro.js";
 import DatosPerfil from "../component/datosPerfil.js";
+import FavGenreComponent from "../component/FavGenreComponent.jsx"
 
 const Muro = () => {
     const [post, setPost] = useState([]);
@@ -101,6 +102,7 @@ const Muro = () => {
                         <div className="m-3" >
                             <h2 id="TituloVideojuegos" className="m-5">Los mas buscados</h2>
                             <Carousel />
+                            <FavGenreComponent/>
 
                         </div>
                     </div>
