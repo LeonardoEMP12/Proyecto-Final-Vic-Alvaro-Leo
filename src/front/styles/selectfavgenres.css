@@ -6,11 +6,11 @@
     overflow: hidden;
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animación suave */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card-border:hover {
-    transform: scale(1.05); /* Aumenta el tamaño al hacer hover */
+    transform: scale(1.05);
 }
 
 .card {
@@ -20,18 +20,19 @@
 }
 
 .card-img-top {
-    height: 75%; /* La imagen ocupa el 75% de la tarjeta */
-    object-fit: cover; /* Ajusta la imagen sin distorsión */
+    height: 75%;
+    object-fit: cover;
 }
 
 .card-body {
-    background-color: #ffd200; /* Fondo de la parte inferior */
-    padding: 16px; /* Espaciado interno */
-    text-align: center; /* Centra el contenido */
-    height: 25%; /* La parte del texto ocupa el 25% */
+    background-color: #ffd200;
+    padding: 16px;
+    text-align: center;
+    height: 25%;
 }
 
 .card-title {
+    color: #131313;
     font-size: 1rem;
     margin: 0;
 }
@@ -40,4 +41,11 @@
     font-size: 0.85rem;
     color: #000000;
     margin: 4px 0 0;
+}
+
+.card-border.favorite {
+    border-color: white; /* Cambia el borde a blanco */
+    box-shadow: 0 0 10px 4px rgba(255, 181, 211, 0.7); /* Glow rosa */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }

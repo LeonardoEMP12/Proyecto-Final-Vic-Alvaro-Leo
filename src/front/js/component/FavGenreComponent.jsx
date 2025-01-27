@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const FavGenreComponent = () => {
   const { store } = useContext(Context);
   const [genres, setGenres] = useState([]);
+  const [favoriteGenres, setFavoriteGenres] = useState([]); // Estado para los favoritos
   const API_URL = process.env.BACKEND_URL + "/api/genres";
 
   const userId = store.userId;
@@ -15,7 +16,7 @@ const FavGenreComponent = () => {
       const data = await response.json();
       setGenres(data.message); // Guardamos solo el array de "results"
     } catch (error) {
-      console.error('Error fetching genres:', error);
+      console.error("Error fetching genres:", error);
     }
   };
 
@@ -28,24 +29,24 @@ const FavGenreComponent = () => {
 
     try {
       const response = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           user_id: userId,
-          genre_id: id
+          genre_id: id,
         }),
       });
 
       if (response.ok) {
-        const data = await response.json();
-        ('Juego añadido a favoritos:', data);
+        setFavoriteGenres((prev) => [...prev, id]); // Añadimos el género a los favoritos
+        console.log("Juego añadido a favoritos");
       } else {
-        ('Error al añadir a favoritos:', response.statusText);
+        console.error("Error al añadir a favoritos:", response.statusText);
       }
     } catch (error) {
-      alert('Error en la solicitud', error);
+      alert("Error en la solicitud", error);
     }
   };
 
@@ -55,7 +56,9 @@ const FavGenreComponent = () => {
         {genres.map((genre) => (
           <div className="col-md-3" key={genre.id}>
             <div
-              className="card card-border"
+              className={`card card-border ${
+                favoriteGenres.includes(genre.id) ? "favorite" : ""
+              }`}
               onClick={() => handleAddToFavorites(genre.id)}
             >
               <img
@@ -65,15 +68,14 @@ const FavGenreComponent = () => {
               />
               <div className="card-body">
                 <h5 className="card-title">{genre.name}</h5>
-                <p className="card-text">{genre.id}</p>
               </div>
             </div>
           </div>
         ))}
       </div>
       <Link className="btn text-white bg-dark mt-5" to="/login">
-  Ir al login
-</Link>
+        Ir al login
+      </Link>
     </div>
   );
 };

@@ -1,7 +1,6 @@
 .social-card {
     border-radius: 8px;
     padding: 16px;
-    max-width: 60%;
     margin: 16px auto;
     background-color: #1c1c1c;
     border: #977b00 solid;
@@ -46,3 +45,79 @@
     width: 1.5rem;
     height: 1.5rem;
   }
+
+  /* Estilo del fondo del modal */
+.modal-content {
+  background-color: #131313;
+  color: #ddd;
+  border: 2px solid #ffd200;
+  border-radius: 12px;
+}
+
+/* Estilo del header del modal */
+.modal-header {
+  border-bottom: 1px solid #ffd200; /* Línea de separación en el header */
+}
+
+/* Botón de cierre del modal */
+.modal-header .btn-close {
+  background-color: transparent;
+  border: none;
+  color: #ffd200;
+  opacity: 1;
+}
+
+/* Cambiar color del botón de cierre al hover */
+.modal-header .btn-close:hover {
+  color: #fff;
+}
+
+/* Estilo de los usernames */
+.modal-body strong {
+  color: #ffd200;
+}
+
+/* Estilo del texto de los comentarios */
+.modal-body p {
+  color: #ddd;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+/* Footer del modal */
+.modal-footer {
+  border-top: 1px solid #ffd200;
+}
+
+/* Botones del modal */
+.modal-footer .btn {
+  background-color: #ffd200;
+  color: #131313;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.modal-footer .btn:hover {
+  background-color: #ffdc2b;
+  color: #131313;
+}
+
+.comment-container {
+  padding: 10px;
+  border: 1px solid #ffd200;
+  border-radius: 12px;
+  width: 100%;
+}
+
+.comment-user {
+  width: 100%;
+}
+
+.comment-text {
+  margin-top: 5px;
+  width: 100%;
+}
+
+.modal-body p {
+  font-size: 14px; /* Tamaño de fuente más pequeño para el texto del comentario */
+}

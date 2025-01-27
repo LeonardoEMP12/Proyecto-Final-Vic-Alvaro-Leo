@@ -71,13 +71,13 @@ const Muro = () => {
             </nav>
 
             {/* Div vacío para el espacio que ocupa la navbar */}
-            <div className="d-flex fondo2 col-md-2">
+            <div className="d-flex fondo2 col-2 d-none d-md-block">
 
             </div>
 
 
             {/* Contenido dinámico */}
-            <div className="col-8 fondo2 muro-content">
+            <div className="col-12 col-md-8 fondo2 muro-content">
                 {activeTab === "publicaciones" && (
                     <div>
                         <ModalPost />
