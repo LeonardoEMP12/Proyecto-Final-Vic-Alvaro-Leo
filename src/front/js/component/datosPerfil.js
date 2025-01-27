@@ -7,9 +7,9 @@ import CartaFavoritos from "./CartaFavoritos.js";
 const DatosPerfil = () => {
 
     const user = localStorage.getItem("userId");
-    const [perfil, setPerfil] = useState([""]);
-    const [genres, setGenres] = useState([""]);
-    const [games, setGames] = useState([""]);
+    const [perfil, setPerfil] = useState([]);
+    const [genres, setGenres] = useState([]);
+    const [games, setGames] = useState([]);
     const [usuario, setUsuario] = useState([""]);
     const [username, setUsername] = useState("");
     const [description, setDescription] = useState("");
@@ -83,7 +83,6 @@ const DatosPerfil = () => {
             })
         })
     }
-
     return (
         <>
             {perfil.map((perfil, index) => {
@@ -98,7 +97,7 @@ const DatosPerfil = () => {
                 )
             })}
             <h1>Tus Generos favoritos</h1>
-            {genres === "" ? (
+            {genres !== "" ? (
                 //Mapeamos el array que tenemos en cada momento
                 genres.map((genre, index) => {
                     return (
@@ -114,8 +113,8 @@ const DatosPerfil = () => {
             )}
             <h1>Tus Juegos favoritos</h1>   
 
-            {games === "" ? (
-
+            {games?.length > 0 ? (
+                
                 //Mapeamos el array que tenemos en cada momento
                 games.map((game, index) => {
                     return (
