@@ -50,7 +50,7 @@ const Carousel = () => {
   <div className="carousel-content d-flex w-100">
     {videogames.slice(currentIndex, currentIndex + visibleGames).map((videogame, index) => (
       <div key={videogame.id || index} className="game-item col-12 col-md-4 col-lg-3">
-        <GameCard title={videogame.title} image={videogame.image} api_id={videogame.api_id} />
+        <GameCard title={videogame.title} image={videogame.image} api_id={videogame.api_id} videogameId={videogame.id} />
       </div>
     ))}
   </div>
