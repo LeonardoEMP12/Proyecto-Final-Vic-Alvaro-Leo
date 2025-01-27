@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../../styles/Carousel.css";
 import CartaFavoritos from "./CartaFavoritos.js";
+import { Context } from "../store/appContext";
+
 
 
 
 const DatosPerfil = () => {
-
+    const { actions } = useContext(Context);
     const user = localStorage.getItem("userId");
     const [perfil, setPerfil] = useState([]);
     const [genres, setGenres] = useState([]);
@@ -88,7 +90,11 @@ const DatosPerfil = () => {
             {perfil.map((perfil, index) => {
                 return (
                     <div key={index}>
-                        <h1 className="mt-5">@{perfil.username}</h1> <button>Editar</button>
+                        <h1 className="mt-5">@{perfil.username}</h1> 
+                        <button>Editar</button> 
+                        <button onClick={()=>{actions.setId(), actions.setToken(), actions.setName()}}>
+                            Cerrar sesion
+                        </button> 
                         <p className="mt-3">Correo: {usuario.email}</p>
                         <p>Fecha de nacimiento: {perfil.birth_date}</p>
                         <h3 className="mt-5">Descripcion</h3>
@@ -97,7 +103,7 @@ const DatosPerfil = () => {
                 )
             })}
             <h1>Tus Generos favoritos</h1>
-            {genres !== "" ? (
+            {genres?.length > 0 ? (
                 //Mapeamos el array que tenemos en cada momento
                 genres.map((genre, index) => {
                     return (
