@@ -1,52 +1,59 @@
 .social-card {
-    border-radius: 8px;
-    padding: 16px;
-    margin: 16px auto;
-    background-color: #1c1c1c;
-    border: #977b00 solid;
-  }
-  
-  
-  .card-image img {
-    width: 100%;
-    border-radius: 8px;
-  }
-  
-  .card-content h3 {
-    margin: 8px 0;
-    font-size: 1em;
-    color: #ffd200;
-    justify-self: right;
-  }
-  
-  .card-content p {
-    font-size: 1em;
-    color: #fff;
-  }
-  
-  .card-actions {
-    margin-right: 0,5vh;
-    display: flex;
-  }
-  
-  .like-btn, .comment-btn {
-    background-color: #1c1c1c;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-  }
-  
-  .like-btn:hover, .comment-btn:hover {
-    background-color: #0f0f0f;
-  }
-  
-  .OMNIAicon {
-    margin-top: 0.5rem;
-    width: 1.5rem;
-    height: 1.5rem;
-  }
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px auto;
+  background-color: #1c1c1c;
+  border: #977b00 solid;
+}
 
-  /* Estilo del fondo del modal */
+
+.card-image img {
+  border-radius: 8px;
+  max-width: 100%;
+  min-width: 100%;
+  max-height: 30vh;
+  min-height: 30vh;
+  object-fit: cover; /* Recorta la imagen para que llene el espacio */
+    object-position: center;
+}
+
+.card-content h3 {
+  margin: 8px 0;
+  font-size: 1em;
+  color: #ffd200;
+  justify-self: right;
+}
+
+.card-content p {
+  font-size: 1em;
+  color: #fff;
+}
+
+.card-actions {
+  margin-right: 0, 5vh;
+  display: flex;
+}
+
+.like-btn,
+.comment-btn {
+  background-color: #1c1c1c;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+}
+
+.like-btn:hover,
+.comment-btn:hover {
+  background-color: #0f0f0f;
+}
+
+.OMNIAicon {
+  margin-top: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Estilo del fondo del modal */
 .modal-content {
   background-color: #131313;
   color: #ddd;
@@ -56,7 +63,8 @@
 
 /* Estilo del header del modal */
 .modal-header {
-  border-bottom: 1px solid #ffd200; /* Línea de separación en el header */
+  border-bottom: 1px solid #ffd200;
+  /* Línea de separación en el header */
 }
 
 /* Botón de cierre del modal */
@@ -119,5 +127,6 @@
 }
 
 .modal-body p {
-  font-size: 14px; /* Tamaño de fuente más pequeño para el texto del comentario */
+  font-size: 14px;
+  /* Tamaño de fuente más pequeño para el texto del comentario */
 }

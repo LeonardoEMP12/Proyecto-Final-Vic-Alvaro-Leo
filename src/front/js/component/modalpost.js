@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../../styles/muro.css";
+import { Navigate } from "react-router-dom";
 
 const ModalPost = () => {
     const [image, setImage] = useState("")
@@ -27,7 +28,10 @@ const ModalPost = () => {
             body: formData // No necesitas establecer el 'Content-Type' cuando usas FormData
         })
         .then((response) => response.json())
-        .then((response) => setPost(response.message))
+        .then((response) => {
+            setPost(response.message); // Maneja la respuesta
+            Navigate("/muro");
+        })
         .catch((error) => console.error(error));
     }
     
