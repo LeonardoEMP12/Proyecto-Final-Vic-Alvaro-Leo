@@ -40,7 +40,7 @@ class Profile(db.Model):
             "id": self.id,
             "username": self.username,
             "description": self.description,
-            "birth_date": self.birth_date,
+            "birth_date": self.birth_date.strftime('%Y-%m-%d') if self.birth_date else None,
             # do not serialize the password, its a security breach
         }
     
