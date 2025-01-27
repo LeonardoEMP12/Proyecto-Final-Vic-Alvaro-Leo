@@ -1,9 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
 
 const FavGenreComponent = () => {
   const { store } = useContext(Context);
   const [genres, setGenres] = useState([]);
+  const [favoriteGenres, setFavoriteGenres] = useState([]); // Estado para los favoritos
   const API_URL = process.env.BACKEND_URL + "/api/genres";
 
   const userId = store.userId;
@@ -12,14 +14,7 @@ const FavGenreComponent = () => {
     try {
       const response = await fetch(API_URL);
       const data = await response.json();
-
-      // Agregar `isFavorite` como false inicialmente
-      const genresWithFavorites = data.message.map((genre) => ({
-        ...genre,
-        isFavorite: false,
-      }));
-
-      setGenres(genresWithFavorites);
+      setGenres(data.message); // Guardamos solo el array de "results"
     } catch (error) {
       console.error("Error fetching genres:", error);
     }
@@ -45,14 +40,8 @@ const FavGenreComponent = () => {
       });
 
       if (response.ok) {
-        console.log("Género añadido a favoritos");
-        
-        // Alternar el estado de isFavorite en el género correspondiente
-        setGenres((prevGenres) =>
-          prevGenres.map((genre) =>
-            genre.id === id ? { ...genre, isFavorite: !genre.isFavorite } : genre
-          )
-        );
+        setFavoriteGenres((prev) => [...prev, id]); // Añadimos el género a los favoritos
+        console.log("Juego añadido a favoritos");
       } else {
         console.error("Error al añadir a favoritos:", response.statusText);
       }
@@ -60,17 +49,15 @@ const FavGenreComponent = () => {
       alert("Error en la solicitud", error);
     }
   };
-
   return (
     <div className="container">
       <div className="row g-4">
         {genres.map((genre) => (
-          <div
-            className={`col-md-3 ${genre.isFavorite ? "favorite-card" : ""}`} // Agregar clase condicional
-            key={genre.id}
-          >
+          <div className="col-md-3 m-4" key={genre.id}>
             <div
-              className="card card-border"
+              className={`card card-border ${
+                favoriteGenres.includes(genre.id) ? "favorite" : ""
+              }`}
               onClick={() => handleAddToFavorites(genre.id)}
             >
               <img
