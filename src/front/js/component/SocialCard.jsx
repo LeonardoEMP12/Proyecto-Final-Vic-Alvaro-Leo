@@ -31,7 +31,7 @@ const SocialCard = ({ image, title, description, comments, id }) => {
 
 
   return (
-    <div className="social-card mt-4 text-start">
+    <div className="social-card mt-4 text-start justify-content-end col-8 col-md-6">
       <div className="card-content">
         <div className="d-flex justify-content-end align-items-center">
           <h3 className="mb-0 me-2">@{title}</h3>
