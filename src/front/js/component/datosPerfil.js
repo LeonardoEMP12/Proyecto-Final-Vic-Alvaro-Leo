@@ -88,7 +88,7 @@ const DatosPerfil = () => {
             {perfil.map((perfil, index) => {
                 return (
                     <div key={index}>
-                        <h1 className="mt-5">@{perfil.username}</h1> <button>Editar perfil</button>
+                        <h1 className="mt-5">@{perfil.username}</h1> <button>Editar</button>
                         <p className="mt-3">Correo: {usuario.email}</p>
                         <p>Fecha de nacimiento: {perfil.birth_date}</p>
                         <h3 className="mt-5">Descripcion</h3>
@@ -96,22 +96,36 @@ const DatosPerfil = () => {
                     </div>
                 )
             })}
+            <h1>Tus Generos favoritos</h1>
+            {genres === "" ? (
+                //Mapeamos el array que tenemos en cada momento
+                genres.map((genre, index) => {
+                    return (
+                        <div key={index}>
+                            <CartaFavoritos title={genre.name} />
+                        </div>
+                    );
+                })
+            ) : (
+                <div>
+                    <p>No tienes Generos favoritos</p>
+                </div>
+            )}
             <h1>Tus Juegos favoritos</h1>
-            {genres.map((genre, index) => {
-                return (
-                    <div key={index}>
-                        <CartaFavoritos title={genre.name}/>
-                    </div>
-                )
-            })}
-            <h1>Tus Juegos favoritos</h1>
-            {games.map((game, index) => {
-                return (
-                    <div key={index}>
-                        <CartaFavoritos title={game.name}/>
-                    </div>
-                )
-            })}
+            {games === "" ? (
+                //Mapeamos el array que tenemos en cada momento
+                games.map((game, index) => {
+                    return (
+                        <div key={index}>
+                            <CartaFavoritos title={game.name} />
+                        </div>
+                    );
+                })
+            ) : (
+                <div>
+                    <p>No tienes Juegos favoritos</p>
+                </div>
+            )}
         </>
     );
 };
