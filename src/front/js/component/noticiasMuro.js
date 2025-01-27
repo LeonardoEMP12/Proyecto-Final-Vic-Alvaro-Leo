@@ -3,10 +3,10 @@ import "../../styles/muro.css";
 
 const NoticiasMuro = () => {
     return (
-        <div className="col-2 fondo1 noticias-content">
+        <div className="col-md-2 fondo1 noticias-content d-none d-md-block">
             <h5 className="header-noticias">Ultimas noticias y paginas de videojuegos</h5>
             <div
-                className="fondo3 mt-3 d-sm-none d-none d-md-block"
+                className="fondo3 mt-3"
                 onClick={() => window.open('https://www.nintendo.com/successor/es-es/index.html?srsltid=AfmBOormJY7WxHvSLOif5f5Gir8cLHWAruBG8ep78xeYP_0PRaKtpKRw')}
             >
                 <div className="card card-border card-noticia">
