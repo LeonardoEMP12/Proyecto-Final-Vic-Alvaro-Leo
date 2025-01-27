@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../../styles/muro.css";
+import "../../styles/navbarmovil.css";
 import SocialCard from "../component/SocialCard.jsx";
 import OMNIAicon from "../../img/OMNIAicon.png";
 import OMNIAtext from "../../img/OMNIAtext.png";
@@ -70,6 +71,22 @@ const Muro = () => {
                 </a>
 
             </nav>
+
+<nav class="menu">
+  <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open"/>
+  <label class="menu-open-button" for="menu-open">
+    <span class="hamburger hamburger-1"></span>
+    <span class="hamburger hamburger-2"></span>
+    <span class="hamburger hamburger-3"></span>
+  </label>
+  
+  <a href="#" class="menu-item"> <i class="fa fa-bar-chart"></i> </a>
+  <a href="#" class="menu-item"> <i class="fa fa-plus"></i> </a>
+  <a href="#" class="menu-item"> <i class="fa fa-heart"></i> </a>
+  <a href="#" class="menu-item"> <i class="fa fa-envelope"></i> </a>
+  <a href="#" class="menu-item"> <i class="fa fa-cog"></i> </a>
+
+</nav>
 
             {/* Div vacío para el espacio que ocupa la navbar */}
             <div className="d-flex fondo2 col-2 d-none d-md-block">
