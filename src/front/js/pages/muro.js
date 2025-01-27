@@ -6,6 +6,7 @@ import OMNIAtext from "../../img/OMNIAtext.png";
 import Carousel from "../component/Carousel.jsx";
 import ModalPost from "../component/modalpost.js";
 import NoticiasMuro from "../component/noticiasMuro.js";
+import FavGenreComponent from "../component/FavGenreComponent.jsx"
 import DatosPerfil from "../component/datosPerfil.js";
 
 const Muro = () => {
@@ -99,9 +100,12 @@ const Muro = () => {
                     <div>
                         <ModalPost />
                         <div className="m-3" >
-                            <h2 id="TituloVideojuegos" className="m-5">Los mas buscados</h2>
+                            <h2 id="TituloVideojuegos" className="m-5">Todos los juegos</h2>
                             <Carousel />
-
+                            <h2 id="TituloGeneros" className="m-5">Generos</h2>
+                            <h4 id="SubtituloGeneros" className="m-5">Añade tus generos favoritos</h4>
+                            <FavGenreComponent/>
+                            
                         </div>
                     </div>
                 )}

@@ -63,7 +63,7 @@ const navigate = useNavigate();
       })
       .catch((error) => {
         console.log("catch");
-        alert("Hubo un problema con el registro");
+        alert("Hubo un problema con el registro final");
         console.error(error);
       });
   };
