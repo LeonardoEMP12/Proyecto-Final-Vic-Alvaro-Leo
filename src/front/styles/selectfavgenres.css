@@ -32,6 +32,7 @@
 }
 
 .card-title {
+    color: #131313;
     font-size: 1rem;
     margin: 0;
 }
@@ -40,4 +41,11 @@
     font-size: 0.85rem;
     color: #000000;
     margin: 4px 0 0;
+}
+
+.card-border.favorite {
+    border-color: white; /* Cambia el borde a blanco */
+    box-shadow: 0 0 10px 4px rgba(255, 181, 211, 0.7); /* Glow rosa */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
