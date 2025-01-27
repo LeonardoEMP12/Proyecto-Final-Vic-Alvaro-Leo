@@ -33,6 +33,8 @@ const SocialCard = ({ image, title, description, id }) => {
         fetchPosts(); // Recargar posts después de publicar el comentario
       })
       .catch((error) => console.error(error));
+
+      setText(" ")
   };
 
   // Función para obtener todos los posts
@@ -133,6 +135,7 @@ const SocialCard = ({ image, title, description, id }) => {
               className="form-control"
               placeholder="Añade un comentario..."
               onChange={handleComentario}
+              value={text}
             />
             <button className="btn btn-outline-secondary" type="button" onClick={publicarComentario}>
               <svg
