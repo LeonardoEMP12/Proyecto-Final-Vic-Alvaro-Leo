@@ -41,24 +41,27 @@ const Carousel = () => {
 
   return (
     <div className="carousel-container">
-      <button onClick={prevSlide} className="carousel-button prev">
-      <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M14 7l-5 5 5 5V7z" />
-      </svg> 
-      </button>
-      <div className="carousel-content">
-        {videogames.slice(currentIndex, currentIndex + visibleGames).map((videogame, index) => (
-          <div key={videogame.id || index} className="game-item">
-            <GameCard title={videogame.title} image={videogame.image} />
-          </div>
-        ))}
+  <button onClick={prevSlide} className="carousel-button prev">
+    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M14 7l-5 5 5 5V7z" />
+    </svg>
+  </button>
+
+  <div className="carousel-content d-flex w-100">
+    {videogames.slice(currentIndex, currentIndex + visibleGames).map((videogame, index) => (
+      <div key={videogame.id || index} className="game-item col-12 col-md-4 col-lg-3">
+        <GameCard title={videogame.title} image={videogame.image} api_id={videogame.api_id} />
       </div>
-      <button onClick={nextSlide} className="carousel-button next">
-      <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10 17l5-5-5-5v10z" />
-      </svg>
-      </button>
-    </div>
+    ))}
+  </div>
+
+  <button onClick={nextSlide} className="carousel-button next">
+    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 17l5-5-5-5v10z" />
+    </svg>
+  </button>
+</div>
+
   );
 };
 

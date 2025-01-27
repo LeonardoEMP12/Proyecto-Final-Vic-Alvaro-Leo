@@ -1,26 +1,79 @@
-#CardJuego{
-    background-color: #ffd200;
-    color: black;
-    transition: transform 0.2s ease-in-out;
+/* Card completa */
+#CardJuego {
+  background-color: #ffd200;
+  color: black;
+  transition: transform 0.2s ease-in-out;
+  border-radius: 2%;
+  border-color: #ffd200;
+  border: 2px solid #ffd200;
 }
-
+/* Card etiqueta a */
+#CardJuego a {
+  background-color: #ffd200;
+  color: black;
+  transition: transform 0.2s ease-in-out;
+}
+/* Card etiqueta en hover */
 #CardJuego:hover {
-    transform: scale(1.04);  /* Aumenta el tamaño en un 10% */
-  }
-
-#Carta{
-  background-color: #1c1c1c;
-  display: flex; 
-  align-items: flex-end;
-  width: 100%; /* Asegura que la imagen ocupe todo el ancho de la card */
-  object-fit: cover; /* Recorta la imagen si es necesario y mantiene la proporción */
+  transform: scale(1.04);
 }
-
+/* div de la imagen  */
+#Carta {
+  background-color: #1c1c1c;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;  
+  object-fit: cover;  
+}
+/* div de la imagen  etiqueta img*/
 #Carta img {
-    border-radius: 5%;
-    max-width: 100%;  /* Ancho máximo */
-  min-width: 100%;  /* Ancho mínimo */
-  max-height: 30vh; /* Alto máximo */
-  min-height: 30vh; /* Alto mínimo */
+  border-radius: 5%;
+  max-width: 100%;
+  min-width: 100%;
+  max-height: 30vh;
+  min-height: 30vh;
   object-fit: cover;
 }
+/* boton de favoritos (abajo) */
+#FavoritoBoton {
+  display: block; 
+  line-height: 40px;  
+  text-decoration: none;
+  color: #333;
+  border: 2px solid #333;
+  letter-spacing: 2px;
+  text-align: center;
+  position: relative;
+  transition: all .35s;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 4%;
+}
+
+#FavoritoBoton span {
+  position: relative;
+  z-index: 2;
+}
+
+#FavoritoBoton:after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: #1c1c1c;
+  transition: all .35s;
+  border-radius: 4%;
+}
+
+#FavoritoBoton:hover {
+  color: #fff;
+  background-color: #ffd200;
+  z-index: 10;
+}
+
+#FavoritoBoton:hover:after {
+  width: 100%;
+}
+/* boton de favoritos (arriba) */
