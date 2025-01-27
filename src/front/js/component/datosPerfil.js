@@ -85,6 +85,7 @@ const DatosPerfil = () => {
             })
         })
     }
+    
     return (
         <>
             {perfil.map((perfil, index) => {
@@ -108,7 +109,7 @@ const DatosPerfil = () => {
                 genres.map((genre, index) => {
                     return (
                         <div key={index}>
-                            <CartaFavoritos title={genre.name} />
+                            <CartaFavoritos title={genre.name} id={genre.id}/>
                         </div>
                     );
                 })
@@ -125,7 +126,7 @@ const DatosPerfil = () => {
                 games.map((game, index) => {
                     return (
                         <div key={index}>
-                            <CartaFavoritos title={game.name} />
+                            <CartaFavoritos title={game.name} id={game.id}/>
                         </div>
                     );
                 })
