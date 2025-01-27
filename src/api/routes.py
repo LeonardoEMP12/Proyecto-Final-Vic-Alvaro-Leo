@@ -172,10 +172,10 @@ def remove_genres():
 # ------------------------------- ENDPOINTS PERFIL ------------------------------- #
 
 # Endpoint para actualizar el username del perfil
-@api.route('/profile/<int:profile_id>/username', methods=['PUT'])
-def update_username(profile_id):
+@api.route('/profile/<int:user_id>/username', methods=['PUT'])
+def update_username(user_id):
     data = request.json
-    profile = Profile.query.get(profile_id)
+    profile = Profile.query.filter_by(user_id = user_id).first()
 
     if not profile:
         return jsonify({"error": "Perfil no encontrado"}), 404
@@ -194,10 +194,10 @@ def update_username(profile_id):
 
 
 # Endpoint para actualizar la description del perfil
-@api.route('/profile/<int:profile_id>/description', methods=['PUT'])
-def update_description(profile_id):
+@api.route('/profile/<int:user_id>/description', methods=['PUT'])
+def update_description(user_id):
     data = request.json
-    profile = Profile.query.get(profile_id)
+    profile = Profile.query.filter_by(user_id = user_id).first()
 
     if not profile:
         return jsonify({"error": "Perfil no encontrado"}), 404
@@ -216,10 +216,10 @@ def update_description(profile_id):
 
 
 # Endpoint para actualizar el birth_date del perfil
-@api.route('/profile/<int:profile_id>/birth_date', methods=['PUT'])
-def update_birth_date(profile_id):
+@api.route('/profile/<int:user_id>/birth_date', methods=['PUT'])
+def update_birth_date(user_id):
     data = request.json
-    profile = Profile.query.get(profile_id)
+    profile = Profile.query.filter_by(user_id = user_id).first()
 
     if not profile:
         return jsonify({"error": "Perfil no encontrado"}), 404
@@ -601,16 +601,21 @@ def get_favorites_games(user_id):
 # ------------------------------- ENDPOINTS INSERCCIONES A LA BASE DE DATOS ------------------------------- #
 
 # Endpoint Get perfil
-@api.route('/perfil', methods=['GET'])
-def get_perfil():
-    request_body = request.json  # Recogemos los datos del body enviado
-    user_id = request_body.get('user_id')  # Recogemos el user_id del request_body
+@api.route('/perfil/<int:user_id>', methods=['GET'])
+def get_perfil(user_id):
     # Creamos las variables para los generos de la tabla Genres
-    perfiles=Profile.query.filter_by(user_id = user_id)
+    perfiles = Profile.query.filter_by(user_id = user_id)
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
     perfil_usuario = [perfil.serialize() for perfil in perfiles]
+    usuario_serialize = user.serialize()  # No necesitas iterar, es un solo objeto
 
     # Retornamos todos los generos de la tabla Genres
-    return jsonify({"message":perfil_usuario}), 200
+    return jsonify({
+        "user": usuario_serialize,
+        "profiles": perfil_usuario
+    }), 200
     
 
 

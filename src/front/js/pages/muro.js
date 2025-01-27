@@ -7,6 +7,7 @@ import Carousel from "../component/Carousel.jsx";
 import ModalPost from "../component/modalpost.js";
 import NoticiasMuro from "../component/noticiasMuro.js";
 import FavGenreComponent from "../component/FavGenreComponent.jsx"
+import DatosPerfil from "../component/datosPerfil.js";
 
 const Muro = () => {
     const [post, setPost] = useState([]);
@@ -113,6 +114,7 @@ const Muro = () => {
                     <div>
                         <ModalPost />
                         <h2>Configuración</h2>
+                        <DatosPerfil/>
                         <p>Opciones de configuración de la cuenta.</p>
                     </div>
                 )}
