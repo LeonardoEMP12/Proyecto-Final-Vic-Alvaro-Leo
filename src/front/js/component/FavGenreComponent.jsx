@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
 
 const FavGenreComponent = () => {
   const { store } = useContext(Context);

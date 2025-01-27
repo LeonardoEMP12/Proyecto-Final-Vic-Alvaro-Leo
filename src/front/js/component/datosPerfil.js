@@ -7,17 +7,18 @@ import CartaFavoritos from "./CartaFavoritos.js";
 const DatosPerfil = () => {
 
     const user = localStorage.getItem("userId");
-    const [perfil, setPerfil] = useState([]);
-    const [genres, setGenres] = useState([]);
-    const [games, setGames] = useState([]);
-    const [usuario, setUsuario] = useState([]);
+    const [perfil, setPerfil] = useState([""]);
+    const [genres, setGenres] = useState([""]);
+    const [games, setGames] = useState([""]);
+    const [usuario, setUsuario] = useState([""]);
     const [username, setUsername] = useState("");
     const [description, setDescription] = useState("");
     const [birth_date, setBirth_date] = useState("");
     const fetchPerfil = () => {
         fetch(process.env.BACKEND_URL + `api/perfil/${user}`)
             .then((response) => response.json())
-            .then((response) => {setPerfil(response.profiles)
+            .then((response) => {
+                setPerfil(response.profiles)
                 setUsuario(response.user)
             })
             .catch((error) => console.error(error));
@@ -111,8 +112,10 @@ const DatosPerfil = () => {
                     <p>No tienes Generos favoritos</p>
                 </div>
             )}
-            <h1>Tus Juegos favoritos</h1>
+            <h1>Tus Juegos favoritos</h1>   
+
             {games === "" ? (
+
                 //Mapeamos el array que tenemos en cada momento
                 games.map((game, index) => {
                     return (
