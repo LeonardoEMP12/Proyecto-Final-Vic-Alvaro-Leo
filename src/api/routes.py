@@ -556,7 +556,7 @@ def get_favorites_genres(user_id):
 
     # Si no hay géneros favoritos, devuelve un mensaje
     if not favorite_genres:
-        return jsonify({"message": "No favorite genres found for this user"}), 404
+        return jsonify({"message": "No favorite genres found for this user"}), 200
 
     # Serializa los géneros favoritos
     genres = [
@@ -583,7 +583,7 @@ def get_favorites_games(user_id):
 
     # Si no hay videojuegos favoritos, devuelve un mensaje
     if not favorites:
-        return jsonify({"message": "No favorite videogames found for this user"}), 404
+        return jsonify({"message": "No favorite videogames found for this user"}), 200
 
     # Serializa los datos junto con los detalles del videojuego
     serialized_favorites = [
