@@ -529,7 +529,7 @@ def remove_games():
     if not user_id or not videogame_id:
         return jsonify({"message": "No se ha podido eliminar de favoritos"}), 400
 
-    videogames = FavoritesGenres.query.filter_by(user_id=user_id, videogame_id=videogame_id).first()
+    videogames = FavoritesVideogames.query.filter_by(user_id=user_id, videogame_id=videogame_id).first()
 
     if not videogames:
         return jsonify({"message": "El género no está en favoritos"}), 404
