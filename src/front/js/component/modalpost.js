@@ -77,7 +77,7 @@ const ModalPost = () => {
                             >
                                 Cerrar
                             </button>
-                            <button id="Publicar" type="button" className="btn btn-primary" onClick={publicar}>
+                            <button id="Publicar" type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={publicar}>
                                 Publicar
                             </button>
                         </div>
