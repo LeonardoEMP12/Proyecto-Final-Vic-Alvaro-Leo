@@ -1,13 +1,22 @@
 #NoJuego{
     background-color: #ffd200;
     color: black;
+    width: 100%;
 }
 
 #NoGenero{
     background-color: #ffd200;
     color: black;
+    width: 100%;
 }
 
 .titulo-perfil{
     color: #fff;
+}
+
+#EtiquetaDatos{
+    background-color: #ffd200;
+    color: black;
+    border: 5px #000000 solid;
+    box-shadow: 0 4px 8px rgba(44, 44, 44, 0.562);
 }

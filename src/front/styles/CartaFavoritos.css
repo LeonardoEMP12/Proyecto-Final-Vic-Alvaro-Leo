@@ -1,0 +1,35 @@
+#BotonEliminarJuego{
+  background: #000000;
+  border: 2px solid #a98a02;
+  color: #fff; 
+  padding: 5px 10px;
+  font-size: 14px; 
+  border-radius: 5px; 
+  transition: all 0.3s ease; 
+  width: 20%;
+  display: flex;
+  justify-content: center;
+}
+
+#BotonEliminarJuego:hover {
+    background: #1c1c1c; 
+    color: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.562);
+  }
+  
+  #BotonEliminarJuego:active {
+    transform: scale(1);
+    box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.555);
+  }
+
+#CardJuego{
+    background-color: #ffd200;
+    border: 2px solid #a98a02;
+    box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.555);
+}
+
+#TituloGame{
+    background-color: transparent;
+    border-style: none;
+}

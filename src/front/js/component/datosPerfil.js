@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import "../../styles/Carousel.css";
 import CartaFavoritos from "./CartaFavoritos.js";
 import { Context } from "../store/appContext";
 import "../../styles/datosPerfil.css"
@@ -87,14 +86,13 @@ const DatosPerfil = () => {
     }
 
     return (
-        <div className="container">
+        <div className="container pb-5 ">
             {perfil.map((perfil, index) => {
                 return (
                     <div className="mb-4" key={index}>
-                        {/* Contenedor con distribución en la misma fila */}
-                        <div className="d-flex justify-content-between align-items-center mt-5">
+                        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-5">
                             <h1 className="titulo-perfil">@{perfil.username}</h1>
-                            <div className="d-flex gap-3">
+                            <div className="d-flex gap-3 flex-column flex-md-row align-items-center mt-3 mt-md-0">
                                 <button className="btn btn-primary">Editar Perfil</button>
                                 <button
                                     className="btn btn-danger"
@@ -108,17 +106,24 @@ const DatosPerfil = () => {
                                 </button>
                             </div>
                         </div>
-                        <p className="mt-3 text-center">Correo: {usuario.email}</p>
-                        <p className="text-center">Fecha de nacimiento: {perfil.birth_date}</p>
-                        <h3 className="mt-5 text-center">Descripción</h3>
-                        <p className="text-center">{perfil.description}</p>
+                        <div className="row justify-content-center">
+                            <div className="col-12 col-md-8 col-lg-6 mt-5">
+                                <div id="EtiquetaDatos" className="p-4">
+                                    <p className="mt-3 text-center">Correo: {usuario.email}</p>
+                                    <p className="text-center">Fecha de nacimiento: {perfil.birth_date}</p>
+                                    <h3 className="mt-5 text-center">Descripción</h3>
+                                    <p className="text-center">{perfil.description}</p>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 );
             })}
 
             <h1 className="titulo-perfil mt-5 text-center">Tus Géneros favoritos</h1>
             {genres?.length > 0 ? (
-                <div className="row">
+                <div className="row align-items-center">
                     {genres.map((genre, index) => {
                         return (
                             <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" key={index}>
@@ -128,7 +133,7 @@ const DatosPerfil = () => {
                     })}
                 </div>
             ) : (
-                <div id="NoGenero" className="text-center mt-3">
+                <div id="NoGenero" className="text-center mt-3 align-items-center">
                     <p>No tienes Géneros favoritos</p>
                 </div>
             )}
@@ -145,7 +150,7 @@ const DatosPerfil = () => {
                     })}
                 </div>
             ) : (
-                <div id="NoJuego" className="text-center mt-3">
+                <div id="NoJuego" className="text-center mt-3 align-items-center">
                     <p>No tienes Juegos favoritos</p>
                 </div>
             )}
