@@ -41,7 +41,7 @@ const DatosPerfil = () => {
         fetchPerfil();
         fetchFavoriteGames();
         fetchFavoriteGenres();
-    }, []);
+    }, [genres, games]);
     const handleUsername = (event) => {
         setText(event.target.value);
     }

@@ -1,6 +1,6 @@
 import React from "react";
 
-const CartaFavoritos = ({ title, id }) => {
+const CartaFavoritos = ({ title, id}) => {
   const user = localStorage.getItem("userId");
 
   const eliminarJuego = () => {
