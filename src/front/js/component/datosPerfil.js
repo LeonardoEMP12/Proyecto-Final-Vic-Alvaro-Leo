@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import "../../styles/Carousel.css";
 import CartaFavoritos from "./CartaFavoritos.js";
 import { Context } from "../store/appContext";
-
+import "../../styles/datosPerfil.css"
 
 
 
@@ -85,58 +85,74 @@ const DatosPerfil = () => {
             })
         })
     }
-    
+
     return (
-        <>
+        <div className="container">
             {perfil.map((perfil, index) => {
                 return (
-                    <div key={index}>
-                        <h1 className="mt-5">@{perfil.username}</h1> 
-                        <button>Editar</button> 
-                        <button onClick={()=>{actions.setId(), actions.setToken(), actions.setName()}}>
-                            Cerrar sesion
-                        </button> 
-                        <p className="mt-3">Correo: {usuario.email}</p>
-                        <p>Fecha de nacimiento: {perfil.birth_date}</p>
-                        <h3 className="mt-5">Descripcion</h3>
-                        <p>{perfil.description}</p>
-                    </div>
-                )
-            })}
-            <h1>Tus Generos favoritos</h1>
-            {genres?.length > 0 ? (
-                //Mapeamos el array que tenemos en cada momento
-                genres.map((genre, index) => {
-                    return (
-                        <div key={index}>
-                            <CartaFavoritos title={genre.name} id={genre.id}/>
+                    <div className="mb-4" key={index}>
+                        {/* Contenedor con distribución en la misma fila */}
+                        <div className="d-flex justify-content-between align-items-center mt-5">
+                            <h1 className="titulo-perfil">@{perfil.username}</h1>
+                            <div className="d-flex gap-3">
+                                <button className="btn btn-primary">Editar Perfil</button>
+                                <button
+                                    className="btn btn-danger"
+                                    onClick={() => {
+                                        actions.setId();
+                                        actions.setToken();
+                                        actions.setName();
+                                    }}
+                                >
+                                    Cerrar sesión
+                                </button>
+                            </div>
                         </div>
-                    );
-                })
+                        <p className="mt-3 text-center">Correo: {usuario.email}</p>
+                        <p className="text-center">Fecha de nacimiento: {perfil.birth_date}</p>
+                        <h3 className="mt-5 text-center">Descripción</h3>
+                        <p className="text-center">{perfil.description}</p>
+                    </div>
+                );
+            })}
+
+            <h1 className="titulo-perfil mt-5 text-center">Tus Géneros favoritos</h1>
+            {genres?.length > 0 ? (
+                <div className="row">
+                    {genres.map((genre, index) => {
+                        return (
+                            <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" key={index}>
+                                <CartaFavoritos title={genre.name} id={genre.id} />
+                            </div>
+                        );
+                    })}
+                </div>
             ) : (
-                <div>
-                    <p>No tienes Generos favoritos</p>
+                <div id="NoGenero" className="text-center mt-3">
+                    <p>No tienes Géneros favoritos</p>
                 </div>
             )}
-            <h1>Tus Juegos favoritos</h1>   
 
+            <h1 className="titulo-perfil mt-5 text-center">Tus Juegos favoritos</h1>
             {games?.length > 0 ? (
-                
-                //Mapeamos el array que tenemos en cada momento
-                games.map((game, index) => {
-                    return (
-                        <div key={index}>
-                            <CartaFavoritos title={game.name} id={game.id}/>
-                        </div>
-                    );
-                })
+                <div className="row">
+                    {games.map((game, index) => {
+                        return (
+                            <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" key={index}>
+                                <CartaFavoritos title={game.name} id={game.id} />
+                            </div>
+                        );
+                    })}
+                </div>
             ) : (
-                <div>
+                <div id="NoJuego" className="text-center mt-3">
                     <p>No tienes Juegos favoritos</p>
                 </div>
             )}
-        </>
+        </div>
+
     );
+
 };
 
 export default DatosPerfil;

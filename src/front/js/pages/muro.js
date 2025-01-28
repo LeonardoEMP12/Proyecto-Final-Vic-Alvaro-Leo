@@ -115,7 +115,6 @@ const Muro = () => {
                         <ModalPost />
                         <h2>Configuración</h2>
                         <DatosPerfil/>
-                        <p>Opciones de configuración de la cuenta.</p>
                     </div>
                 )}
             </div>
