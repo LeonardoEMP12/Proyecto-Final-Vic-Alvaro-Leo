@@ -356,4 +356,6 @@ body {
   width: 70%;
 }
 
-.placeholder-details 
+.placeholder-details {
+  width:100;
+}
