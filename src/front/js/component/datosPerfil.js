@@ -44,7 +44,7 @@ const DatosPerfil = () => {
         fetchPerfil();
         fetchFavoriteGames();
         fetchFavoriteGenres();
-    }, [genres, games]);
+    }, [genres, games, perfil]);
 
     const handleUsername = (event) => {
         setUsername(event.target.value);
@@ -213,6 +213,7 @@ const DatosPerfil = () => {
                             <button
                                 type="button"
                                 className="btn btn-primary"
+                                data-bs-dismiss="modal"
                                 onClick={() => {
                                     putUsername();
                                     putDescription();
