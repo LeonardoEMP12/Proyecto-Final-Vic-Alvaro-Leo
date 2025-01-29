@@ -1,4 +1,5 @@
 import React from "react";
+import "../../styles/CartaFavoritos.css"
 
 const CartaFavoritosJuegos = ({ title, id}) => {
   const user = localStorage.getItem("userId");
@@ -17,9 +18,13 @@ const CartaFavoritosJuegos = ({ title, id}) => {
   }
   
   return (
-    <div id="CardJuego" className="card mb-3">
-      <div className="card-header">{title}</div>
-      <button onClick={()=>{eliminarJuego()}}>X</button>
+    <div id="CardJuego" className="card text-center justify-content-center">
+      <div id="TituloGame" className="card-header"><h4>{title}</h4></div>
+      <div ontouchstart="">
+        <div className="button mb-5">
+          <button onClick={() => { eliminarJuego()}}>Eliminar</button>
+        </div>
+      </div>
     </div>
   );
 };

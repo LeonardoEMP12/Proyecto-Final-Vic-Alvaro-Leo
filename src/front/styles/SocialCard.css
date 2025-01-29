@@ -1,51 +1,58 @@
 .social-card {
 
-    border-radius: 8px;
-    padding: 16px;
-    margin: 16px auto;
-    background-color: #000000;
-    border: #977b00 solid;
-  }
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px auto;
+  background-color: #000000;
+  border: #977b00 solid;
+}
+
+
+.card-image img {
   
-  
-  .card-image img {
-    width: 100%;
-    border-radius: 8px;
-  }
-  
-  .card-content h3 {
-    margin: 8px 0;
-    font-size: 1em;
-    color: #ffd200;
-    justify-self: right;
-  }
-  
-  .card-content p {
-    font-size: 1em;
-    color: #fff;
-  }
-  
-  .card-actions {
-    margin-right: 0,5vh;
-    display: flex;
-  }
-  
-  .like-btn, .comment-btn {
-    background-color: #1c1c1c;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-  }
-  
-  .like-btn:hover, .comment-btn:hover {
-    background-color: #0f0f0f;
-  }
-  
-  .OMNIAicon {
-    margin-top: 0.5rem;
-    width: 1.5rem;
-    height: 1.5rem;
-  }
+  border-radius: 8px;
+  max-width: 100%;
+  min-width: 100%;
+  max-height: 500px;
+  min-height: 500px;
+  object-fit: cover;
+}
+
+.card-content h3 {
+  margin: 8px 0;
+  font-size: 1em;
+  color: #ffd200;
+  justify-self: right;
+}
+
+.card-content p {
+  font-size: 1em;
+  color: #fff;
+}
+
+.card-actions {
+  margin-right: 0, 5vh;
+  display: flex;
+}
+
+.like-btn,
+.comment-btn {
+  background-color: #1c1c1c;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+}
+
+.like-btn:hover,
+.comment-btn:hover {
+  background-color: #0f0f0f;
+}
+
+.OMNIAicon {
+  margin-top: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
 
 
 .modal-content {
