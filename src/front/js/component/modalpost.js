@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../styles/muro.css";
+import { Context } from "../store/appContext";
+
 
 const ModalPost = () => {
+    const { actions } = useContext(Context);
     const [image, setImage] = useState("")
     const [text, setText] = useState("")
     const user = localStorage.getItem("userId")
@@ -21,18 +24,28 @@ const ModalPost = () => {
     formData.append('image', image[0] ? image[0] : ""); // Enviar solo el primer archivo, si es que hay varios
 
     // Realizar la solicitud POST con FormData
-    const publicar = () => {
-        fetch(process.env.BACKEND_URL + "api/create-posts", {
-            method: "POST",
-            body: formData // No necesitas establecer el 'Content-Type' cuando usas FormData
-        })
-        .then((response) => response.json())
-        .then((response) => {
-            setPost(response.message); // Maneja la respuesta
-            
-        })
-        .catch((error) => console.error(error));
-    }
+    const publicar = async () => {
+        try {
+            const response = await fetch(process.env.BACKEND_URL + "api/create-posts", {
+                method: "POST",
+                body: formData, // No necesitas establecer el 'Content-Type' cuando usas FormData
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                // Si la publicación es exitosa, actualiza los datos en la pantalla
+                console.log("Post publicado:", data);
+
+                // Si estás usando un estado para almacenar los posts, puedes actualizarlos aquí
+                // actions.addPost(data); // Asumiendo que tienes una función para agregar el post
+                actions.toggleEstado(); // Actualiza el estado para forzar el re-render
+            } else {
+                console.error("Error al publicar el post");
+            }
+        } catch (error) {
+            console.error("Error en la solicitud:", error);
+        }
+    };
     
 
     return (
@@ -62,7 +75,7 @@ const ModalPost = () => {
                                         ¿Listo para jugar?:
                                     </label>
                                     <textarea className="form-control" id="TextoPost" name="text" onChange={handleText}></textarea>
-                                    <label className="mt-4" for="fileInput">Selecciona una imagen para subir:</label>
+                                    <label className="mt-4" htmlFor="fileInput">Selecciona una imagen para subir:</label>
                                     <input type="file" id="fileInput" name="image" accept="image/*" onChange={handleImage}></input>
                                 </div>
                             </form>
@@ -76,7 +89,7 @@ const ModalPost = () => {
                             >
                                 Cerrar
                             </button>
-                            <button id="Publicar" type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={publicar}>
+                            <button id="Publicar" type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={()=>{publicar(), actions.toggleEstado()}}>
                                 Publicar
                             </button>
                         </div>

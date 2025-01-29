@@ -104,7 +104,7 @@ const SocialCard = ({ image, title, description, id }) => {
           <h3 className="mb-0 me-2">@{title}</h3>
           <img src={OMNIAicon} className="OMNIAicon" alt="Logo OMNIA" />
         </div>
-        <p>{description}</p>
+        <p className='description'>{description}</p>
       </div>
       <div className="card-image">
         <img src={image} alt={image} />

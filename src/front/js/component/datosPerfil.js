@@ -6,45 +6,52 @@ import "../../styles/datosPerfil.css";
 
 
 const DatosPerfil = () => {
-    const { actions } = useContext(Context);
+    const { actions, store } = useContext(Context);
     const user = localStorage.getItem("userId");
     const [perfil, setPerfil] = useState([]);
     const [genres, setGenres] = useState([]);
     const [games, setGames] = useState([]);
     const [usuario, setUsuario] = useState([""]);
-    const [username, setUsername] = useState("");
-    const [description, setDescription] = useState("");
+    const [username, setUsername] = useState();
+    const [description, setDescription] = useState();
     const [birth_date, setBirth_date] = useState("");
 
-    const fetchPerfil = () => {
-        fetch(process.env.BACKEND_URL + `api/perfil/${user}`)
-            .then((response) => response.json())
-            .then((response) => {
-                setPerfil(response.profiles);
-                setUsuario(response.user);
-            })
-            .catch((error) => console.error(error));
+    const fetchPerfil = async () => {
+        try {
+            const response = await fetch(process.env.BACKEND_URL + `api/perfil/${user}`);
+            const data = await response.json();
+            setPerfil(data.profiles);
+            setUsuario(data.user);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
-    const fetchFavoriteGenres = () => {
-        fetch(process.env.BACKEND_URL + `api/favorites-genres/${user}`)
-            .then((response) => response.json())
-            .then((response) => setGenres(response.message.favorite_genres))
-            .catch((error) => console.error(error));
+    const fetchFavoriteGenres = async () => {
+        try {
+            const response = await fetch(process.env.BACKEND_URL + `api/favorites-genres/${user}`);
+            const data = await response.json();
+            setGenres(data.message.favorite_genres);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
-    const fetchFavoriteGames = () => {
-        fetch(process.env.BACKEND_URL + `api/favorites-games/${user}`)
-            .then((response) => response.json())
-            .then((response) => setGames(response.message.favorite_games))
-            .catch((error) => console.error(error));
+    const fetchFavoriteGames = async () => {
+        try {
+            const response = await fetch(process.env.BACKEND_URL + `api/favorites-games/${user}`);
+            const data = await response.json();
+            setGames(data.message.favorite_games);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     useEffect(() => {
         fetchPerfil();
         fetchFavoriteGames();
         fetchFavoriteGenres();
-    }, [genres, games, perfil]);
+    }, [store.actualizador]);
 
     const handleUsername = (event) => {
         setUsername(event.target.value);
@@ -58,40 +65,52 @@ const DatosPerfil = () => {
         setBirth_date(event.target.value);
     };
 
-    const putUsername = () => {
-        fetch(process.env.BACKEND_URL + `api/profile/${user}/username`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username: username,
-            }),
-        });
+    const putUsername = async () => {
+        try {
+            const response = await fetch(process.env.BACKEND_URL + `api/profile/${user}/username`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username: username }),
+            });
+            const updatedData = await response.json();
+            setPerfil((prevPerfil) => prevPerfil.map((p) => (p.id === updatedData.id ? { ...p, username: updatedData.username } : p)));
+        } catch (error) {
+            console.error(error);
+        }
     };
 
-    const putDescription = () => {
-        fetch(process.env.BACKEND_URL + `api/profile/${user}/description`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                description: description,
-            }),
-        });
+    const putDescription = async () => {
+        try {
+            const response = await fetch(process.env.BACKEND_URL + `api/profile/${user}/description`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ description: description }),
+            });
+            const updatedData = await response.json();
+            setPerfil((prevPerfil) => prevPerfil.map((p) => (p.id === updatedData.id ? { ...p, description: updatedData.description } : p)));
+        } catch (error) {
+            console.error(error);
+        }
     };
 
-    const putBirthdate = () => {
-        fetch(process.env.BACKEND_URL + `api/profile/${user}/birth_date`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                birth_date: birth_date,
-            }),
-        });
+    const putBirthdate = async () => {
+        try {
+            const response = await fetch(process.env.BACKEND_URL + `api/profile/${user}/birth_date`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ birth_date: birth_date }),
+            });
+            const updatedData = await response.json();
+            setPerfil((prevPerfil) => prevPerfil.map((p) => (p.id === updatedData.id ? { ...p, birth_date: updatedData.birth_date } : p)));
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -181,7 +200,7 @@ const DatosPerfil = () => {
                                         type="text"
                                         className="form-control"
                                         id="username"
-                                        value={username}
+                                        value={username || ""}
                                         onChange={handleUsername}
                                     />
                                 </div>
@@ -191,7 +210,7 @@ const DatosPerfil = () => {
                                         className="form-control"
                                         id="description"
                                         value={description}
-                                        onChange={handleDescription}
+                                        onChange={handleDescription || ""}
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -201,7 +220,7 @@ const DatosPerfil = () => {
                                         className="form-control"
                                         id="birth_date"
                                         value={birth_date}
-                                        onChange={handleBirthDate}
+                                        onChange={handleBirthDate || ""}
                                     />
                                 </div>
                             </form>
@@ -218,6 +237,7 @@ const DatosPerfil = () => {
                                     putUsername();
                                     putDescription();
                                     putBirthdate();
+                                    actions.toggleEstado();
                                 }}
                             >
                                 Guardar cambios
