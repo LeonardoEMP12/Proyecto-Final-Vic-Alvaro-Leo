@@ -64,6 +64,43 @@ const NoticiasMuro = () => {
                     </div>
                 </div>
             </div>
+
+            <div
+                className="fondo3 mt-3 d-sm-none d-none d-md-block"
+                onClick={() => window.open('https://www.monsterhunter.com/wilds/es/')}
+            >
+                <div className="card card-border card-noticia">
+                    <img src="https://res.cloudinary.com/dqlsbhfxs/image/upload/v1738145802/Monsterhunterwilds_sgvghg.avif" />
+                    <div className="card-body">
+                        <h5 className="titular-noticia">Monster Hunter Wilds</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                className="fondo3 mt-3 d-sm-none d-none d-md-block"
+                onClick={() => window.open('https://as.com/meristation/noticias/si-gta-6-se-retrasa-lo-sabremos-en-esta-fecha-rockstar-games-se-la-juega-muy-pronto-n/?utm_source=chatgpt.com')}
+            >
+                <div className="card card-border card-noticia">
+                    <img src="https://res.cloudinary.com/dqlsbhfxs/image/upload/v1738174367/descarga_ymk9e6.jpg" />
+                    <div className="card-body">
+                        <h5 className="titular-noticia">Si GTA 6 se retrasa lo sabremos en esta fecha</h5>
+                    </div>
+                </div>
+            </div>
+
+
+            <div
+                className="fondo3 mt-3 d-sm-none d-none d-md-block"
+                onClick={() => window.open('https://www.tiktok.com/@light_419/video/7310767000182164741')}
+            >
+                <div className="card card-border card-noticia">
+                    <img src="https://res.cloudinary.com/dqlsbhfxs/image/upload/v1738174620/silksong_gdjaoq.jpg" />
+                    <div className="card-body">
+                        <h5 className="titular-noticia">Fecha de lanzamiento de Hollow Knight: Silksong</h5>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
