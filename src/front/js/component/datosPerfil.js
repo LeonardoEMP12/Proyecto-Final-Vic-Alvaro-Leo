@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import "../../styles/Carousel.css";
-import CartaFavoritos from "./CartaFavoritos.js";
 import { Context } from "../store/appContext";
+import CartaFavoritosGeneros from "./CartaFavoritosGeneros.js";
+import CartaFavoritosJuegos from "./CartaFavoritosJuegos.js";
 
 
 
@@ -109,7 +110,7 @@ const DatosPerfil = () => {
                 genres.map((genre, index) => {
                     return (
                         <div key={index}>
-                            <CartaFavoritos title={genre.name} id={genre.id}/>
+                            <CartaFavoritosGeneros title={genre.name} id={genre.id}/>
                         </div>
                     );
                 })
@@ -126,7 +127,7 @@ const DatosPerfil = () => {
                 games.map((game, index) => {
                     return (
                         <div key={index}>
-                            <CartaFavoritos title={game.name} id={game.id}/>
+                            <CartaFavoritosJuegos title={game.name} id={game.id}/>
                         </div>
                     );
                 })
