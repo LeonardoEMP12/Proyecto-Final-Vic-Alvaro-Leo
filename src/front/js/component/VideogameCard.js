@@ -74,7 +74,7 @@ const VideogameCard = () => {
               <img src={OMNIAtext} alt="OMNIA" className="img-fluid" />
             </span>
           </a>
-  
+
           <a
             className={`navigate-icon  mt-4 mb-0 nav-link ${activeTab === "videojuegos" ? "active" : ""}`}
             onClick={() => handleTabClick("muro")}
@@ -106,103 +106,104 @@ const VideogameCard = () => {
             </svg>
             <span class="hover-text" id="publicar-btn">PUBLICAR</span>
           </a>
-  
+
         </nav>
-  
+
         <div className="col-2 fondo2">
           {/* Aquí puedes añadir más contenido si es necesario */}
         </div>
-  
-  
-          <div className="col-10 fondo2 placeholder-details game-details">
+
+        <div className="col-10 fondo2 placeholder-details game-details">
 
 
-            <h1 className="banner-title placeholder placeholder-wave">
-              aaaaaaaaaaaaaaaa
-            </h1>
-  
-            <div className="row">
-              <div className="banner col-10 placeholder placeholder-wave">
-                <img
-                  src=" "
-                  alt=" "
-                  className="banner-image placeholder placeholder-wave"
-                />
-              </div>
-            </div>
-  
-  
-  
-            {/* Información por columnas */}
-  
-            <div className="game-info">
-              <div className="info-column">
-                <p>
-                  <strong className="placeholder placeholder-wave"></strong> 
-                  <br />
-                  <p className="placeholder placeholder-wave"></p>
-                </p>
-                <p>
-                  <strong className="placeholder placeholder-wave"></strong>{" "}
-                  <br />
-                  <p className="placeholder placeholder-wave"></p>
-                </p>
-                <p>
-                  <strong className="placeholder placeholder-wave"></strong>{" "}
-                  <br />
-                  <p className="placeholder placeholder-wave"></p>
-                </p>
-              </div>
-  
-              <div className="info-column">
-                <p>
-                  <strong className="placeholder placeholder-wave"></strong> 
-                  <br />
-                  <p className="placeholder placeholder-wave"></p>
-                </p>
-                <p>
-                  <strong className="placeholder placeholder-wave"></strong>{" "}
-                  <br />
-                  <p className="placeholder placeholder-wave"></p>
-                </p>
-                <p>
-                  <strong className="placeholder placeholder-wave"></strong>{" "}
-                  <br />
-                  <p className="placeholder placeholder-wave"></p>
-                </p>
-              </div>
-  
-              <div className="ratings">
-                <strong className="placeholder-wave"></strong>
-                <p className="placeholder-wave"></p>
-              </div>
-            </div>
-  
-            {/* Descripción con límite y "Leer más" */}
-            <div className="game-description placeholder-wave">
-              <h3>Description</h3>
-              <p className="placeholder-wave"></p>
-              <button
-                className="btn btn-link text-warning placeholder-wave"
-                onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded)}
-              >
-                {isDescriptionExpanded ? "Leer menos" : "Leer más"}
-              </button>
-            </div>
-  
-            <div className="game-tags">
-              <p>
-                <strong className="placeholder-wave">Tags:</strong> <p className="placeholder-wave"></p>
-              </p>
+          <h1 className="banner-title placeholder placeholder-wave">
+
+          </h1>
+
+          <div className="row">
+            <div className="banner col-10 placeholder placeholder-wave">
+              <img
+                src=" "
+                alt=" "
+                className="banner-image placeholder placeholder-wave"
+              />
             </div>
           </div>
-  
-  
+
+
+
+          {/* Información por columnas */}
+
+          <div className="game-info">
+            <div className="info-column">
+              <p>
+                <strong className="placeholder placeholder-wave"></strong>
+                <br />
+                <p className="placeholder placeholder-wave"></p>
+              </p>
+              <p>
+                <strong className="placeholder placeholder-wave"></strong>{" "}
+                <br />
+                <p className="placeholder placeholder-wave"></p>
+              </p>
+              <p>
+                <strong className="placeholder placeholder-wave"></strong>{" "}
+                <br />
+                <p className="placeholder placeholder-wave"></p>
+              </p>
+            </div>
+            <div className="info-column">
+              <p>
+                <strong className="placeholder placeholder-wave"></strong>
+                <br />
+                <p className="placeholder placeholder-wave"></p>
+              </p>
+              <p>
+                <strong className="placeholder placeholder-wave"></strong>{" "}
+                <br />
+                <p className="placeholder placeholder-wave"></p>
+              </p>
+              <p>
+                <strong className="placeholder placeholder-wave"></strong>{" "}
+                <br />
+                <p className="placeholder placeholder-wave"></p>
+              </p>
+            </div>
+
+
+            <div className="ratings placeholder placeholder-wave">
+              <strong className="placeholder placeholder-wave"></strong>
+              <p className="placeholder placeholder-wave"></p>
+            </div>
+
+
+          </div>
+
+        </div>
+
+        <div className="col-2 game-image">
+          {/* Trailer */}
+          <div className="game-trailer">
+            <h3 className="placeholder placeholder-wave">Game trailers:</h3>
+            <div className="trailer-container placeholder placeholder-wave">
+
+            </div>
+          </div>
+
+          {/* Screenshots */}
+          <div className="game-screenshots">
+            <h3 className="placeholder placeholder-wave">Screenshots:</h3>
+            <div className="screenshots-container placeholder placeholder-wave">
+
+            </div>
+          </div>
+
+        </div>
 
       </div>
     );
-}
-// if (!game) return <p>Game not found!</p>;
+  }
+  // if (!game) return <p>Game not found!</p>;
 
 
   return (
@@ -258,116 +259,116 @@ const VideogameCard = () => {
       </div>
 
 
-        <div className="col-10 fondo2 game-details">
-          <h1 className={`banner-title ${loading ? "placeholder-wave" : ""}`}>{game.name}</h1>
+      <div className="col-10 fondo2 game-details">
+        <h1 className={`banner-title ${loading ? "placeholder-wave" : ""}`}>{game.name}</h1>
 
-          <div className="row">
-            <div className="banner col-10">
-              <img
-                src={game.background_image}
-                alt={game.name}
-                className="banner-image"
-              />
-            </div>
-          </div>
-
-
-
-          {/* Información por columnas */}
-
-          <div className="game-info">
-            <div className="info-column">
-              <p>
-                <strong>Release date:</strong> <br /> {game.released}
-              </p>
-              <p>
-                <strong>Distribuidora:</strong>{" "}
-                <br />
-                {game.publishers?.map((publisher) => publisher.name).join(", ") ||
-                  "N/A"}
-              </p>
-              <p>
-                <strong>Plataformas:</strong>{" "}
-                <br />
-                {game.parent_platforms?.map((platform) => platform.platform.name).join(", ") ||
-                  "N/A"}
-              </p>
-            </div>
-
-            <div className="info-column">
-              <p>
-                <strong>Genero:</strong>{" "}
-                <br />
-                {game.genres.map((genre) => genre.name).join(", ")}
-              </p>
-              <p>
-                <strong>Desarrolladora:</strong>{" "}
-                <br />
-                {game.developers?.map((developer) => developer.name).join(", ") ||
-                  "N/A"}
-              </p>
-              <p>
-                <strong>Tiendas:</strong>{" "}
-                <br />
-                {game.stores?.map((store) => store.store.name).join(", ") ||
-                  "N/A"}
-              </p>
-            </div>
-
-            <div className="ratings">
-              <strong>Ratings:</strong>
-              {game.ratings?.map((rating) => (
-                <div key={rating.id} className="rating">
-                  <span className={`rating-title rating-${rating.title}`}>
-                    {rating.title}
-                  </span>
-                  : {rating.percent}%
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Descripción con límite y "Leer más" */}
-          <div className="game-description">
-            <h3>Description</h3>
-            <p
-              className={
-                isDescriptionExpanded ? "description-expanded" : "description-collapsed"
-              }
-              dangerouslySetInnerHTML={{ __html: game.description }}
+        <div className="row">
+          <div className="banner col-10">
+            <img
+              src={game.background_image}
+              alt={game.name}
+              className="banner-image"
             />
-            <button
-              className="btn btn-link text-warning"
-              onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded)}
-            >
-              {isDescriptionExpanded ? "Leer menos" : "Leer más"}
-            </button>
           </div>
+        </div>
 
-          <div className="game-tags">
+
+
+        {/* Información por columnas */}
+
+        <div className="game-info">
+          <div className="info-column">
             <p>
-              <strong>Tags:</strong> {game.tags.map((tag) => tag.name).join(", ")}
+              <strong>Release date:</strong> <br /> {game.released}
+            </p>
+            <p>
+              <strong>Distribuidora:</strong>{" "}
+              <br />
+              {game.publishers?.map((publisher) => publisher.name).join(", ") ||
+                "N/A"}
+            </p>
+            <p>
+              <strong>Plataformas:</strong>{" "}
+              <br />
+              {game.parent_platforms?.map((platform) => platform.platform.name).join(", ") ||
+                "N/A"}
             </p>
           </div>
 
-          {/* Enlace a la página web del juego */}
-          <div className="game-website">
-            {game.website ? (
-              <p>
-                <strong>Official Website: </strong>
-                <a
-                  href={game.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {game.website}
-                </a>
-              </p>
-            ) : (
-              <p>No official website available.</p>
-            )}
+          <div className="info-column">
+            <p>
+              <strong>Genero:</strong>{" "}
+              <br />
+              {game.genres.map((genre) => genre.name).join(", ")}
+            </p>
+            <p>
+              <strong>Desarrolladora:</strong>{" "}
+              <br />
+              {game.developers?.map((developer) => developer.name).join(", ") ||
+                "N/A"}
+            </p>
+            <p>
+              <strong>Tiendas:</strong>{" "}
+              <br />
+              {game.stores?.map((store) => store.store.name).join(", ") ||
+                "N/A"}
+            </p>
+          </div>
+
+          <div className="ratings">
+            <strong>Ratings:</strong>
+            {game.ratings?.map((rating) => (
+              <div key={rating.id} className="rating">
+                <span className={`rating-title rating-${rating.title}`}>
+                  {rating.title}
+                </span>
+                : {rating.percent}%
+              </div>
+            ))}
           </div>
         </div>
+
+        {/* Descripción con límite y "Leer más" */}
+        <div className="game-description">
+          <h3>Description</h3>
+          <p
+            className={
+              isDescriptionExpanded ? "description-expanded" : "description-collapsed"
+            }
+            dangerouslySetInnerHTML={{ __html: game.description }}
+          />
+          <button
+            className="btn btn-link text-warning"
+            onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded)}
+          >
+            {isDescriptionExpanded ? "Leer menos" : "Leer más"}
+          </button>
+        </div>
+
+        <div className="game-tags">
+          <p>
+            <strong>Tags:</strong> {game.tags.map((tag) => tag.name).join(", ")}
+          </p>
+        </div>
+
+        {/* Enlace a la página web del juego */}
+        <div className="game-website">
+          {game.website ? (
+            <p>
+              <strong>Official Website: </strong>
+              <a
+                href={game.website}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {game.website}
+              </a>
+            </p>
+          ) : (
+            <p>No official website available.</p>
+          )}
+        </div>
+      </div>
 
 
       <div className="col-2 game-image">
