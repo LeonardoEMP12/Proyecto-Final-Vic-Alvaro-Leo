@@ -60,7 +60,7 @@ useEffect(() => {
 
 
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <div className="vw-100 vh-100 skeleton-loader"></div>;
   if (!game) return <p>Game not found!</p>;
 
   return (
