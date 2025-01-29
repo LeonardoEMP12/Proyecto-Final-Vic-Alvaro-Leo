@@ -350,54 +350,10 @@ body {
   margin-left: 20px;
 }
 
-.skeleton-loader {
-  position: relative;
-  height: 100vh; /* Asegura que ocupe toda la altura de la pantalla */
-  width: 100vw;  /* Asegura que ocupe todo el ancho de la pantalla */
-  display: flex;           /* Usamos flexbox para centrar el contenido */
-  justify-content: center; /* Centrado horizontal */
-  align-items: center;     /* Centrado vertical */
+.placeholder-details p,
+.placeholder-details strong,
+.placeholder-details h1 {
+  width: 70%;
 }
 
-.skeleton-loader:after {
-  content: '';
-  display: block;
-  width: 100vw;  /* Asegura que ocupe todo el ancho de la pantalla */
-  height: 100vh; /* Asegura que ocupe toda la altura de la pantalla */
-  position: absolute;
-  left: 0;
-  top: 0;
-  background-repeat: no-repeat;
-  background-image: 
-      linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%),
-      linear-gradient(#aaaaaa 3%, transparent 0), 
-      linear-gradient(#999999 1%, transparent 0), 
-      linear-gradient(#aaaaaa 13%, transparent 0), 
-      linear-gradient(#aaaaaa 2%, transparent 0), 
-      linear-gradient(#aaaaaa 8%, transparent 0), 
-      linear-gradient(#aaaaaa 2%, transparent 0), 
-      linear-gradient(#aaaaaa 2%, transparent 0), 
-      linear-gradient(#aaaaaa 2%, transparent 0), 
-      linear-gradient(#aaaaaa 2%, transparent 0), 
-      linear-gradient(#aaaaaa 5%, transparent 0), 
-      linear-gradient(#aaaaaa 5%, transparent 0), 
-      linear-gradient(#aaaaaa 5%, transparent 0), 
-      linear-gradient(#aaaaaa 4%, transparent 0), 
-      linear-gradient(#aaaaaa 25%, transparent 0),
-      linear-gradient(#ffffff 100%, transparent 0);
-  
-  background-size: 
-      26vw 100%, 24vw 3vh, 8vw 1vh, 34vw 13vh, 8vw 2vh, 8vw 8vh, 10vw 2vh, 10vw 2vh, 10vw 2vh, 10vw 2vh, 5vw 5vh, 5vw 5vh, 5vw 5vh, 4vw 4vh, 6vw 25vh, 100% 100%;
-  
-  background-position: 
-      0 0, 14vw 4vh, 10vw 23vh, 10vw 8vh, 23vw 23vh, 36vw 23vh, 10vw 25vh, 10vw 28vh, 23vw 25vh, 23vw 28vh, 44vw 8vh, 44vw 14vh, 44vw 21vh, 44vw 27vh, 2vw 4vh, 0 0;
-  
-  animation: skeleton-animation 2000ms infinite;
-}
-
-@keyframes skeleton-animation {
-  to {
-      background-position: 
-          100% 0, 14vw 4vh, 10vw 23vh, 10vw 8vh, 23vw 23vh, 36vw 23vh, 10vw 25vh, 10vw 28vh, 23vw 25vh, 23vw 28vh, 44vw 8vh, 44vw 14vh, 44vw 21vh, 44vw 27vh, 2vw 4vh, 0 0;
-  }
-}
+.placeholder-details 
