@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../styles/muro.css";
 import "../../styles/navbarmovil.css";
 import SocialCard from "../component/SocialCard.jsx";
@@ -9,8 +9,11 @@ import ModalPost from "../component/modalpost.js";
 import NoticiasMuro from "../component/noticiasMuro.js";
 import FavGenreComponent from "../component/FavGenreComponent.jsx"
 import DatosPerfil from "../component/datosPerfil.js";
+import { Context } from "../store/appContext";
+
 
 const Muro = () => {
+    const { store } = useContext(Context);
     const [post, setPost] = useState([]);
     const [activeTab, setActiveTab] = useState("publicaciones");
 
@@ -22,7 +25,7 @@ const Muro = () => {
 
     useEffect(() => {
         publicaciones();
-    }, [post]);
+    }, [store.actualizador]);
 
     return (
         <div className="row body">
@@ -80,19 +83,18 @@ const Muro = () => {
             <div className="menu d-block d-md-none">
                 <input type="checkbox" id="menu-open" className="menu-open" />
 
-                <label for="menu-open" className="menu-open-button">
+                <label htmlFor="menu-open" className="menu-open-button">
                     <div className="hamburger hamburger-1"></div>
                     <div className="hamburger hamburger-2"></div>
                     <div className="hamburger hamburger-3"></div>
                 </label>
 
-                <div class="menu-item"
+                <div className="menu-item"
                     data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                    className="menu-item">
+                    data-bs-target="#exampleModal">
                 
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" class="bi bi-plus-lg" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" className="bi bi-plus-lg" viewBox="0 0 16 16">
+  <path fillRule ="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
 </svg>
 
                 </div>
@@ -138,7 +140,7 @@ const Muro = () => {
                 {activeTab === "publicaciones" && (
                     <div>
                         <ModalPost />
-                        {post.map((post, index) => (
+                        {post.reverse().map((post, index) => (
                             <div className="cuerpo" key={index}>
                                 <SocialCard
                                     title={post.post_user.username}

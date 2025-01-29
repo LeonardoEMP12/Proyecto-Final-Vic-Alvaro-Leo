@@ -17,7 +17,6 @@ const GameCard = ({ image, title, api_id, videogameId }) => {
       })
     })
       .then((response) => response.json())
-      .then((response) => setPost(response.message))
       .catch((error) => console.error(error));
   }
 

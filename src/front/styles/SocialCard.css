@@ -7,6 +7,9 @@
   border: #977b00 solid;
 }
 
+.description{
+  overflow-wrap: break-word;
+}
 
 .card-image img {
   border-radius: 8px;
