@@ -9,12 +9,10 @@
 
 
 .card-image img {
-  
   border-radius: 8px;
   max-width: 100%;
   min-width: 100%;
-  max-height: 500px;
-  min-height: 500px;
+  max-height: 400px;
   object-fit: cover;
 }
 

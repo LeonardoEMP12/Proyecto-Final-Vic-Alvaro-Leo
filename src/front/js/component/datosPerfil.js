@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import CartaFavoritos from "./CartaFavoritos.js";
 import { Context } from "../store/appContext";
+import CartaFavoritosGeneros from "./CartaFavoritosGeneros.js";
+import CartaFavoritosJuegos from "./CartaFavoritosJuegos.js";
 import "../../styles/datosPerfil.css";
+
 
 const DatosPerfil = () => {
     const { actions } = useContext(Context);
@@ -42,7 +44,7 @@ const DatosPerfil = () => {
         fetchPerfil();
         fetchFavoriteGames();
         fetchFavoriteGenres();
-    }, [genres, games]);
+    }, [genres, games, perfil]);
 
     const handleUsername = (event) => {
         setUsername(event.target.value);
@@ -138,7 +140,7 @@ const DatosPerfil = () => {
                 <div className="row align-items-center">
                     {genres.map((genre, index) => (
                         <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" key={index}>
-                            <CartaFavoritos title={genre.name} id={genre.id} />
+                            <CartaFavoritosGeneros title={genre.name} id={genre.id} />
                         </div>
                     ))}
                 </div>
@@ -153,7 +155,7 @@ const DatosPerfil = () => {
                 <div className="row">
                     {games.map((game, index) => (
                         <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" key={index}>
-                            <CartaFavoritos title={game.name} id={game.id} />
+                            <CartaFavoritosJuegos title={game.name} id={game.id} />
                         </div>
                     ))}
                 </div>
@@ -211,6 +213,7 @@ const DatosPerfil = () => {
                             <button
                                 type="button"
                                 className="btn btn-primary"
+                                data-bs-dismiss="modal"
                                 onClick={() => {
                                     putUsername();
                                     putDescription();
