@@ -1,4 +1,5 @@
 .social-card {
+
     border-radius: 8px;
     padding: 16px;
     margin: 16px auto;
@@ -46,7 +47,7 @@
     height: 1.5rem;
   }
 
-  /* Estilo del fondo del modal */
+
 .modal-content {
   background-color: #131313;
   color: #ddd;
@@ -56,7 +57,8 @@
 
 /* Estilo del header del modal */
 .modal-header {
-  border-bottom: 1px solid #ffd200; /* Línea de separación en el header */
+  border-bottom: 1px solid #ffd200;
+  /* Línea de separación en el header */
 }
 
 /* Botón de cierre del modal */
@@ -119,5 +121,6 @@
 }
 
 .modal-body p {
-  font-size: 14px; /* Tamaño de fuente más pequeño para el texto del comentario */
+  font-size: 14px;
+  /* Tamaño de fuente más pequeño para el texto del comentario */
 }

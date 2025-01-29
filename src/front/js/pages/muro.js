@@ -22,7 +22,7 @@ const Muro = () => {
 
     useEffect(() => {
         publicaciones();
-    }, []);
+    }, [post]);
 
     return (
         <div className="row body">
