@@ -1,0 +1,86 @@
+#NoJuego{
+    background-color: #ffd200;
+    color: black;
+    width: 100%;
+}
+
+#NoGenero{
+    background-color: #ffd200;
+    color: black;
+    width: 100%;
+}
+
+.titulo-perfil{
+    color: #fff;
+}
+
+#EtiquetaDatos{
+    background-color: #ffd200;
+    color: black;
+    border: 5px #000000 solid;
+    box-shadow: 0 4px 8px rgba(44, 44, 44, 0.562);
+}
+
+#BotonPerfil{
+    background-color: #ffd200;
+    color: black;
+    border: 2px solid #ffd200;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#BotonPerfil:hover{
+    background-color: black;
+    color: #ffd200;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#BotonPerfil:active {
+    transform: scale(0.98);
+}
+
+#BotonCerrar {
+    background-color: #ff0000;
+    color: white;
+    border: 2px solid #ff0000;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+#BotonCerrar:hover {
+    color: #ff0000;
+    background-color: white;
+}
+
+#BotonCerrar::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background-color: #ff0000;
+    transition: all 0.5s ease;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+}
+
+#BotonCerrar:hover::before {
+    width: 0;
+    height: 0;
+    opacity: 1;
+}

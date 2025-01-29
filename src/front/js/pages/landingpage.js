@@ -21,6 +21,7 @@ const Landing = () => {
 				</div>
 				<div className="col-6 d-none d-md-flex d-flex justify-content-center align-items-center bg-succes logo-container">
 					<img src={OMNIAlogo} alt="OMNIA Logo" className="img-fluid" />
+					
 				</div>
 			</div>
 		</div>
