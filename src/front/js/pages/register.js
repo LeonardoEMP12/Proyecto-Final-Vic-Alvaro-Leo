@@ -82,14 +82,7 @@ const Register = () => {
       numberValidated &&
       specialValidated &&
       lengthValidated;
-    const areFieldsFilled =
-      formData.name.trim() !== "" &&
-      formData.email.trim() !== "" &&
-      formData.password.trim() !== "" &&
-      formData.confirm_password.trim() !== "";
-    const doPasswordsMatch = formData.password === formData.confirm_password;
-
-    return isPasswordValid && areFieldsFilled && doPasswordsMatch;
+    return isPasswordValid;
   };
 
 
@@ -207,7 +200,7 @@ const Register = () => {
                       <FaRegCircle />
                     </span>
                   )}
-                  At least one lowercase letter
+                  Al menos una minuscula
                 </div>
                 <div className={upperValidated ? 'validated' : 'not-validated'}>
                   {upperValidated ? (
@@ -219,7 +212,7 @@ const Register = () => {
                       <FaRegCircle />
                     </span>
                   )}
-                  At least one uppercase letter
+                  Al menos una mayuscula
                 </div>
                 <div className={numberValidated ? 'validated' : 'not-validated'}>
                   {numberValidated ? (
@@ -231,7 +224,7 @@ const Register = () => {
                       <FaRegCircle />
                     </span>
                   )}
-                  At least one number
+                  Al menos un numero
                 </div>
                 <div className={specialValidated ? 'validated' : 'not-validated'}>
                   {specialValidated ? (
@@ -243,7 +236,7 @@ const Register = () => {
                       <FaRegCircle />
                     </span>
                   )}
-                  At least one special character
+                  Al menos un caracter especial
                 </div>
                 <div className={lengthValidated ? 'validated' : 'not-validated'}>
                   {lengthValidated ? (
@@ -255,7 +248,7 @@ const Register = () => {
                       <FaRegCircle />
                     </span>
                   )}
-                  At least 8 characters
+                  Al menos 8 caracteres
                 </div>
               </main>
 
