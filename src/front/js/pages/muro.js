@@ -136,7 +136,7 @@ const Muro = () => {
                 {activeTab === "publicaciones" && (
                     <div>
                         <ModalPost />
-                        {post.map((post, index) => (
+                        {post.slice().reverse().map((post, index) => (
                             <div className="cuerpo" key={index}>
                                 <SocialCard
                                     title={post.post_user.username}
