@@ -257,7 +257,7 @@ def forgot_password():
         <body>
             <h1>Resetea tu contraseña</h1>
             <p>Haz click en el siguente enlace para resetear tu contraseña</p>
-            <a href="https://sturdy-goldfish-7vr7w6p9w4qrcrgpj-3000.app.github.dev/newpassword?token={token}">Resetea tu contraseña</a>
+            <a href="https://sample-service-name-kkch.onrender.com/newpassword?token={token}">Resetea tu contraseña</a>
         </body>
     </html>
     """
