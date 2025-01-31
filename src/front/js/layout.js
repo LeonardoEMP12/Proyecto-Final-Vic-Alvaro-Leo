@@ -12,6 +12,7 @@ import Email from "./pages/email";
 import Muro from "./pages/muro";
 import PrivateRoute from "./component/privateRoute";
 import VideogameCard from "./component/VideogameCard";
+import Skeleton from "./component/skeleton";
 
 //create your first component
 const Layout = () => {
@@ -27,6 +28,7 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Landing />} path="/" />
                         <Route element={<Login />} path="/login" />
+                        <Route element={<Skeleton />} path="/skel" />
                         <Route element={<Register />} path="/register" />
                         <Route element={<SelectFavGenre />} path="/selectfavgenre" />
                         <Route element={<Email />} path="/email"  />

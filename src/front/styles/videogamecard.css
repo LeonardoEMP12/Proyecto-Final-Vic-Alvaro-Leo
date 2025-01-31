@@ -349,3 +349,24 @@ body {
   flex-shrink: 0;
   margin-left: 20px;
 }
+
+.placeholder-details p,
+.placeholder-details strong,
+.placeholder-details h1 {
+  width: 70%;
+}
+
+.placeholder-details .ratings{
+  width:20%;
+  height: 100%;
+}
+
+.placeholder-details .trailer-container{
+  width:20%;
+  height: 100%;
+}
+
+.placeholder-details .screenshots-container{
+  width:20%;
+  height: 100%;
+}
