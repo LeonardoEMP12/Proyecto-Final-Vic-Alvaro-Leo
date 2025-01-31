@@ -10,8 +10,8 @@ export const SelectFavGenre = () => {
 			<h1 className="text-white mt-5">Selecciona tus géneros favoritos!</h1>
 			<h5 className="text-white mb-5">Esto nos ayudará a mejorar tus recomendaciones</h5>
             <FavGenreComponent />
-<Link className="btn text-white bg-dark m-5" to="/muro">
-  Ir al muro
+<Link className="btn text-white bg-dark m-5" to="/login">
+Ir al login
 </Link>
 		</div>
 	);
