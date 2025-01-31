@@ -622,48 +622,48 @@ def get_perfil(user_id):
 # ------------------------------- ENDPOINTS INSERCCIONES A LA BASE DE DATOS ------------------------------- #
 
 
-# Insertar Generos
-@api.route('/insertar-generos', methods=['POST'])
-def insert_genres():
-    datos = request.json # Recogemos los datos del body mandado  
+# # Insertar Generos
+# @api.route('/insertar-generos', methods=['POST'])
+# def insert_genres():
+#     datos = request.json # Recogemos los datos del body mandado  
 
-    if not datos:
-        return jsonify({"message":"Faltan datos"}), 400
+#     if not datos:
+#         return jsonify({"message":"Faltan datos"}), 400
     
-    registros = [] # Creamos un array que recogera todos los datos de la request
+#     registros = [] # Creamos un array que recogera todos los datos de la request
 
-    for registro in datos:
-        if 'name' not in registro or 'description' not in registro or 'image' not in registro:
-            return jsonify({"error": "Cada registro debe tener 'name', 'image' y 'description'"}), 400
+#     for registro in datos:
+#         if 'name' not in registro or 'description' not in registro or 'image' not in registro:
+#             return jsonify({"error": "Cada registro debe tener 'name', 'image' y 'description'"}), 400
          
-        nuevo_registro = Genres(name=registro['name'], description=registro['description'], image=registro['image'])
-        registros.append(nuevo_registro)
+#         nuevo_registro = Genres(name=registro['name'], description=registro['description'], image=registro['image'])
+#         registros.append(nuevo_registro)
         
-    db.session.add_all(registros)
-    db.session.commit()
+#     db.session.add_all(registros)
+#     db.session.commit()
 
-    return jsonify({"message": "Se han añadido todos los registros"}), 200
+#     return jsonify({"message": "Se han añadido todos los registros"}), 200
 
 
-# Insertar Videojuegos
-@api.route('/insertar-videogames', methods=['POST'])
-def insert_videogames():
-    datos = request.json # Recogemos los datos del body mandado  
+# # Insertar Videojuegos
+# @api.route('/insertar-videogames', methods=['POST'])
+# def insert_videogames():
+#     datos = request.json # Recogemos los datos del body mandado  
 
-    if not datos:
-        return jsonify({"message":"Faltan datos"}), 400
+#     if not datos:
+#         return jsonify({"message":"Faltan datos"}), 400
     
-    registros = [] # Creamos un array que recogera todos los datos de la request
+#     registros = [] # Creamos un array que recogera todos los datos de la request
 
-    for registro in datos:
-        if 'title' not in registro or 'image' not in registro or 'api_id' not in registro:
-            return jsonify({"error": "Cada registro debe tener 'title'"}), 400
+#     for registro in datos:
+#         if 'title' not in registro or 'image' not in registro or 'api_id' not in registro:
+#             return jsonify({"error": "Cada registro debe tener 'title'"}), 400
          
-        nuevo_registro = Videogames(title=registro['title'], image=registro['image'], api_id=registro['api_id'])
-        registros.append(nuevo_registro)
+#         nuevo_registro = Videogames(title=registro['title'], image=registro['image'], api_id=registro['api_id'])
+#         registros.append(nuevo_registro)
         
-    db.session.add_all(registros)
-    db.session.commit()
+#     db.session.add_all(registros)
+#     db.session.commit()
 
-    return jsonify({"message": "Se han añadido todos los registros"}), 200
+#     return jsonify({"message": "Se han añadido todos los registros"}), 200
 
