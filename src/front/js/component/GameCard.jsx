@@ -23,10 +23,7 @@ const GameCard = ({ image, title, api_id, videogameId }) => {
   return (
     <div id="CardJuego" className="mb-3">
       <a
-        // cambiar url en momento de produccion
-        // href={`https://sturdy-goldfish-7vr7w6p9w4qrcrgpj-3000.app.github.dev/game/${api_id}`}
         href={process.env.FRONTEND_URL + `game/${api_id}`}
-        target="_blank"
         rel="noopener noreferrer"
         className="text-decoration-none"
       >
