@@ -3,13 +3,17 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from datetime import datetime
-from api.models import db, User, Profile, Genres, FavoritesGenres, Platforms, Tags, Developers, Videogames, Post, Comments
+from api.models import db, User, Profile, Genres, FavoritesGenres, Videogames, Post, Comments, Profile, FavoritesVideogames
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt 
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from datetime import timedelta
 from flask_mail import Mail, Message
+import random
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 
 api = Blueprint('api', __name__)
@@ -31,7 +35,8 @@ def handle_hello():
     return jsonify(response_body), 200
 
 
-# Endpoint de registro de Usuario
+# ------------------------------- ENDPOINTS DE REGISTRP DE USUARIO ------------------------------- #
+
 @api.route('/signup', methods=['POST'])
 def handle_register():
     request_body = request.json # Recogemos los datos del body mandado  
@@ -40,6 +45,10 @@ def handle_register():
     password = request_body.get('password') # Recogemos el campo password del request_body
     confirm_password = request_body.get('confirm_password')# Recogemos el campo repita contraseña del request_body
     creation_date = request_body.get('creation_date') # Recogemos el campo creation_date del request_body
+
+    # Datos del perfil
+    username = name
+    description = "pon aqui la descripcion de tu perfil"  # Recogemos la descripción del perfil
 
     if password != confirm_password: # Validamos si las contraseñas coinciden
         return jsonify({"message": "Las contraseñas no coinciden"}), 400
@@ -59,12 +68,22 @@ def handle_register():
     db.session.add(usuario_add) # Realizamos la insercion
     db.session.commit() # Actualizamos la base de datos
 
+    # Ahora creamos el perfil asociado al usuario recién creado
+    while Profile.query.filter_by(username=username).first():  # Verificamos si ya existe en la base de datos
+        username = f"{username}_{random.randint(0, 1000)}"  # Si existe, generamos uno nuevo añadiendo números
+
+    profile_add = Profile(username = username, description=description, user_id=usuario_add.id)
+    db.session.add(profile_add)  # Añadimos el perfil a la base de datos
+    db.session.commit()  # Confirmamos la transacción para guardar el perfil
+
      # Retornamos los datos añadidos
     usuario_add_serialize = usuario_add.serialize()
     return jsonify({"message":usuario_add_serialize}), 200
 
 
-#Endpoint login de usuario
+
+# ------------------------------- ENDPOINTS DE INICIO DE SESION ------------------------------- #
+
 @api.route('/login', methods=['POST'])
 def handle_login(): 
     request_body = request.json # Recogemos los datos del body mandado    
@@ -87,6 +106,8 @@ def handle_login():
                     "user":user_serialize}), 200
 
 
+# ------------------------------- ENDPOINTS GET CATEGORIAS ------------------------------- #
+
 # Endpoint Get categorias
 @api.route('/genres', methods=['GET'])
 def get_genres():
@@ -96,8 +117,11 @@ def get_genres():
     all_genres = [genres.serialize() for genres in genre]
 
     # Retornamos todos los generos de la tabla Genres
-    return jsonify(all_genres), 200
+    return jsonify({"message":all_genres}), 200
 
+
+
+# ------------------------------- ENDPOINTS AÑDIR/ELIMINAR GENEROS FAVORITOS ------------------------------- #
 
 # Endpoint añadir categoria a favoritas
 @api.route('/register-genres', methods=['POST'])
@@ -142,13 +166,16 @@ def remove_genres():
     db.session.commit()  # Actualizamos la base de datos
 
     return jsonify({"message": "Se ha eliminado de favoritos"}), 200
-# -------------------------------ENDPOINTS PERFIL------------------------------- #
+
+
+
+# ------------------------------- ENDPOINTS PERFIL ------------------------------- #
 
 # Endpoint para actualizar el username del perfil
-@api.route('/profile/<int:profile_id>/username', methods=['PUT'])
-def update_username(profile_id):
+@api.route('/profile/<int:user_id>/username', methods=['PUT'])
+def update_username(user_id):
     data = request.json
-    profile = Profile.query.get(profile_id)
+    profile = Profile.query.filter_by(user_id = user_id).first()
 
     if not profile:
         return jsonify({"error": "Perfil no encontrado"}), 404
@@ -167,10 +194,10 @@ def update_username(profile_id):
 
 
 # Endpoint para actualizar la description del perfil
-@api.route('/profile/<int:profile_id>/description', methods=['PUT'])
-def update_description(profile_id):
+@api.route('/profile/<int:user_id>/description', methods=['PUT'])
+def update_description(user_id):
     data = request.json
-    profile = Profile.query.get(profile_id)
+    profile = Profile.query.filter_by(user_id = user_id).first()
 
     if not profile:
         return jsonify({"error": "Perfil no encontrado"}), 404
@@ -189,10 +216,10 @@ def update_description(profile_id):
 
 
 # Endpoint para actualizar el birth_date del perfil
-@api.route('/profile/<int:profile_id>/birth_date', methods=['PUT'])
-def update_birth_date(profile_id):
+@api.route('/profile/<int:user_id>/birth_date', methods=['PUT'])
+def update_birth_date(user_id):
     data = request.json
-    profile = Profile.query.get(profile_id)
+    profile = Profile.query.filter_by(user_id = user_id).first()
 
     if not profile:
         return jsonify({"error": "Perfil no encontrado"}), 404
@@ -210,6 +237,7 @@ def update_birth_date(profile_id):
         return jsonify({"error": "Error al actualizar la fecha de nacimiento", "details": str(e)}), 500
 
 
+# ------------------------------- ENDPOINTS RESETEO DE CONTRASEÑA ------------------------------- #
 
 # Endpoint de envio de correo de reset de password
 @api.route('/forgot-password', methods=['POST'])
@@ -266,81 +294,55 @@ def reset_password():
     return jsonify({"message":"La contraseña ha sido actualizada"}), 200
 
 
-# Endpoint Get platforms
-@api.route('/platforms', methods=['GET'])
-def get_platforms():
 
-    # Creamos las variables para los platforms de la tabla Platforms
-    platforms=Platforms.query.all()
-    all_platforms = [platforms.serialize() for platforms in platforms]
-
-    # Retornamos todos los platforms de la tabla Platforms
-    return jsonify(all_platforms), 200
-
-
-# Endpoint Get get_tags
-@api.route('/tags', methods=['GET'])
-def get_tags():
-
-    # Creamos las variables para los tags de la tabla Tags
-    tags=Tags.query.all()
-    all_tags = [tags.serialize() for tags in tags]
-
-    # Retornamos todos los tags de la tabla Tags
-    return jsonify(all_tags), 200
-
-
-# Endpoint Get developers
-@api.route('/developers', methods=['GET'])
-def get_developers():
-
-    # Creamos las variables para los developers de la tabla Developers
-    developers=Developers.query.all()
-    all_developers = [developers.serialize() for developers in developers]
-
-    # Retornamos todos los developers de la tabla Developers
-    return jsonify(all_developers), 200
-
+# ------------------------------- ENDPOINTS GET DE LOS VIDEOJUEGOS ------------------------------- #
 
 # Endpoint Get videogame
 @api.route('/videogame', methods=['GET'])
 def get_videogame():
 
     # Creamos las variables para los videogame de la tabla Videogames
-    videogame=Videogames.query.all()
-    all_videogame = [videogame.serialize() for videogame in videogame]
+    videogames=Videogames.query.all()
+    all_videogame = [videogame.serialize() for videogame in videogames]
 
     # Retornamos todos los videogame de la tabla Videogames
-    return jsonify(all_videogame), 200
+    return jsonify({"message":all_videogame}), 200
+
+
 
 # -------------------------------ENDPOINTS PUBLICACIONES------------------------------- #
 
 # Crear un post
 @api.route('/create-posts', methods=['POST'])
 def create_post():
-    # Obtenemos los datos de la solicitud (en formato JSON)
-    request_body = request.get_json()
-    text = request_body.get('text') # Recogemos el campo text del request_body
-    user_id = request_body.get('user_id') # Recogemos el campo user_id del request_body
-    like = request_body.get('like') # Recogemos el campo like del request_body
+    # Obtener los datos del formulario
+    text = request.form.get('text')  # 'text' es enviado como parte del formulario
+    user_id = request.form.get('user_id')  # 'user_id' es enviado como parte del formulario
+    like = request.form.get('like')  # Si tienes el campo 'like', lo puedes obtener así
 
-    # Validamos que los datos necesarios estén presentes
     if not text or not user_id:
         return jsonify({"message": "Rellena todos los datos"}), 400
 
     user = User.query.get(user_id)
     if not user:
-        return jsonify({"message": "el usuario no existe"}), 400
+        return jsonify({"message": "El usuario no existe"}), 400
 
-    # Creamos un nuevo objeto Post con los datos recibidos
-    new_post = Post(text = text, like = like, user_id = user_id)
+    # Subir la imagen a Cloudinary
+    if 'image' in request.files and request.files['image']:
+        image = request.files['image']  # El archivo debe ser enviado como parte de un formulario
+        upload_result = cloudinary.uploader.upload(image)
+        image_url = upload_result.get('secure_url')  # URL de la imagen subida
+        new_post = Post(text=text, like=like, user_id=user_id, image=image_url)
+    else:
+        # Crear el nuevo post
+        new_post = Post(text=text, like=like, user_id=user_id)
     
-    # Guardamos el nuevo post en la base de datos
+    # Guardar el nuevo post en la base de datos
     db.session.add(new_post)
     db.session.commit()
 
-    # Retornamos la respuesta con los datos de la nueva publicación
-    return jsonify({"message" : "Post creado"}), 200
+    return jsonify({"message": "Post creado"}), 200
+
 
 # Crear un comentario
 @api.route('/create-comment', methods=['POST'])
@@ -381,23 +383,33 @@ def get_all_posts():
 
     for post in posts:
         post_user = User.query.get(post.user_id) # Obtenemos los datos del usuario que creó la publicación
+        post_profile = Profile.query.filter_by(user_id=post.user_id).first()  # Obtenemos el perfil del usuario
+
         comments = Comments.query.filter_by( post_id = post.id).all() # Obtener los comentarios asociados a la publicación
 
         comments_data = [] # Serializar los datos de los comentarios
         for comment in comments:
             comment_user = User.query.get(comment.user_id) # Obtener el usuario que hizo el comentario
+            comment_profile = Profile.query.filter_by(user_id=comment.user_id).first()  # Obtener el perfil del comentario
+
             
             # Agregar el comentario con los datos del usuario
             comments_data.append({
                 "comment_text": comment.text,
-                "comment_user": comment_user.serialize() if comment_user else None
+                "comment_user": comment_user.serialize() if comment_user else None,
+                "username": comment_profile.username if comment_profile else None  # Usamos el username del perfil
             })
         
         # Serializar los datos de la publicación
         post_data = {
             "post_text": post.text,
-            "post_user": post_user.serialize() if post_user else None,  # Datos del usuario que hizo la publicación
-            "comments": comments_data  # Lista de comentarios con los usuarios
+            "post_image": post.image,
+            "post_user": {
+                "id": post_user.id,
+                "username": post_profile.username if post_profile else None  # Usamos el username del perfil
+            },  # Datos del usuario que hizo la publicación
+            "comments": comments_data,  # Lista de comentarios con los usuarios
+            "id": post.id
         }
         # Agregar la publicación con los datos completos a la lista
         all_posts.append(post_data)
@@ -478,3 +490,180 @@ def update_comment(comment_id):
     db.session.commit() # Actualizamos la base de datos
 
     return jsonify({"message" : "Se ha editado el comentario"}), 200
+
+
+
+# ------------------------------- ENDPOINTS AÑADIR/ELIMINAR UN VIDEOJUEGOS A FAVORITOS ------------------------------- #
+
+# Endpoint añadir Videojuegos a favoritos
+@api.route('/register-games', methods=['POST'])
+def register_games():
+
+    request_body = request.json # Recogemos los datos del body mandado  
+    user_id = request_body.get('user_id') # Recogemos el user_id del request_body
+    videogame_id = request_body.get('videogame_id') # Recogemos el videogame_id del request_body
+
+    if not user_id or not videogame_id:
+        return jsonify({"message": "No se ha podido añadir a favoritos"}), 400
+    
+    videogames = FavoritesVideogames.query.filter_by(user_id = user_id, videogame_id = videogame_id).first()
+
+    if videogames:
+        return jsonify({"message": "Ya está en favoritos"}), 400
+    
+    videogames__add = FavoritesVideogames(user_id = user_id, videogame_id = videogame_id)
+
+    db.session.add(videogames__add) # Realizamos la insercion
+    db.session.commit() # Actualizamos la base de datos
+
+    return jsonify({"message": "Se ha añadido a favoritos"}), 200
+
+
+#Endpoint eliminar Videojuegos de favoritas
+@api.route('/remove-games', methods=['DELETE'])
+def remove_games():
+    request_body = request.json  # Recogemos los datos del body enviado
+    user_id = request_body.get('user_id')  # Recogemos el user_id del request_body
+    videogame_id = request_body.get('videogame_id')  # Recogemos el videogame_id del request_body
+
+    if not user_id or not videogame_id:
+        return jsonify({"message": "No se ha podido eliminar de favoritos"}), 400
+
+    videogames = FavoritesVideogames.query.filter_by(user_id=user_id, videogame_id=videogame_id).first()
+
+    if not videogames:
+        return jsonify({"message": "El género no está en favoritos"}), 404
+
+    db.session.delete(videogames)  # Eliminamos el registro
+    db.session.commit()  # Actualizamos la base de datos
+
+    return jsonify({"message": "Se ha eliminado de favoritos"}), 200
+
+
+
+# ------------------------------- ENDPOINTS GET VIDEOJUEGOS Y GENEROS FAVORITOS ------------------------------- #
+
+
+@api.route('/favorites-genres/<int:user_id>', methods=['GET'])
+def get_favorites_genres(user_id):
+    # Verifica si el usuario existe
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    # Obtén los géneros favoritos del usuario
+    favorite_genres = FavoritesGenres.query.filter_by(user_id=user_id).all()
+
+    # Si no hay géneros favoritos, devuelve un mensaje
+    if not favorite_genres:
+        return jsonify({"message": "No favorite genres found for this user"}), 200
+
+    # Serializa los géneros favoritos
+    genres = [
+        {
+            "id": favorite_genre.genre.id,
+            "name": favorite_genre.genre.name 
+        }
+        for favorite_genre in favorite_genres
+    ]
+
+    return jsonify({"message": {"user_id": user_id, "favorite_genres": genres}}), 200
+
+
+@api.route('/favorites-games/<int:user_id>', methods=['GET'])
+def get_favorites_games(user_id):
+    # Verifica si el usuario existe
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    # Obtén los géneros favoritos del usuario
+    # Obtén los videojuegos favoritos del usuario
+    favorites = FavoritesVideogames.query.filter_by(user_id=user_id).all()
+
+    # Si no hay videojuegos favoritos, devuelve un mensaje
+    if not favorites:
+        return jsonify({"message": "No favorite videogames found for this user"}), 200
+
+    # Serializa los datos junto con los detalles del videojuego
+    serialized_favorites = [
+        {   
+            "id": favorite.videogame.id,
+            "name": favorite.videogame.title,     
+            "api_id": favorite.videogame.api_id, 
+        }
+        for favorite in favorites
+    ]
+
+    return jsonify({"message": {"user_id": user_id, "favorite_games": serialized_favorites}}), 200
+
+
+# ------------------------------- ENDPOINTS INSERCCIONES A LA BASE DE DATOS ------------------------------- #
+
+# Endpoint Get perfil
+@api.route('/perfil/<int:user_id>', methods=['GET'])
+def get_perfil(user_id):
+    # Creamos las variables para los generos de la tabla Genres
+    perfiles = Profile.query.filter_by(user_id = user_id)
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+    perfil_usuario = [perfil.serialize() for perfil in perfiles]
+    usuario_serialize = user.serialize()  # No necesitas iterar, es un solo objeto
+
+    # Retornamos todos los generos de la tabla Genres
+    return jsonify({
+        "user": usuario_serialize,
+        "profiles": perfil_usuario
+    }), 200
+    
+
+
+# ------------------------------- ENDPOINTS INSERCCIONES A LA BASE DE DATOS ------------------------------- #
+
+
+# Insertar Generos
+@api.route('/insertar-generos', methods=['POST'])
+def insert_genres():
+    datos = request.json # Recogemos los datos del body mandado  
+
+    if not datos:
+        return jsonify({"message":"Faltan datos"}), 400
+    
+    registros = [] # Creamos un array que recogera todos los datos de la request
+
+    for registro in datos:
+        if 'name' not in registro or 'description' not in registro or 'image' not in registro:
+            return jsonify({"error": "Cada registro debe tener 'name', 'image' y 'description'"}), 400
+         
+        nuevo_registro = Genres(name=registro['name'], description=registro['description'], image=registro['image'])
+        registros.append(nuevo_registro)
+        
+    db.session.add_all(registros)
+    db.session.commit()
+
+    return jsonify({"message": "Se han añadido todos los registros"}), 200
+
+
+# Insertar Videojuegos
+@api.route('/insertar-videogames', methods=['POST'])
+def insert_videogames():
+    datos = request.json # Recogemos los datos del body mandado  
+
+    if not datos:
+        return jsonify({"message":"Faltan datos"}), 400
+    
+    registros = [] # Creamos un array que recogera todos los datos de la request
+
+    for registro in datos:
+        if 'title' not in registro or 'image' not in registro or 'api_id' not in registro:
+            return jsonify({"error": "Cada registro debe tener 'title'"}), 400
+         
+        nuevo_registro = Videogames(title=registro['title'], image=registro['image'], api_id=registro['api_id'])
+        registros.append(nuevo_registro)
+        
+    db.session.add_all(registros)
+    db.session.commit()
+
+    return jsonify({"message": "Se han añadido todos los registros"}), 200
+

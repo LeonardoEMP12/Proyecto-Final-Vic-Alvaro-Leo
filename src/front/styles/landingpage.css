@@ -1,69 +1,99 @@
-.welcome-banner {
-  background-color: #000000; /* Color de fondo claro */
+@import url('https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap');
+
+
+#Registro{
+  background-color: #141414;
+  color: #ffffff;
+  border-color: #ffffff;
+  transition: all 0.3s ease;
+  padding: 20px 40px;
+  font-size: 24px;
+  border-radius: 8px;
 }
 
-.content-wrapper {
-  max-width: 1200px;
+
+
+#Registro:hover {
+  background-color: #272727;
+  color: #ffd200;
+  border-color: #ffffff;
+  cursor: pointer;
+}
+
+#Registro:focus {
+  outline: none;
+  box-shadow: 0 0 5px #000000;
+}
+
+#Inicio{
+  background-color: #ffd200;
+  color: #1c1c1c;
+  border-color: #ffd200;
+  transition: all 0.3s ease;
+  padding: 20px 40px;
+  font-size: 24px;
+  border-radius: 8px;
+}
+
+#Inicio:hover {
+  background-color: #685501;
+  color: #ffffff;
+  border-color: #e6ba00;
+  cursor: pointer;
+}
+
+#Inicio:focus {
+  outline: none;
+  box-shadow: 0 0 5px #ffd200;
+}
+
+#Inicio:active {
+  background-color: #cda600;
+  border-color: #cda600;
+  transform: scale(0.98);
+}
+
+#ContLanding{
+  background-color: #141414;
+  border: 5px solid #ffd200;
+  
+}
+
+#BackgroundLanding{
+  background-color: #141414;
   width: 100%;
-  padding: 20px;
-  text-align: center;
+  height: 100%;
+  transform-origin: center; /* Para asegurar que se agrande desde el centro */
+  overflow: hidden; /* Para evitar desplazamiento */
 }
 
-.button-section {
-  margin-bottom: 20px;
+#FondoLanding{
+  background-color: #141414;
+background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
 }
 
-.custom-btn {
-  width: 200px;
-  font-size: 1.2rem;
-  padding: 10px 20px;
-}
-
-.logo-section {
+.logo-container {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: pulse 1s infinite ease-in-out;
 }
 
-.custom-logo {
-  max-width: 300px;
-  height: auto;
+/* Pulsación continua */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1.0);
+  }
+  50% {
+    transform: scale(1.1);
+  }
 }
 
-.formulario-contenedor {
-    background-color: #141414;
-    padding: 5vh;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border: 2px solid #ffd200;
-  }
-
-  .btn-yellow {
-    background-color: #ffd200;
-    border: none;
-    color: #000;
-    font-weight: bold;
-    padding: 12px 20px;
-    border-radius: 5px;
-    width: 50%;
-  }
-  
-  .btn-yellow:hover {
-    background-color: #aa8b01;
-    color: #000;
-  }
-
-  .btn-white {
-    background-color: #FFFFFF;
-    border: none;
-    color: #000;
-    font-weight: bold;
-    padding: 12px 20px;
-    border-radius: 5px;
-    width: 50%;
-  }
-  
-  .btn-white:hover {
-    background-color: #D0D0D0;
-    color: #000;
-  }
+#Frase{
+  font-family: "Zen Dots", serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #ffffff;
+  font-size: 3vh;
+}

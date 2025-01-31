@@ -25,7 +25,6 @@ const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
 
-
     fetch(process.env.BACKEND_URL + "/api/forgot-password", {
       method: "POST",
       headers: {
@@ -39,7 +38,7 @@ const navigate = useNavigate();
       .then((data) => {
           alert("Se ha enviado un correo para el cambio de contraseña");
           // Modal de se ha mandado un correo
-          navigate("/newpassword");
+          navigate("/");
        
       })
       .catch((error) => {

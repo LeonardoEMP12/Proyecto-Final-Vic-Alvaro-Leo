@@ -1,0 +1,39 @@
+
+/* Contenedor de el carrousel con flechas*/
+.carousel-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    margin: auto;
+    overflow: hidden;
+    background-color: transparent;
+  }
+  /* Contenedor de todas las cards del carrousel */
+  .carousel-content {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+  }
+  /* Contenedor de las cards del carrousel */
+  .game-item {
+    flex: 0 0 calc(100% / 3 - 10px);
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  /* Botones de paginacion */
+  .carousel-button {
+    background-color: #ffd200;
+    color: #000000;
+    padding: 10px;
+    margin: 0 10px;
+    font-size: 14px;
+    border-radius: 10%;
+  }
+  /* Botones de paginacion hover*/
+  .carousel-button:hover {
+    background-color: #a98a02;
+    transform: scale(1.2);
+  }

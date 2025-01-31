@@ -24,9 +24,9 @@ class User(db.Model):
 
 class Profile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(500), unique=True, nullable=False)
-    description = db.Column(db.String(500), unique=True, nullable=False)
-    birth_date = db.Column(db.Date, nullable=False)
+    username = db.Column(db.String(500), nullable=False, unique=True)
+    description = db.Column(db.String(500))
+    birth_date = db.Column(db.Date)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
     user = db.relationship('User')
 
@@ -40,10 +40,10 @@ class Profile(db.Model):
             "id": self.id,
             "username": self.username,
             "description": self.description,
-            "birth_date": self.birth_date,
+            "birth_date": self.birth_date.strftime('%Y-%m-%d') if self.birth_date else None,
             # do not serialize the password, its a security breach
         }
-
+    
 
 class Genres(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -62,68 +62,13 @@ class Genres(db.Model):
             "description": self.description,
             "image": self.image,
         }
-    
-
-class Developers(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(500), nullable=False)
-
-
-    def __repr__(self):
-        return f'<Developer {self.name}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-        } 
-    
-
-class Platforms(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(500), nullable=False)
-
-    def __repr__(self):
-        return f'<Platform {self.name}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-        }         
-
-
-class Tags(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(500), nullable=False)
-    pegi = db.Column(db.String(500), nullable=False) 
-
-
-    def __repr__(self):
-        return f'<Tag {self.name}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "pegi": self.pegi,
-        }
 
 
 class Videogames(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(500), nullable=False)
-    image = db.Column(db.String(500), nullable=False)
-    rating = db.Column(db.Integer, nullable=False)
-    genre_id = db.Column(db.Integer, db.ForeignKey(Genres.id))
-    developer_id = db.Column(db.Integer, db.ForeignKey(Developers.id))
-    platform_id = db.Column(db.Integer, db.ForeignKey(Platforms.id))
-    tag_id = db.Column(db.Integer, db.ForeignKey(Tags.id))
-    genre = db.relationship('Genres')
-    developer = db.relationship('Developers')
-    platform = db.relationship('Platforms')
-    tag = db.relationship('Tags')
-
+    image = db.Column(db.String(500000), nullable=False)
+    api_id = db.Column(db.Integer)
 
     def __repr__(self):
         return f'<Videogame {self.title}>'
@@ -133,13 +78,9 @@ class Videogames(db.Model):
             "id": self.id,
             "title": self.title,
             "image": self.image,
-            "rating": self.rating,
-            "genre_id":self.genre_id,
-            "developer_id":self.genre_id,
-            "platform_id":self.genre_id,
-            "tag_id":self.genre_id
+            "api_id": self.api_id
         }
-
+    
 
 class FavoritesVideogames(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -183,6 +124,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(500), nullable=False)
     like = db.Column(db.Integer)
+    image = image = db.Column(db.String(50000))
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
     user = db.relationship('User')
 
@@ -195,6 +137,7 @@ class Post(db.Model):
             "id": self.id,
             "text": self.text,
             "like": self.like,
+            "image": self.image,
             "user_id": self.user_id,
             "comment_id": self.comment_id,
         }

@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react";
 import "../../styles/register.css";
 import OMNIAlogo from "../../img/LogoOM.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 const Login = () => {
   const { actions } = useContext(Context);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -36,12 +37,20 @@ const Login = () => {
       })
       .then((data) => {
         if (data.error) {
+          <div class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+              <div class="toast-body">
+              Hubo un problema con el inicio de sesión
+              </div>
+              <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+          </div>
           alert(data.error || "Hubo un problema con el inicio de sesión");
         } else {
-          alert("Inicio de sesión exitoso");
           actions.setName(data.user.name);
           actions.setId(data.user.id);
           actions.setToken(data.token);
+          navigate("/muro");
         }
       })
       .catch((error) => {
@@ -79,7 +88,7 @@ const Login = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                placeholder="Crea una contraseña"
+                placeholder="Ingresa tu contraseña"
                 required
               />
             </div>

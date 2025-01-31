@@ -1,7 +1,10 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			token: localStorage.getItem("userId"),
+			userId: localStorage.getItem("userId"),
+			userToken: localStorage.getItem("userToken"),
+			userName: localStorage.getItem("userName"),
+			actualizador: false,
 			message: null,
 			demo: [
 				{
@@ -19,7 +22,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 
 			setId : (userId) => {
-				console.log(userId);
                 setStore({"userId":(userId)});
                 if (userId) {
                     localStorage.setItem("userId", userId);
@@ -29,7 +31,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
 			setToken : (userToken) => {
-				console.log(userToken);
                 setStore({"userToken":(userToken)});
                 if (userToken) {
                     localStorage.setItem("userToken", userToken);
@@ -39,7 +40,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
 			setName : (userName) => {
-				console.log(userName);
                 setStore({"userName":(userName)});
                 if (userName) {
                     localStorage.setItem("userName", userName);
@@ -47,7 +47,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                     localStorage.removeItem("userName");
                 }
 			},
-			
+			toggleEstado: () => {
+				setStore({"actualizador":(prevEstado) => !prevEstado}); // Cambia entre true y false
+			},
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");

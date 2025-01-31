@@ -1,0 +1,134 @@
+.social-card {
+
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px auto;
+  background-color: #000000;
+  border: #977b00 solid;
+}
+
+.description{
+  overflow-wrap: break-word;
+}
+
+.card-image img {
+  border-radius: 8px;
+  max-width: 100%;
+  min-width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.card-content h3 {
+  margin: 8px 0;
+  font-size: 1em;
+  color: #ffd200;
+  justify-self: right;
+}
+
+.card-content p {
+  font-size: 1em;
+  color: #fff;
+}
+
+.card-actions {
+  margin-right: 0, 5vh;
+  display: flex;
+}
+
+.like-btn,
+.comment-btn {
+  background-color: #1c1c1c;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+}
+
+.like-btn:hover,
+.comment-btn:hover {
+  background-color: #0f0f0f;
+}
+
+.OMNIAicon {
+  margin-top: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+
+.modal-content {
+  background-color: #131313;
+  color: #ddd;
+  border: 2px solid #ffd200;
+  border-radius: 12px;
+}
+
+/* Estilo del header del modal */
+.modal-header {
+  border-bottom: 1px solid #ffd200;
+  /* Línea de separación en el header */
+}
+
+/* Botón de cierre del modal */
+.modal-header .btn-close {
+  background-color: transparent;
+  border: none;
+  color: #ffd200;
+  opacity: 1;
+}
+
+/* Cambiar color del botón de cierre al hover */
+.modal-header .btn-close:hover {
+  color: #fff;
+}
+
+/* Estilo de los usernames */
+.modal-body strong {
+  color: #ffd200;
+}
+
+/* Estilo del texto de los comentarios */
+.modal-body p {
+  color: #ddd;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+/* Footer del modal */
+.modal-footer {
+  border-top: 1px solid #ffd200;
+}
+
+/* Botones del modal */
+.modal-footer .btn {
+  background-color: #ffd200;
+  color: #131313;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.modal-footer .btn:hover {
+  background-color: #ffdc2b;
+  color: #131313;
+}
+
+.comment-container {
+  padding: 10px;
+  border: 1px solid #ffd200;
+  border-radius: 12px;
+  width: 100%;
+}
+
+.comment-user {
+  width: 100%;
+}
+
+.comment-text {
+  margin-top: 5px;
+  width: 100%;
+}
+
+.modal-body p {
+  font-size: 14px;
+  /* Tamaño de fuente más pequeño para el texto del comentario */
+}
