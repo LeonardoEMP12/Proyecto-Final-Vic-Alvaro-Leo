@@ -121,7 +121,7 @@ const DatosPerfil = () => {
                         <h1 className="titulo-perfil">@{perfil.username}</h1>
                         <div className="d-flex gap-3 flex-column flex-md-row align-items-center mt-3 mt-md-0">
                             <button
-                            id="BotonPerfil"
+                                id="BotonPerfil"
                                 className="btn btn-primary"
                                 data-bs-toggle="modal"
                                 data-bs-target="#EditModal"
@@ -129,7 +129,7 @@ const DatosPerfil = () => {
                                 Editar Perfil
                             </button>
                             <button
-                            id="BotonCerrar"
+                                id="BotonCerrar"
                                 className="btn btn-danger"
                                 onClick={() => {
                                     actions.setId();
@@ -144,7 +144,7 @@ const DatosPerfil = () => {
                     <div className="row justify-content-center">
                         <div className="col-12 col-md-8 col-lg-6 mt-5">
                             <div id="EtiquetaDatos" className="p-4">
-                                <p className="mt-3 text-center">Correo:</p> <h4 className="text-center mb-5">{usuario.email}</h4>
+                                <p className="mt-3 text-center">Correo:</p> <h4 className="text-center mb-5 description">{usuario.email}</h4>
                                 <p className="text-center">Fecha de nacimiento:</p> <h4 className="text-center mb-5">{perfil.birth_date}</h4>
                                 <p className="mt-5 text-center">Descripción</p>
                                 <h4 className="text-center mb-5">{perfil.description}</h4>
