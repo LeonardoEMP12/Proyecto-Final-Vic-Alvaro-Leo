@@ -3,11 +3,22 @@ import "../../styles/register.css";
 import OMNIAlogo from "../../img/LogoOM.png"
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
-
+import { FaRegEyeSlash } from "react-icons/fa6";
+import { FaRegEye } from "react-icons/fa6";
+import { FaRegCircleCheck } from "react-icons/fa6";
+import { FaRegCircle } from "react-icons/fa6";
 
 
 const NewPassword = () => {
 
+  const [password, setPassword] = useState('password');
+  const [confirmPassword, setConfirmPassword] = useState('password');
+  // Validacion de la contraseña
+  const [lowerValidated, setLowerValidated] = useState(false);
+  const [upperValidated, setUpperValidated] = useState(false);
+  const [numberValidated, setNumberValidated] = useState(false);
+  const [specialValidated, setSpecialValidated] = useState(false);
+  const [lengthValidated, setLengthValidated] = useState(false);
   const { actions } = useContext(Context);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -21,23 +32,74 @@ const NewPassword = () => {
       ...formData,
       [name]: value
     });
+    if (name === "password") {
+      const lower = new RegExp('(?=.*[a-z])');
+      const upper = new RegExp('(?=.*[A-Z])');
+      const number = new RegExp('(?=.*[0-9])');
+      const special = new RegExp('(?=.*[!@#\$%\^&\*])');
+      const length = new RegExp('(?=.{8,})')
+      if (lower.test(value)) {
+        setLowerValidated(true);
+      }
+      else {
+        setLowerValidated(false);
+      }
+      if (upper.test(value)) {
+        setUpperValidated(true);
+      }
+      else {
+        setUpperValidated(false);
+      }
+      if (number.test(value)) {
+        setNumberValidated(true);
+      }
+      else {
+        setNumberValidated(false);
+      }
+      if (special.test(value)) {
+        setSpecialValidated(true);
+      }
+      else {
+        setSpecialValidated(false);
+      }
+      if (length.test(value)) {
+        setLengthValidated(true);
+      }
+      else {
+        setLengthValidated(false);
+      }
+    }
   };
+  const isFormValid = () => {
+    const isPasswordValid =
+      lowerValidated &&
+      upperValidated &&
+      numberValidated &&
+      specialValidated &&
+      lengthValidated;
+    return isPasswordValid;
+  }
+
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (!isFormValid()) {
+      alert("Por favor, asegúrate de que todas las validaciones estén completas.");
+      return;
+    }
 
     if (formData.password !== formData.confirm_password) {
       alert("Las contraseñas no coinciden");
       return;
     }
 
-  const token =new URLSearchParams(location.search).get("token");
+    const token = new URLSearchParams(location.search).get("token");
     fetch(process.env.BACKEND_URL + "/api/reset-password", {
       method: "POST",
       headers: {
-        'Authorization' : `Bearer ${token}`,
+        'Authorization': `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -71,10 +133,10 @@ const NewPassword = () => {
             <img src={OMNIAlogo} className="img-fluid w-75 mx-auto d-block mt-5 mb-5 d-block d-sm-block d-md-none" alt="Logo OMNIA" />
             <h1 className="text-center mb-4 formulario-titulo">Cambio de contraseña</h1>
             <form autoComplete="off" onSubmit={handleSubmit}>
-              <div className="mb-4">
+              <div className="">
                 <label htmlFor="password" className="formulario-label">Contraseña</label>
                 <input
-                  type="password"
+                  type={password}
                   className="formulario-input"
                   id="password"
                   name="password"
@@ -83,12 +145,83 @@ const NewPassword = () => {
                   placeholder="Crea una contraseña"
                   required
                 />
+                {password === "password" ? (
+                  <span className='icon-span' onClick={() => setPassword("text")}>
+                    <FaRegEyeSlash />
+                  </span>
+                ) : (
+                  <span className='icon-span' onClick={() => setPassword("password")}>
+                    <FaRegEye />
+                  </span>
+                )}
               </div>
+              <main className='tracker-box mb-4'>
+                <div className={lowerValidated ? 'validated' : 'not-validated'}>
+                  {lowerValidated ? (
+                    <span className='list-icon green'>
+                      <FaRegCircleCheck />
+                    </span>
+                  ) : (
+                    <span className='list-icon'>
+                      <FaRegCircle />
+                    </span>
+                  )}
+                  Al menos una minuscula
+                </div>
+                <div className={upperValidated ? 'validated' : 'not-validated'}>
+                  {upperValidated ? (
+                    <span className='list-icon green'>
+                      <FaRegCircleCheck />
+                    </span>
+                  ) : (
+                    <span className='list-icon'>
+                      <FaRegCircle />
+                    </span>
+                  )}
+                  Al menos una mayuscula
+                </div>
+                <div className={numberValidated ? 'validated' : 'not-validated'}>
+                  {numberValidated ? (
+                    <span className='list-icon green'>
+                      <FaRegCircleCheck />
+                    </span>
+                  ) : (
+                    <span className='list-icon'>
+                      <FaRegCircle />
+                    </span>
+                  )}
+                  Al menos un numero
+                </div>
+                <div className={specialValidated ? 'validated' : 'not-validated'}>
+                  {specialValidated ? (
+                    <span className='list-icon green'>
+                      <FaRegCircleCheck />
+                    </span>
+                  ) : (
+                    <span className='list-icon'>
+                      <FaRegCircle />
+                    </span>
+                  )}
+                  Al menos un caracter especial
+                </div>
+                <div className={lengthValidated ? 'validated' : 'not-validated'}>
+                  {lengthValidated ? (
+                    <span className='list-icon green'>
+                      <FaRegCircleCheck />
+                    </span>
+                  ) : (
+                    <span className='list-icon'>
+                      <FaRegCircle />
+                    </span>
+                  )}
+                  Al menos 8 caracteres
+                </div>
+              </main>
 
               <div className="mb-4">
                 <label htmlFor="confirmPassword" className="formulario-label">Confirmar Contraseña</label>
                 <input
-                  type="password"
+                  type={confirmPassword}
                   className="formulario-input"
                   id="confirm_password"
                   name="confirm_password"
@@ -97,6 +230,15 @@ const NewPassword = () => {
                   placeholder="Repite la contraseña"
                   required
                 />
+                {confirmPassword === "password" ? (
+                  <span className='icon-span' onClick={() => setConfirmPassword("text")}>
+                    <FaRegEyeSlash />
+                  </span>
+                ) : (
+                  <span className='icon-span' onClick={() => setConfirmPassword("password")}>
+                    <FaRegEye />
+                  </span>
+                )}
               </div>
 
               <div className="d-grid">
