@@ -24,6 +24,10 @@ const Muro = () => {
 
     useEffect(() => {
         publicaciones();
+        const intervalo = setInterval(() => {
+            publicaciones();
+        }, 20000);
+        return () => clearInterval(intervalo);
     }, [store.actualizador]);
 
     return (
