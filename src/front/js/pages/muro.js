@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "../../styles/muro.css";
 import "../../styles/navbarmovil.css";
 import SocialCard from "../component/SocialCard.jsx";
@@ -9,11 +9,13 @@ import ModalPost from "../component/modalpost.js";
 import NoticiasMuro from "../component/noticiasMuro.js";
 import FavGenreComponent from "../component/FavGenreComponent.jsx"
 import DatosPerfil from "../component/datosPerfil.js";
+import { Context } from "../store/appContext";
+
 
 const Muro = () => {
     const [post, setPost] = useState([]);
     const [activeTab, setActiveTab] = useState("publicaciones");
-
+    const { actions, store } = useContext(Context);
     const publicaciones = () =>
         fetch(process.env.BACKEND_URL + "/api/posts")
             .then((response) => response.json())
@@ -22,7 +24,7 @@ const Muro = () => {
 
     useEffect(() => {
         publicaciones();
-    }, [post]);
+    }, [store.actualizador]);
 
     return (
         <div className="row body">
