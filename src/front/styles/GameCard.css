@@ -1,4 +1,4 @@
-/* Card completa */
+/* Card completa /
 #CardJuego {
   background-color: #ffd200;
   color: black;
@@ -7,25 +7,25 @@
   border-color: #ffd200;
   border: 2px solid #ffd200;
 }
-/* Card etiqueta a */
+/ Card etiqueta a /
 #CardJuego a {
   background-color: #ffd200;
   color: black;
   transition: transform 0.2s ease-in-out;
 }
-/* Card etiqueta en hover */
+/ Card etiqueta en hover /
 #CardJuego:hover {
   transform: scale(1.04);
 }
-/* div de la imagen  */
+/ div de la imagen  /
 #Carta {
   background-color: #1c1c1c;
   display: flex;
   align-items: flex-end;
-  width: 100%;  
-  object-fit: cover;  
+  width: 100%;
+  object-fit: cover;
 }
-/* div de la imagen  etiqueta img*/
+/ div de la imagen  etiqueta img/
 #Carta img {
   border-radius: 5%;
   max-width: 100%;
@@ -34,10 +34,10 @@
   min-height: 30vh;
   object-fit: cover;
 }
-/* boton de favoritos (abajo) */
+/ boton de favoritos (abajo) /
 #FavoritoBoton {
   display: block; 
-  line-height: 40px;  
+  line-height: 40px;
   text-decoration: none;
   color: #333;
   border: 2px solid #333;
@@ -76,4 +76,15 @@
 #FavoritoBoton:hover:after {
   width: 100%;
 }
-/* boton de favoritos (arriba) */
+/ boton de favoritos (arriba) */
+
+#FavoritoBoton.added {
+  background-color: #1c1c1c;
+  color: #fff;
+  border-color: black;
+  cursor: default;
+}
+
+.btn:disabled {
+  opacity: 1;
+}
