@@ -30,9 +30,9 @@ const Layout = () => {
                         <Route element={<Login />} path="/login" />
                         <Route element={<Skeleton />} path="/skel" />
                         <Route element={<Register />} path="/register" />
-                        <Route element={<SelectFavGenre />} path="/selectfavgenre" />
                         <Route element={<Email />} path="/email"  />
                         {/* Private route implementation  */}
+                        <Route element={<PrivateRoute Component={SelectFavGenre} />} path="/selectfavgenre" />
                         <Route path="/muro" element={<PrivateRoute Component={Muro} />} />
                         <Route path="/newpassword" element={<PrivateRoute Component={NewPassword} />} />
                         <Route path="/game/:id" element={<PrivateRoute Component={VideogameCard} />} />

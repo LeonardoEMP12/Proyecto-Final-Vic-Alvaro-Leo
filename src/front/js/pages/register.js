@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import "../../styles/register.css";
 import OMNIAlogo from "../../img/LogoOM.png"
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { FaRegEye } from "react-icons/fa6";
@@ -277,6 +277,10 @@ const Register = () => {
 
               <div className="d-grid">
                 <button type="submit" className="formulario-boton">Registrarse</button>
+
+                <div className="mt-4">
+              <span>¿Ya tienes una cuenta? </span> <Link to="/login" id="enlace-login"> Iniciar sesión</Link>
+            </div>
               </div>
             </form>
           </div>

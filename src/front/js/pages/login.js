@@ -3,9 +3,12 @@ import "../../styles/register.css";
 import OMNIAlogo from "../../img/LogoOM.png";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { FaRegEyeSlash } from "react-icons/fa6";
+import { FaRegEye } from "react-icons/fa6";
 
 const Login = () => {
   const { actions } = useContext(Context);
+  const [password, setPassword] = useState('password');
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -40,7 +43,7 @@ const Login = () => {
           <div class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
               <div class="toast-body">
-              Hubo un problema con el inicio de sesión
+                Hubo un problema con el inicio de sesión
               </div>
               <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
@@ -82,7 +85,7 @@ const Login = () => {
             <div className="mb-4">
               <label htmlFor="password" className="formulario-label">Contraseña</label>
               <input
-                type="password"
+                type={password}
                 className="formulario-input"
                 id="password"
                 name="password"
@@ -91,6 +94,15 @@ const Login = () => {
                 placeholder="Ingresa tu contraseña"
                 required
               />
+              {password === "password" ? (
+                <span className='icon-span' onClick={() => setPassword("text")}>
+                  <FaRegEyeSlash />
+                </span>
+              ) : (
+                <span className='icon-span' onClick={() => setPassword("password")}>
+                  <FaRegEye />
+                </span>
+              )}
             </div>
             {/* Boton inicio de sesion */}
             <div className="d-grid">
@@ -98,6 +110,10 @@ const Login = () => {
             </div>
             <div className="mt-4">
               <Link to="/email" id="enlace-login">He olvidado mi contraseña</Link>
+            </div>
+
+            <div className="mt-4">
+              <span>¿No tienes cuenta? </span> <Link to="/register" id="enlace-login"> Regístrate</Link>
             </div>
           </form>
 
