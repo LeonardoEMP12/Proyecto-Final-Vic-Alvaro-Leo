@@ -1,7 +1,7 @@
   
 import os
 from flask_admin import Admin
-from .models import db, User, Videogames, FavoritesVideogames, Genres, FavoritesGenres, Comments, Post, Profile
+from .models import db
 from flask_admin.contrib.sqla import ModelView
 
 def setup_admin(app):
@@ -13,15 +13,6 @@ def setup_admin(app):
         column_display_pk = True
         list_display = ("id", "name", "text")
     
-    # Add your models here, for example this is how we add a the User model to the admin
-    admin.add_view(userAdmin(User, db.session))
-    admin.add_view(userAdmin(Profile, db.session))
-    admin.add_view(userAdmin(Videogames, db.session))
-    admin.add_view(userAdmin(FavoritesVideogames, db.session))
-    admin.add_view(userAdmin(Genres, db.session))
-    admin.add_view(userAdmin(FavoritesGenres, db.session))
-    admin.add_view(userAdmin(Comments, db.session))
-    admin.add_view(userAdmin(Post, db.session))
-    
+    # Add your models here, for example this is how we add a the User model to the admin    
     # You can duplicate that line to add mew models
     # admin.add_view(ModelView(YourModelName, db.session))
